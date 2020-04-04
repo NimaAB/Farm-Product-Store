@@ -1,6 +1,6 @@
 package filehandling.csv;
 
-import filehandling.ReaderInterface;
+import filehandling.ReaderAbstract;
 
-public class ReaderCSV implements ReaderInterface {
+public class ReaderCSV implements ReaderAbstract {
 }

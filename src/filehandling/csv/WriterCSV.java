@@ -1,6 +1,4 @@
 package filehandling.csv;
 
-import filehandling.WriterInterface;
-
-public class WriterCSV implements WriterInterface {
+public class WriterCSV {
 }
