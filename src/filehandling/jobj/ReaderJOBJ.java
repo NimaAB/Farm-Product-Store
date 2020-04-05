@@ -6,7 +6,10 @@ import filehandling.ReaderAbstract;
 import java.io.File;
 
 public class ReaderJOBJ extends ReaderAbstract {
-    //attributter og kunstraktor:
+    private File filePath;
+    public ReaderJOBJ(File filePath){
+        this.filePath = filePath;
+    }
 
     @Override
     public String read(File filePath) {
@@ -15,6 +18,6 @@ public class ReaderJOBJ extends ReaderAbstract {
 
     @Override
     protected String call() throws Exception {
-        return null;
+        return read(filePath);
     }
 }
