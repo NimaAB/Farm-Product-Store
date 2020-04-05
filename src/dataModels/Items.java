@@ -13,14 +13,15 @@ public class Items implements Serializable {
     private SimpleStringProperty artikkelNavn;
     private SimpleStringProperty spesifikasjoner;
     private SimpleStringProperty kategori;
+    private SimpleIntegerProperty pris;
 
     public Items(int artikkelnr, String artikkelNavn,String kategori
-            ,String spesifikasjoner){
+            ,String spesifikasjoner,int pris){
         this.artikkelnr = new SimpleIntegerProperty(artikkelnr);
         this.artikkelNavn= new SimpleStringProperty(artikkelNavn);
         this.kategori = new SimpleStringProperty(kategori);
         this.spesifikasjoner = new SimpleStringProperty(spesifikasjoner);
-
+        this.pris = new SimpleIntegerProperty(pris);
     }
     public void setArtikkelnr(int artikkelnr){
         this.artikkelnr.set(artikkelnr+1);
@@ -50,6 +51,13 @@ public class Items implements Serializable {
         return spesifikasjoner.getValue();
     }
 
+    public void setPris(int pris){
+        this.pris.set(pris);
+    }
+    public int getPris(){
+        return pris.getValue();
+    }
+
     //Serielizing part:
     private void writeObject(ObjectOutputStream st) throws IOException{
         st.defaultWriteObject();
@@ -57,16 +65,18 @@ public class Items implements Serializable {
         st.writeUTF(getArtikkelNavn());
         st.writeUTF(getKategori());
         st.writeUTF(getSpesifikasjoner());
+        st.writeInt(getPris());
     }
     private void readObject(ObjectInputStream st) throws IOException,ClassNotFoundException{
         int artikkelnr = st.readInt();
         String artikkelNavn = st.readUTF();
         String kategori = st.readUTF();
         String spesifikasjoner = st.readUTF();
+        int pris = st.readInt();
         this.artikkelnr = new SimpleIntegerProperty(artikkelnr);
         this.artikkelNavn = new SimpleStringProperty(artikkelNavn);
         this.kategori = new SimpleStringProperty(kategori);
         this.spesifikasjoner = new SimpleStringProperty(spesifikasjoner);
+        this.pris = new SimpleIntegerProperty(pris);
     }
-
 }
