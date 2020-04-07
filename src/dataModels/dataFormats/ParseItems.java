@@ -1,6 +1,7 @@
 package dataModels.dataFormats;
 
 import dataModels.Items;
+import exceptions.ExceptionHandling;
 import exceptions.ioExceptions.InvalidItemFormatException;
 
 public class ParseItems {
@@ -14,10 +15,17 @@ public class ParseItems {
         String kategori = items[2];
         String spesifikasjoer = items[3];
         String pris = items[4];
-        //disse to skal gå gjennom en validering (Det er midlertidig løsning):
-        int artikkelnrInt = Integer.parseInt(artikkelnr);
-        double prisD = Double.parseDouble(pris);
 
-        return new Items(artikkelnrInt,artikkelNavn,spesifikasjoer,kategori,prisD);
+        //TODO:make a seperate method for this in a new class maybe!??
+        Number [] numbers = ExceptionHandling.numberInputs(artikkelnr,pris);
+        int artikkernr1 = (int) numbers[0];
+        double pris1 = (double) numbers[1];
+        int sjekkeTall =(int) numbers[2];
+        //TODO:make cheks for all of the arguments up.
+        if(sjekkeTall != 0){
+            return new Items(artikkernr1,artikkelNavn,spesifikasjoer,kategori,pris1);
+        }
+
+        return null;
     }
 }

@@ -30,7 +30,7 @@ public class ReaderCSV extends ReaderAbstract {
     }
 
     @Override
-    protected ArrayList<Items> call() throws Exception {
+    protected ArrayList<Items> call()throws IOException{
         try{
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}
