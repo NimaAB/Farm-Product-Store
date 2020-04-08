@@ -1,56 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.gluonhq.charm.glisten.control.BottomNavigationButton?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="612.0" prefWidth="653.0" style="-fx-background-color: #626d71;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CostumerController">
-   <children>
-      <Label alignment="CENTER" layoutX="190.0" layoutY="121.0" prefHeight="106.0" prefWidth="274.0" text="Velg katogrie:" textFill="WHITE">
-         <font>
-            <Font size="22.0" />
-         </font></Label>
-      <HBox alignment="CENTER" layoutX="132.0" layoutY="245.0" prefHeight="159.0" prefWidth="391.0" spacing="20.0">
-         <children>
-            <VBox prefHeight="175.0" prefWidth="153.0" spacing="20.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <BottomNavigationButton prefHeight="41.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Skjermkort" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </BottomNavigationButton>
-                  <BottomNavigationButton prefHeight="41.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Prossesor" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </BottomNavigationButton>
-                  <BottomNavigationButton prefHeight="41.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Mus/ Tastatur" VBox.vgrow="ALWAYS">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </BottomNavigationButton>
-               </children>
-            </VBox>
-         </children>
-      </HBox>
-      <VBox layoutX="336.0" layoutY="366.0" prefHeight="157.0" prefWidth="94.0" spacing="20.0" />
-      <BottomNavigationButton layoutX="9.0" layoutY="78.0" prefHeight="43.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Laptop">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </BottomNavigationButton>
-      <BottomNavigationButton layoutX="326.0" layoutY="83.0" prefHeight="38.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Harddisk">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </BottomNavigationButton>
-      <BottomNavigationButton layoutY="147.0" prefHeight="55.0" prefWidth="153.0" style="-fx-background-color: #f5be41; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Skjerm">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </BottomNavigationButton>
-   </children>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="app.controllers.CostumerController"
+            prefHeight="400.0" prefWidth="600.0">
+
 </AnchorPane>
