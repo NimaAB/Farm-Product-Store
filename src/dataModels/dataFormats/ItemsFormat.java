@@ -5,7 +5,7 @@ import dataModels.Items;
 import java.util.ArrayList;
 
 public class ItemsFormat {
-    private static final char DELIMITER = ';';
+    public static final String DELIMITER = ";";
 
     public static String itemsFormat(Items item){
         return item.getArtikkelnr()+DELIMITER+item.getArtikkelNavn()+DELIMITER
