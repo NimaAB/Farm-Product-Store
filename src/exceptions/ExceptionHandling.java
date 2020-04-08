@@ -14,9 +14,11 @@ public class ExceptionHandling {
         try{
             artikkelnr = Integer.parseInt(artikkelnrStr);
             if(prisStr.contains(",")){ //If someone uses coma instead of dot for desimal values.
-                newPrisStr.replace(",",".");
+                newPrisStr = prisStr.replace(",",".");
+                pris = Double.parseDouble(newPrisStr);
+            }else {
+                pris = Double.parseDouble(prisStr);
             }
-            pris = Double.parseDouble(prisStr);
         }catch (InvalidNumberException e){
             sjekkeTall = 0;
             messege = e.getMessage();
