@@ -1,14 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="app.controllers.AdminController"
-            prefHeight="400.0" prefWidth="600.0">
+<BorderPane fx:id="adminPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="1262.0" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+            <menus>
+                <Menu mnemonicParsing="false" text="File">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Open" />
+                        <MenuItem mnemonicParsing="false" text="Save" />
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                    <tabs>
 
-</AnchorPane>
+                        <Tab text="Komponenter">
+                            <AnchorPane>
+                                <children>
+                                    <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <columns>
+                                            <TableColumn prefWidth="134.0" text="KomponentNr" />
+                                            <TableColumn prefWidth="168.0" text="Komponent Navn" />
+                                            <TableColumn prefWidth="189.0" text="Kategory" />
+                                            <TableColumn prefWidth="236.0" text="Spesifikasjoner" />
+                                            <TableColumn prefWidth="134.0" text="Pris" />
+                                        </columns>
+                                    </TableView>
+                                </children>
+                            </AnchorPane>
+                        </Tab>
+
+                        <Tab text="En annen tableview">
+                            <AnchorPane>
+                                <children>
+                                    <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                        <columns>
+                                            <TableColumn prefWidth="101.0" text="kolonne 1" />
+                                            <TableColumn prefWidth="143.0" text="kolonne 2" />
+                                            <TableColumn prefWidth="151.0" text="kolonne 3" />
+                                            <TableColumn prefWidth="157.0" text="kolonne 4" />
+                                            <TableColumn prefWidth="309.0" text="kolonne 5" />
+                                        </columns>
+                                    </TableView>
+                                </children>
+                            </AnchorPane>
+                        </Tab>
+
+                    </tabs>
+                </TabPane>
+            </children>
+        </AnchorPane>
+    </center>
+    <left>
+        <AnchorPane prefHeight="648.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <children>
+                <Label layoutX="193.0" layoutY="44.0" text="Ny Komponent">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="90.0" prefWidth="120.0" text="Komponentnummer:" />
+                <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="127.0" prefWidth="120.0" text="Komponent Navn:" />
+                <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="409.0" prefWidth="120.0" text="Pris:" />
+                <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="161.0" prefWidth="120.0" text="Kategory:" />
+                <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="194.0" prefWidth="120.0" text="Spesifikasjoner:" />
+
+                <TextField fx:id="txtKomponentNr" layoutX="165.0" layoutY="83.0" prefHeight="25.0" prefWidth="200.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="txtKomponentNavn" layoutX="165.0" layoutY="120.0" prefHeight="25.0" prefWidth="200.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+                <TextField fx:id="txtPris" layoutX="165.0" layoutY="402.0" prefHeight="25.0" prefWidth="200.0">
+                    <font>
+                        <Font size="14.0" />
+                    </font>
+                </TextField>
+                <TextArea fx:id="txtSpesifikasjoner" layoutX="165.0" layoutY="194.0" prefHeight="200.0" prefWidth="200.0" />
+                <ComboBox fx:id="kategorier" layoutX="165.0" layoutY="157.0" prefHeight="25.0" prefWidth="200.0" />
+
+                <Button layoutX="165.0" layoutY="443.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
+                <Button layoutX="165.0" layoutY="476.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
+                <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#loggUt" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="1.0" />
+            </children>
+        </AnchorPane>
+    </left>
+   <bottom>
+      <Pane prefHeight="11.0" prefWidth="1262.0" BorderPane.alignment="CENTER" />
+   </bottom>
+</BorderPane>
