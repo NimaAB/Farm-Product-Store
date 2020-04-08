@@ -1,9 +1,11 @@
 package filehandling.jobj;
 
 
+import dataModels.Items;
 import filehandling.ReaderAbstract;
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 
 public class ReaderJOBJ extends ReaderAbstract {
     private File filePath;
@@ -12,12 +14,28 @@ public class ReaderJOBJ extends ReaderAbstract {
     }
 
     @Override
-    public String read(File filePath) {
-        return null;
+    public ArrayList<Items> read(File filePath){
+        ArrayList<Items> items = new ArrayList<>();
+
+        try{
+            FileInputStream file = new FileInputStream(filePath);
+            ObjectInputStream objFromFile = new ObjectInputStream(file);
+            Items item;
+            while((item = (Items) objFromFile.readObject()) != null){
+                items.add(item);
+            }
+        }catch (IOException|ClassNotFoundException e){
+            //Denne exception-en er ikke for bruker derfor er det ingen behov for å vise det fram.
+            e.getStackTrace();
+        }
+        return items;
     }
 
     @Override
-    protected String call() throws Exception {
+    protected ArrayList<Items> call(){
+        try{
+            Thread.sleep(3000);
+        }catch (InterruptedException ignored){}
         return read(filePath);
     }
 }
