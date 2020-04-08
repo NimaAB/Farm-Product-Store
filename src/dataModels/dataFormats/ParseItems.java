@@ -16,12 +16,12 @@ public class ParseItems {
         String spesifikasjoer = items[3];
         String pris = items[4];
 
-        //TODO:make a seperate method for this in a new class maybe!??
-        Number [] numbers = ExceptionHandling.numberInputs(artikkelnr,pris);
+        Number [] numbers = ExceptionHandling.convertNumberInputsWcheck(artikkelnr,pris);
         int artikkernr1 = (int) numbers[0];
         double pris1 = (double) numbers[1];
         int sjekkeTall =(int) numbers[2];
-        //TODO:make cheks for all of the arguments up.
+        //TODO:make checks for all of the arguments up in a new method in the ExceptionValidation.
+        // the method will return a bolean which will be used here. But the number validation will be here.
         if(sjekkeTall != 0){
             return new Items(artikkernr1,artikkelNavn,spesifikasjoer,kategori,pris1);
         }
