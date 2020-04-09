@@ -40,4 +40,11 @@ public class Costumer implements Serializable {
     public ArrayList<Items> getConfigurationList() {
         return configurationList;
     }
+    public double totalPrice(ArrayList<Items> configurationList){
+        double totalPris = 0;
+        for(Items item:configurationList){
+            totalPris += item.getPris();
+        }
+        return totalPris;
+    }
 }
