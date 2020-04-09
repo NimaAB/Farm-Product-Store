@@ -2,10 +2,11 @@ package dataModels.dataFormats;
 
 import dataModels.Items;
 import exceptions.ExceptionHandling;
+import exceptions.dataExceptions.InvalidItemDataException;
 import exceptions.ioExceptions.InvalidItemFormatException;
 
 public class ParseItems {
-    public static Items parseItem(String itemTxt) throws InvalidItemFormatException{
+    public static Items parseItem(String itemTxt) throws InvalidItemFormatException, InvalidItemDataException {
         String [] items = itemTxt.split(";");
         if(items.length !=5){
             throw new InvalidItemFormatException("Fiel bruk av skilleten (;)");
@@ -20,12 +21,13 @@ public class ParseItems {
         int artikkernr1 = (int) numbers[0];
         double pris1 = (double) numbers[1];
         int sjekkeTall =(int) numbers[2];
-        //TODO:make checks for all of the arguments up in a new method in the ExceptionValidation.
-        // the method will return a bolean which will be used here. But the number validation will be here.
-        if(sjekkeTall != 0){
-            return new Items(artikkernr1,artikkelNavn,spesifikasjoer,kategori,pris1);
-        }
+        boolean validTextInput = ExceptionHandling.isValidTextInput(artikkelNavn,spesifikasjoer);
+        boolean validNumbers = sjekkeTall != 0;
 
-        return null;
+        if(!(validNumbers && validTextInput)){
+           throw new InvalidItemDataException("Feil skriving av komponent info i CSV filen din. "+
+                   "Husk rekkefølge på dataene og å bruk av nummer for artikkelnr. og pris.");
+        }
+        return new Items(artikkernr1,artikkelNavn,spesifikasjoer,kategori,pris1);
     }
 }
