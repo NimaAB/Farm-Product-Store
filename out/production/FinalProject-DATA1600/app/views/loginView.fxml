@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="533.0" prefWidth="505.0" style="-fx-background-color: #003741;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
+<AnchorPane prefHeight="533.0" prefWidth="505.0" style="-fx-background-color: #355C7D;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.LoginController">
    <children>
       <VBox layoutX="98.0" layoutY="61.0" prefHeight="411.0" prefWidth="309.0" spacing="20.0">
          <children>
@@ -45,12 +45,12 @@
             </HBox>
             <HBox alignment="CENTER" prefHeight="65.0" prefWidth="299.0" spacing="50.0">
                <children>
-                  <CheckBox mnemonicParsing="false" prefHeight="18.0" prefWidth="76.0" text="Admin" textFill="WHITE">
+                  <CheckBox fx:id="adminBox" mnemonicParsing="false" prefHeight="18.0" prefWidth="76.0" text="Admin" textFill="WHITE">
                      <font>
                         <Font size="13.0" />
                      </font>
                   </CheckBox>
-                  <Button mnemonicParsing="false" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #F0A202; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Button" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="logButton" mnemonicParsing="false" onAction="#loginCheck" prefHeight="32.0" prefWidth="154.0" style="-fx-background-color: ffcc5c; -fx-background-radius: 5px; -fx-border-radius: 5px;" text="Button" HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
             <Label fx:id="melding" prefHeight="58.0" prefWidth="299.0" />

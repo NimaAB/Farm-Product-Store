@@ -2,6 +2,7 @@ package filehandling.csv;
 
 import dataModels.Items;
 import dataModels.dataFormats.ParseItems;
+import exceptions.dataExceptions.InvalidItemDataException;
 import filehandling.ReaderAbstract;
 
 import java.io.BufferedReader;
@@ -12,11 +13,13 @@ import java.util.ArrayList;
 
 public class ReaderCSV extends ReaderAbstract {
     private File filePath;
+
+
     public ReaderCSV(File filePath){
         this.filePath = filePath;
     }
     @Override
-    public ArrayList<Items> read(File filePath) throws IOException{
+    public ArrayList<Items> read(File filePath) throws IOException, InvalidItemDataException {
         ArrayList<Items> items = new ArrayList<>();
         FileReader file = new FileReader(filePath);
 
@@ -29,11 +32,18 @@ public class ReaderCSV extends ReaderAbstract {
         return items;
     }
 
+
+
     @Override
-    protected ArrayList<Items> call()throws IOException{
+    //  Har lagt til invaliddataexeption handling
+
+    protected ArrayList<Items> call() throws IOException, InvalidItemDataException {
         try{
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}
         return read(filePath);
+
+
+
     }
 }
