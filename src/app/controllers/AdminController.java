@@ -15,42 +15,26 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
 
     @FXML BorderPane adminPane;
-    @FXML TextField txtKomponentNr, txtKomponentNavn, txtPris;
+    @FXML TextField txtKomponentNr, txtKomponentNavn, txtPris, txtFilter;
     @FXML TextArea txtSpesifikasjoner;
-    @FXML ComboBox<String> kategorier;
+    @FXML ComboBox<String> optKategorier;
+    @FXML ComboBox<String> optFilterBy; // dere bestemmer om vi skal ha den her eller ikke - det som står ved siden av filter textfield
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
     }
 
-    // Oppretter komponenter(items) med validering
     @FXML void opprettKomponent(ActionEvent event){
 
     }
 
-    // Når en rad trykkes direkte på tabellen så kan vi slette den ved å trykke på slett knapp
     @FXML void slett(ActionEvent event){
 
     }
 
-    // Endrer admin vindu til login vindu når logout knappen trykkes
     @FXML void loggUt(ActionEvent event){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
     }
-
-    /* Hva vi mangler:
-    * 1. Metode for auto lagring
-    * 2. Metode/Kode for tråder
-    * 3. Metode/Kode for fil lagring
-    *
-    * Åpen for diskusjon / spørsmål:
-    * 1. Trenger vi to tableviewer i admin vindu?
-    *       - komponenter tabell - den må vi ha
-    *       - konfigurert produkt tabell
-    *           - det står på oppgaven at kunde skal kunne se tidligere konfigurerte produkter
-    *           - skal vi gi den mulighet til administratoren også?
-    *
-    * 2. Trenger vi å lagre komponenter som CSV fil også? */
 }

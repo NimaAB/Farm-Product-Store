@@ -10,10 +10,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class WriterCSV extends WriterAbstract {
+public class SaveCSV extends WriterAbstract {
     private ArrayList<Items> items;
     private File filePath;
-    public WriterCSV(ArrayList<Items> items,File filePath){
+    public SaveCSV(ArrayList<Items> items, File filePath){
         this.items = items;
         this.filePath = filePath;
     }

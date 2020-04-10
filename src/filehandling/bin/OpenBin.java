@@ -1,4 +1,4 @@
-package filehandling.jobj;
+package filehandling.bin;
 
 
 import dataModels.Items;
@@ -7,9 +7,9 @@ import filehandling.ReaderAbstract;
 import java.io.*;
 import java.util.ArrayList;
 
-public class ReaderJOBJ extends ReaderAbstract {
+public class OpenBin extends ReaderAbstract {
     private File filePath;
-    public ReaderJOBJ(File filePath){
+    public OpenBin(File filePath){
         this.filePath = filePath;
     }
 
