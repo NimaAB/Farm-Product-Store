@@ -1,4 +1,4 @@
-package filehandling.jobj;
+package filehandling.bin;
 
 import dataModels.Items;
 import filehandling.WriterAbstract;
@@ -9,10 +9,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class WriterJOBJ extends WriterAbstract {
+public class SaveBin extends WriterAbstract {
     private ArrayList<Items> items;
     private File filePath;
-    public WriterJOBJ(ArrayList<Items> items,File filePath){
+    public SaveBin(ArrayList<Items> items, File filePath){
         this.items = items;
         this.filePath = filePath;
     }

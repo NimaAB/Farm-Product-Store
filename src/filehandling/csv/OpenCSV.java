@@ -11,11 +11,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ReaderCSV extends ReaderAbstract {
+public class OpenCSV extends ReaderAbstract {
     private File filePath;
 
 
-    public ReaderCSV(File filePath){
+    public OpenCSV(File filePath){
         this.filePath = filePath;
     }
     @Override
