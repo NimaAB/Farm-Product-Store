@@ -13,12 +13,11 @@ import java.util.ArrayList;
 public class Costumer implements Serializable {
     private String userName;
     private String password;
-    private ArrayList<Items> configurationList;
+
 
     public Costumer(String userName,String password,ArrayList<Items> configurationList){
        this.userName = userName;
        this.password = password;
-       this.configurationList = configurationList;
     }
 
     public void setUserName(String userName) {
@@ -34,17 +33,5 @@ public class Costumer implements Serializable {
         return password;
     }
 
-    public void setConfigurationList(ArrayList<Items> configurationList){
-        this.configurationList=configurationList;
-    }
-    public ArrayList<Items> getConfigurationList() {
-        return configurationList;
-    }
-    public double totalPrice(ArrayList<Items> configurationList){
-        double totalPris = 0;
-        for(Items item:configurationList){
-            totalPris += item.getPris();
-        }
-        return totalPris;
-    }
+
 }
