@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="customerPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="700.0" minWidth="1100.0" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CostumerController">
+<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CostumerController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -44,7 +44,7 @@
         </AnchorPane>
     </center>
     <left>
-        <AnchorPane prefHeight="648.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
                 <Label layoutX="134.0" layoutY="44.0" text="Konfigurasjon">
                     <font>

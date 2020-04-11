@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="adminPane" minHeight="700.0" minWidth="1100.0" prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
+<BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <menus>
@@ -28,15 +28,16 @@
       </MenuBar>
    </top>
    <center>
-      <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="700.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+            <TableView AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <columns>
-                  <TableColumn prefWidth="130.0" resizable="false" text="KomponentNr" />
-                  <TableColumn maxWidth="300.0" minWidth="150.0" prefWidth="150.0" text="Komponent Navn" />
-                  <TableColumn maxWidth="300.0" minWidth="150.0" prefWidth="150.0" text="Kategory" />
-                  <TableColumn maxWidth="400.0" minWidth="200.0" prefWidth="200.0" text="Spesifikasjoner" />
-                  <TableColumn minWidth="150.0" prefWidth="150.0" resizable="false" text="Pris" />
+                  <TableColumn maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" />
+                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr" />
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn" />
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory" />
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner" />
+                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris" />
                </columns>
             </TableView>
             <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
@@ -45,39 +46,39 @@
       </AnchorPane>
    </center>
    <left>
-      <AnchorPane prefHeight="648.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="193.0" layoutY="44.0" text="Ny Komponent">
+            <Label layoutX="193.0" layoutY="22.0" text="Ny Komponent">
                <font>
                   <Font name="System Bold" size="20.0" />
                </font>
             </Label>
-            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="90.0" prefWidth="120.0" text="Komponentnummer:" />
-            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="127.0" prefWidth="120.0" text="Komponent Navn:" />
-            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="409.0" prefWidth="120.0" text="Pris:" />
-            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="161.0" prefWidth="120.0" text="Kategory:" />
-            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="194.0" prefWidth="120.0" text="Spesifikasjoner:" />
+            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="68.0" prefWidth="120.0" text="Komponentnummer:" />
+            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="105.0" prefWidth="120.0" text="Komponent Navn:" />
+            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="387.0" prefWidth="120.0" text="Pris:" />
+            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="139.0" prefWidth="120.0" text="Kategory:" />
+            <Label alignment="CENTER_RIGHT" layoutX="35.0" layoutY="172.0" prefWidth="120.0" text="Spesifikasjoner:" />
 
-            <TextField fx:id="txtKomponentNr" layoutX="165.0" layoutY="83.0" prefHeight="25.0" prefWidth="200.0">
+            <TextField fx:id="txtKomponentNr" layoutX="165.0" layoutY="61.0" prefHeight="25.0" prefWidth="200.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtKomponentNavn" layoutX="165.0" layoutY="120.0" prefHeight="25.0" prefWidth="200.0">
+            <TextField fx:id="txtKomponentNavn" layoutX="165.0" layoutY="98.0" prefHeight="25.0" prefWidth="200.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextField fx:id="txtPris" layoutX="165.0" layoutY="402.0" prefHeight="25.0" prefWidth="200.0">
+            <TextField fx:id="txtPris" layoutX="165.0" layoutY="380.0" prefHeight="25.0" prefWidth="200.0">
                <font>
                   <Font size="14.0" />
                </font>
             </TextField>
-            <TextArea fx:id="txtSpesifikasjoner" layoutX="165.0" layoutY="194.0" prefHeight="200.0" prefWidth="200.0" />
-            <ComboBox fx:id="optKategorier" layoutX="165.0" layoutY="157.0" prefHeight="25.0" prefWidth="200.0" />
+            <TextArea fx:id="txtSpesifikasjoner" layoutX="165.0" layoutY="172.0" prefHeight="200.0" prefWidth="200.0" />
+            <ComboBox fx:id="optKategorier" layoutX="165.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
 
-            <Button layoutX="165.0" layoutY="443.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
-            <Button layoutX="165.0" layoutY="476.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
+            <Button layoutX="165.0" layoutY="421.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
+            <Button layoutX="165.0" layoutY="454.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
             <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#loggUt" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
          </children>
       </AnchorPane>
