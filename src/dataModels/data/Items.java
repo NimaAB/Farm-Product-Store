@@ -1,4 +1,4 @@
-package dataModels;
+package dataModels.data;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -74,6 +74,7 @@ public class Items implements Serializable {
         String kategori = st.readUTF();
         String spesifikasjoner = st.readUTF();
         double pris = st.readDouble();
+
         this.artikkelnr = new SimpleIntegerProperty(artikkelnr);
         this.artikkelNavn = new SimpleStringProperty(artikkelNavn);
         this.kategori = new SimpleStringProperty(kategori);

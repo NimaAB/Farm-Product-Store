@@ -1,4 +1,4 @@
-package dataModels;
+package dataModels.data;
 
 // Enummen er som en liste.
 // Vi kan velge fra den senere i AdminController med en choiser input.

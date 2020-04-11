@@ -1,6 +1,6 @@
 package filehandling.csv;
 
-import dataModels.Items;
+import dataModels.data.Items;
 import dataModels.dataFormats.ItemsFormat;
 import filehandling.WriterAbstract;
 
