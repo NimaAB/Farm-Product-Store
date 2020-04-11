@@ -1,11 +1,9 @@
 package dataModels.dataFormats;
 
-import dataModels.Items;
+import dataModels.data.Items;
 import exceptions.ExceptionHandling;
 import exceptions.dataExceptions.InvalidItemDataException;
 import exceptions.ioExceptions.InvalidItemFormatException;
-
-import java.util.regex.Pattern;
 
 public class ParseItems {
     public static Items parseItem(String itemTxt) throws InvalidItemFormatException, InvalidItemDataException {

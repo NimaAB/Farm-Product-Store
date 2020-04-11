@@ -1,7 +1,7 @@
 package filehandling.bin;
 
 
-import dataModels.Items;
+import dataModels.data.Items;
 import filehandling.ReaderAbstract;
 
 import java.io.*;

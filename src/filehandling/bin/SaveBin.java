@@ -1,6 +1,6 @@
 package filehandling.bin;
 
-import dataModels.Items;
+import dataModels.data.Items;
 import filehandling.WriterAbstract;
 
 import java.io.File;

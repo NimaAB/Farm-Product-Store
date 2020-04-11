@@ -1,13 +1,8 @@
-package dataModels.users;
+package app.users;
 
-import app.controllers.AdminController;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 
-public class Adminstrator implements Serializable {
+public class Adminstrator  {
     private String userName;
     private String password;
 
@@ -27,4 +22,12 @@ public class Adminstrator implements Serializable {
     public String getPassword(){
         return password;
     }
+
+    //Adder Items til TabelView:
+
+    //Sletter Items fra TableView:
+
+    //Lagrer to bin:
+
+    //lagrer to csv:
 }

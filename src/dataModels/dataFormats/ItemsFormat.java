@@ -1,6 +1,6 @@
 package dataModels.dataFormats;
 
-import dataModels.Items;
+import dataModels.data.Items;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,6 @@
-package dataModels;
+package app;
+
+import dataModels.data.Items;
 
 import java.util.ArrayList;
 

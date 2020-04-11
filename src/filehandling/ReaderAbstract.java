@@ -1,6 +1,6 @@
 package filehandling;
 
-import dataModels.Items;
+import dataModels.data.Items;
 import exceptions.dataExceptions.InvalidItemDataException;
 import javafx.concurrent.Task;
 

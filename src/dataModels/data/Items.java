@@ -1,4 +1,4 @@
-package dataModels;
+package dataModels.data;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
