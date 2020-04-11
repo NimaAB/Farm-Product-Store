@@ -14,6 +14,7 @@ import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
+
     @FXML BorderPane adminPane;
     @FXML TextField txtKomponentNr, txtKomponentNavn, txtPris, txtFilter;
     @FXML TextArea txtSpesifikasjoner;
@@ -26,7 +27,6 @@ public class AdminController implements Initializable {
     }
 
     @FXML void opprettKomponent(ActionEvent event){
-
     }
 
     @FXML void slett(ActionEvent event){
