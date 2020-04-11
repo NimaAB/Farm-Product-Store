@@ -3,6 +3,8 @@ package dataModels.data;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -59,6 +61,7 @@ public class Items implements Serializable {
         return pris.getValue();
     }
 
+
     //Serielizing part:
     private void writeObject(ObjectOutputStream st) throws IOException{
         st.defaultWriteObject();
@@ -80,5 +83,11 @@ public class Items implements Serializable {
         this.kategori = new SimpleStringProperty(kategori);
         this.spesifikasjoner = new SimpleStringProperty(spesifikasjoner);
         this.pris = new SimpleDoubleProperty(pris);
+
+        setArtikkelnr(artikkelnr);
+        setArtikkelNavn(artikkelNavn);
+        setKategori(kategori);
+        setSpesifikasjoner(spesifikasjoner);
+        setPris(pris);
     }
 }

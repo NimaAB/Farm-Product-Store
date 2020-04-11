@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
@@ -32,12 +33,31 @@
          <children>
             <TableView AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <columns>
-                  <TableColumn maxWidth="30.0" minWidth="30.0" prefWidth="30.0" resizable="false" />
-                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr" />
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn" />
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory" />
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner" />
-                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris" />
+                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="artikkelnr" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="artikkelNavn" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="kategori" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="spesifikasjoner" />
+                     </cellValueFactory>
+                  </TableColumn>
+                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris">
+                     <cellValueFactory>
+                        <PropertyValueFactory property="pris" />
+                     </cellValueFactory>
+                  </TableColumn>
                </columns>
             </TableView>
             <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
@@ -75,7 +95,7 @@
                </font>
             </TextField>
             <TextArea fx:id="txtSpesifikasjoner" layoutX="165.0" layoutY="172.0" prefHeight="200.0" prefWidth="200.0" />
-            <ComboBox fx:id="optKategorier" layoutX="165.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
+            <ComboBox fx:id="optKategorier" layoutX="165.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0"/>
 
             <Button layoutX="165.0" layoutY="421.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
             <Button layoutX="165.0" layoutY="454.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
