@@ -1,6 +1,6 @@
 package filehandling.bin;
 
-import dataModels.data.Items;
+import dataModels.data.Components;
 import filehandling.WriterAbstract;
 
 import java.io.File;
@@ -10,18 +10,18 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class SaveBin extends WriterAbstract {
-    private ArrayList<Items> items;
+    private ArrayList<Components> items;
     private File filePath;
-    public SaveBin(ArrayList<Items> items, File filePath){
+    public SaveBin(ArrayList<Components> items, File filePath){
         this.items = items;
         this.filePath = filePath;
     }
     @Override
-    public void write(ArrayList<Items> items, File filePath) {
+    public void write(ArrayList<Components> items, File filePath) {
         try{
             FileOutputStream file = new FileOutputStream(filePath);
             ObjectOutputStream objectOut = new ObjectOutputStream(file);
-            for(Items item:items){
+            for(Components item:items){
                 objectOut.writeObject(item);
             }
             objectOut.close();

@@ -1,7 +1,7 @@
 package filehandling.bin;
 
 
-import dataModels.data.Items;
+import dataModels.data.Components;
 import filehandling.ReaderAbstract;
 
 import java.io.*;
@@ -14,14 +14,14 @@ public class OpenBin extends ReaderAbstract {
     }
 
     @Override
-    public ArrayList<Items> read(File filePath){
-        ArrayList<Items> items = new ArrayList<>();
+    public ArrayList<Components> read(File filePath){
+        ArrayList<Components> items = new ArrayList<>();
 
         try{
             FileInputStream file = new FileInputStream(filePath);
             ObjectInputStream objFromFile = new ObjectInputStream(file);
-            Items item;
-            while((item = (Items) objFromFile.readObject()) != null){
+            Components item;
+            while((item = (Components) objFromFile.readObject()) != null){
                 items.add(item);
             }
         }catch (IOException|ClassNotFoundException e){
@@ -32,7 +32,7 @@ public class OpenBin extends ReaderAbstract {
     }
 
     @Override
-    protected ArrayList<Items> call(){
+    protected ArrayList<Components> call(){
         try{
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}

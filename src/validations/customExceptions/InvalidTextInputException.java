@@ -1,4 +1,4 @@
-package exceptions.dataExceptions;
+package validations.customExceptions;
 
 public class InvalidTextInputException extends Exception {
     public InvalidTextInputException(String msg){

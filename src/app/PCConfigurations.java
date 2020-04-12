@@ -1,10 +1,10 @@
 package app;
 
-import dataModels.data.Items;
+import dataModels.data.Components;
 
 import java.util.ArrayList;
 
-public class PCConfiuration {
+public class PCConfigurations {
    /* private ArrayList<Items> configurationList;
     public PCConfiuration(ArrayList<Items> configurationList){
         this.configurationList=configurationList;
@@ -16,10 +16,10 @@ public class PCConfiuration {
     public ArrayList<Items> getConfigurationList() {
         return configurationList;
     }*/
-    public double totalPrice(ArrayList<Items> configurationList){
+    public double totalPrice(ArrayList<Components> configurationList){
         double totalPris = 0;
-        for(Items item:configurationList){
-            totalPris += item.getPris();
+        for(Components item:configurationList){
+            totalPris += item.getComponentPrice();
         }
         return totalPris;
     }

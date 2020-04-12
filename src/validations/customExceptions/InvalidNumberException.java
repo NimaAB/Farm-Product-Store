@@ -1,4 +1,4 @@
-package exceptions.dataExceptions;
+package validations.customExceptions;
 
 public class InvalidNumberException extends NumberFormatException {
     public InvalidNumberException(String msg){

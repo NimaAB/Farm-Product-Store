@@ -1,10 +1,5 @@
 package app.users;
 
-import dataModels.data.Items;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-
 public class Costumer  {
     private String userName;
     private String password;

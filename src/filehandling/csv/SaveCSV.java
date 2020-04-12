@@ -1,6 +1,6 @@
 package filehandling.csv;
 
-import dataModels.data.Items;
+import dataModels.data.Components;
 import dataModels.dataFormats.ItemsFormat;
 import filehandling.WriterAbstract;
 
@@ -11,15 +11,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class SaveCSV extends WriterAbstract {
-    private ArrayList<Items> items;
+    private ArrayList<Components> items;
     private File filePath;
-    public SaveCSV(ArrayList<Items> items, File filePath){
+    public SaveCSV(ArrayList<Components> items, File filePath){
         this.items = items;
         this.filePath = filePath;
     }
 
     @Override
-    public void write(ArrayList<Items> items, File filePath){
+    public void write(ArrayList<Components> items, File filePath){
         FileWriter file;
         try{
             file = new FileWriter(filePath);

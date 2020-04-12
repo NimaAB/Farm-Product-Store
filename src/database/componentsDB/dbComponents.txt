@@ -1,0 +1,4 @@
+1;Component X;Processor;Specs;450.0
+2;Component L;Screen;Specs;200.0
+3;Component Q;Mouse;Specs;150.0
+4;Component Q;Camera;Specs;199.0
