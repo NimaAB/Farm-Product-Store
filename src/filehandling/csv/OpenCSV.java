@@ -12,17 +12,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class OpenCSV extends ReaderAbstract {
-    private File filePath;
+    private String filePath;
 
-
-    public OpenCSV(File filePath){
+    public OpenCSV(String filePath){
         this.filePath = filePath;
     }
+
     @Override
-    public ArrayList<Items> read(File filePath) throws IOException, InvalidItemDataException {
+    public ArrayList<Items> read(String filePath) throws IOException, InvalidItemDataException {
         ArrayList<Items> items = new ArrayList<>();
         FileReader file = new FileReader(filePath);
-
         try(BufferedReader reader = new BufferedReader(file)){
             String line;
             while((line =reader.readLine())!=null){
@@ -32,18 +31,11 @@ public class OpenCSV extends ReaderAbstract {
         return items;
     }
 
-
-
     @Override
-    //  Har lagt til invaliddataexeption handling
-
     protected ArrayList<Items> call() throws IOException, InvalidItemDataException {
         try{
             Thread.sleep(3000);
         }catch (InterruptedException ignored){}
         return read(filePath);
-
-
-
     }
 }

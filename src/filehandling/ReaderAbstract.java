@@ -9,5 +9,5 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public abstract class ReaderAbstract extends Task<ArrayList<Items>> {
-    protected abstract ArrayList<Items> read(File filePath) throws IOException, InvalidItemDataException;
+    protected abstract ArrayList<Items> read(String filePath) throws IOException, InvalidItemDataException;
 }
