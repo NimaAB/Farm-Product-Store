@@ -12,14 +12,14 @@ import java.util.ArrayList;
 
 public class SaveCSV extends WriterAbstract {
     private ArrayList<Items> items;
-    private File filePath;
-    public SaveCSV(ArrayList<Items> items, File filePath){
+    private String filePath;
+    public SaveCSV(ArrayList<Items> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
 
     @Override
-    public void write(ArrayList<Items> items, File filePath){
+    public void write(ArrayList<Items> items, String filePath){
         FileWriter file;
         try{
             file = new FileWriter(filePath);

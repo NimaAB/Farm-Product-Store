@@ -11,13 +11,13 @@ import java.util.ArrayList;
 
 public class SaveBin extends WriterAbstract {
     private ArrayList<Items> items;
-    private File filePath;
-    public SaveBin(ArrayList<Items> items, File filePath){
+    private String filePath;
+    public SaveBin(ArrayList<Items> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
     @Override
-    public void write(ArrayList<Items> items, File filePath) {
+    public void write(ArrayList<Items> items, String filePath) {
         try{
             FileOutputStream file = new FileOutputStream(filePath);
             ObjectOutputStream objectOut = new ObjectOutputStream(file);
