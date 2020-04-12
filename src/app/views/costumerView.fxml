@@ -20,8 +20,8 @@
             <menus>
                 <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" text="Open" />
-                        <MenuItem mnemonicParsing="false" text="Save as csv" />
+                        <MenuItem onAction="#open" mnemonicParsing="false" text="Open" />
+                        <MenuItem onAction="#save" mnemonicParsing="false" text="Save as csv" />
                     </items>
                 </Menu>
             </menus>

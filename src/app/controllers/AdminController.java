@@ -33,6 +33,16 @@ public class AdminController implements Initializable {
 
     }
 
+    @FXML
+    void open(){
+        //csv
+    }
+
+    @FXML
+    void save(){
+        //csv
+    }
+
     @FXML void loggUt(ActionEvent event){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
