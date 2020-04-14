@@ -1,6 +1,8 @@
 package database.componentsDB;
 
 import dataModels.data.Components;
+import filehandling.bin.OpenBin;
+import filehandling.bin.SaveBin;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.collections.FXCollections;
@@ -10,25 +12,14 @@ import java.io.File;
 import java.util.ArrayList;
 
 public class RequestDatabase {
-    private static final String FILE_DATABASE = "src/database/componentsDB/dbComponents.txt";
+    private static final String FILE_DATABASE = "src/database/componentsDB/dbComponents.bin";
     private static final ObservableList<Components> DATABASE = FXCollections.observableArrayList();
 
     /** DONE: READS THE <FILE DATABASE> AND SAVES ITS CONTENTS IN THE <DATABASE> OBSERVABLE LIST */
     public static void toLoadDatabase() {
-        OpenCSV csv = new OpenCSV(new File(FILE_DATABASE));
-        ArrayList<Components> fileContents = csv.read(new File(FILE_DATABASE));
-
-        for(Components lines : fileContents){
-            String componentNumber = Integer.toString(lines.getComponentNr());
-            String componentName = lines.getComponentName();
-            String componentCategory = lines.getComponentCategory();
-            String componentSpecs = lines.getComponentSpecs();
-            String componentPrice = Double.toString(lines.getComponentPrice());
-            CheckBox b = new CheckBox();
-
-            Components c = new Components(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
-            DATABASE.add(c);
-        }
+        OpenBin<Components> read = new OpenBin<>(FILE_DATABASE);
+        ArrayList<Components> components = read.call();
+        DATABASE.addAll(components);
     }
 
     /** DONE: DELETES COMPONENTS FROM FILE DATABASE WHEN CHECKBOX IS SELECTED. */
@@ -38,8 +29,8 @@ public class RequestDatabase {
 
         // DELETES COMPONENTS FROM THE FILE DATABASE
         ArrayList<Components> updatedDatabase = new ArrayList<>(DATABASE);
-        SaveCSV read = new SaveCSV(updatedDatabase,new File(FILE_DATABASE));
-        read.run();
+        SaveBin<Components> write = new SaveBin<>(updatedDatabase, FILE_DATABASE);
+        write.call();
     }
 
     /** DONE: SAVES NEW COMPONENTS TO THE FILE DATABASE */
@@ -49,8 +40,8 @@ public class RequestDatabase {
 
         // SAVES NEW COMPONENT IN THE FILE DATABASE
         ArrayList<Components> updatedDatabase = new ArrayList<>(DATABASE);
-        SaveCSV write = new SaveCSV(updatedDatabase,new File(FILE_DATABASE));
-        write.run();
+        SaveBin<Components> write = new SaveBin<>(updatedDatabase, FILE_DATABASE);
+        write.call();
     }
 
     public static ObservableList<Components> getDatabase() { return DATABASE; }

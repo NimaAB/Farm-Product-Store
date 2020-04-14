@@ -1,25 +1,22 @@
 package filehandling.csv;
 
-import dataModels.data.Components;
 import dataModels.dataFormats.ItemsFormat;
 import filehandling.WriterAbstract;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SaveCSV extends WriterAbstract {
-    private ArrayList<Components> items;
-    private File filePath;
-    public SaveCSV(ArrayList<Components> items, File filePath){
+public class SaveCSV<T> extends WriterAbstract<T> {
+    private final ArrayList<T> items;
+    private final String filePath;
+    public SaveCSV(ArrayList<T> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
 
     @Override
-    public void write(ArrayList<Components> items, File filePath){
+    protected void write(ArrayList<T> items, String filePath){
         FileWriter file;
         try{
             file = new FileWriter(filePath);
@@ -33,7 +30,7 @@ public class SaveCSV extends WriterAbstract {
     }
 
     @Override
-    protected Void call() {
+    public T call() {
         try{
             Thread.sleep(2000);
         }catch (InterruptedException ignored){}

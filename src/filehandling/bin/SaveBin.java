@@ -1,40 +1,38 @@
 package filehandling.bin;
 
-import dataModels.data.Components;
 import filehandling.WriterAbstract;
-
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class SaveBin extends WriterAbstract {
-    private ArrayList<Components> items;
-    private File filePath;
-    public SaveBin(ArrayList<Components> items, File filePath){
+public class SaveBin<T> extends WriterAbstract<T> {
+    private final ArrayList<T> items;
+    private final String filePath;
+    public SaveBin(ArrayList<T> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
+
     @Override
-    public void write(ArrayList<Components> items, File filePath) {
+    protected void write(ArrayList<T> items, String filePath) {
         try{
-            FileOutputStream file = new FileOutputStream(filePath);
-            ObjectOutputStream objectOut = new ObjectOutputStream(file);
-            for(Components item:items){
-                objectOut.writeObject(item);
-            }
-            objectOut.close();
+            FileOutputStream fileOutputStream = new FileOutputStream(filePath);
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
+            for(T item:items){ objectOutputStream.writeObject(item); }
+
+            fileOutputStream.close();
+            objectOutputStream.close();
         }catch (IOException e){
             e.getStackTrace();
         }
     }
 
     @Override
-    protected Void call() {
-        try{
-            Thread.sleep(2000);
-        }catch (InterruptedException ignored){}
+    public T call() {
+        try { Thread.sleep(2000);
+        } catch (InterruptedException ignored){}
+
         write(items,filePath);
         return null;
     }

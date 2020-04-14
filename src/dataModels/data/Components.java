@@ -59,6 +59,12 @@ public class Components implements Serializable {
         this.componentPrice.set(DATA.getComponentPrice());
     }
 
+    public String toString(){
+        return String.format("%s;%s;%s;%s;%s",
+                componentNr.get(), componentName.get(), componentCategory.get(),
+                componentSpecs.get(), componentPrice.get());
+    }
+
     public int getComponentNr() { return componentNr.get(); }
     public String getComponentName() { return componentName.get(); }
     public String getComponentSpecs() { return componentSpecs.get(); }

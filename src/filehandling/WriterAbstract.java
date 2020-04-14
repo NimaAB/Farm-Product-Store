@@ -1,11 +1,8 @@
 package filehandling;
 
-import dataModels.data.Components;
 import javafx.concurrent.Task;
-
-import java.io.File;
 import java.util.ArrayList;
 
-public abstract class WriterAbstract extends Task<Void> {
-    public abstract void write(ArrayList<Components> items, File filePath);
+public abstract class WriterAbstract <T> extends Task<T> {
+    protected abstract void write(ArrayList<T> items, String filePath);
 }
