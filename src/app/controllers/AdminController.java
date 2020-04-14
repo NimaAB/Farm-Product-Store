@@ -26,7 +26,7 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String ComponentsDatabase = "src/database/componentsDB/dbComponents.bin";
+    private final String FILE_DATABASE = "src/database/componentsDB/dbComponents.bin";
 
     /**
      <ENDRINGER:>
@@ -63,7 +63,7 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Categories.categoryOnChange(optCategories,category);
-        DataCollection.loadComponents();
+        DataCollection.loadComponents(FILE_DATABASE);
         DataCollection.setTableView(tableview);
         DataCollection.filterOnChange(optFilterBy);
         DataCollection.filterTableView(tableview,txtFilter);
@@ -79,7 +79,7 @@ public class AdminController implements Initializable {
             CheckBox b = new CheckBox();
 
             Components component = new Components(nr,name,category,specs,price,b);
-            RequestDatabase.toSaveComponent(component, ComponentsDatabase);
+            RequestDatabase.toSaveComponent(component,FILE_DATABASE);
 
             success.setHeaderText("Component created");
             success.showAndWait();
@@ -90,7 +90,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML void slett(ActionEvent event){
-        RequestDatabase.toDeleteSelectedComponents(ComponentsDatabase);
+        RequestDatabase.toDeleteSelectedComponents(FILE_DATABASE);
         tableview.refresh();
     }
 

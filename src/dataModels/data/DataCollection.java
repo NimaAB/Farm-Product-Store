@@ -11,13 +11,12 @@ import javafx.scene.control.TextField;
 
 public class DataCollection {
     private static ObservableList<Components> components;
-    private static String filterCategory;
+    private static String filterCategory = "Component Name";
     private static boolean refreshDatabase = true;
 
-    public static void loadComponents() {
+    public static void loadComponents(String FILE_DATABASE) {
         if(refreshDatabase){
-            String componentsDatabase = "src/database/componentsDB/dbComponents.bin";
-            RequestDatabase.toLoadDatabase(componentsDatabase);
+            RequestDatabase.toLoadDatabase(FILE_DATABASE);
             components = RequestDatabase.getDatabase();
             refreshDatabase = false; }
     }
