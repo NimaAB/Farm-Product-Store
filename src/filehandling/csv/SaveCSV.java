@@ -17,23 +17,24 @@ public class SaveCSV<T> extends WriterAbstract<T> {
 
     @Override
     protected void write(ArrayList<T> items, String filePath){
-        FileWriter file;
-        try{
-            file = new FileWriter(filePath);
-            BufferedWriter writer = new BufferedWriter(file);
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             String itemText = ItemsFormat.rewriteItems(items);
-            writer.write(itemText);
-            writer.close();
-        }catch (IOException e){
+            bufferedWriter.write(itemText);
+
+            fileWriter.close();
+            bufferedWriter.close();
+        } catch (IOException e){
             e.getStackTrace();
         }
     }
 
     @Override
     public T call() {
-        try{
-            Thread.sleep(2000);
-        }catch (InterruptedException ignored){}
+        try { Thread.sleep(2000); }
+        catch (InterruptedException ignored){}
+
         write(items,filePath);
         return null;
     }

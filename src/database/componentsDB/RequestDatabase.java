@@ -15,9 +15,12 @@ public class RequestDatabase {
     public static void toLoadDatabase(String FILE_DATABASE) {
         OpenBin<Components> read = new OpenBin<>(FILE_DATABASE);
         ArrayList<Components> components = read.call();
+        //DATABASE.addAll(components);
+
+         /* Når Components objektet er serialisert, CheckBox blir IKKE med derfor vises den ikke på tableview
+            For å se hva jeg mener, kjør koden i linje 18 istedenfor <for loop> */
 
         for(Components c : components){
-            // NØVVENDIG FORDI CHECKBOX KAN IKKE SERIALISERES
             CheckBox checkBox = new CheckBox();
             c.setCHECKBOX(checkBox);
             DATABASE.add(c);

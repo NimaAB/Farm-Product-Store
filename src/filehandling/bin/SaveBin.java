@@ -16,7 +16,7 @@ public class SaveBin<T> extends WriterAbstract<T> {
 
     @Override
     protected void write(ArrayList<T> items, String filePath) {
-        try{
+        try {
             FileOutputStream fileOutputStream = new FileOutputStream(filePath);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
             for(T item:items){ objectOutputStream.writeObject(item); }
@@ -30,8 +30,8 @@ public class SaveBin<T> extends WriterAbstract<T> {
 
     @Override
     public T call() {
-        try { Thread.sleep(2000);
-        } catch (InterruptedException ignored){}
+        try { Thread.sleep(2000); }
+        catch (InterruptedException ignored){}
 
         write(items,filePath);
         return null;

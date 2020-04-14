@@ -31,9 +31,8 @@ public class OpenBin<T> extends ReaderAbstract<T> {
 
     @Override
     public ArrayList<T> call(){
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException ignored){}
+        try{ Thread.sleep(3000); }
+        catch (InterruptedException ignored){}
         return read(filePath);
     }
 }

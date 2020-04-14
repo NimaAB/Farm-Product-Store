@@ -30,9 +30,10 @@ public class AdminController implements Initializable {
 
     /**
      <ENDRINGER:>
+
         PRØV Å KJØRE PROGRAMMEN :)
 
-        <NB>: Når man sletter eller oppretter komponenter, tar det 3 sek før den sKjer på grunn av tråder NIMA har laget
+        <NB>: Når man sletter eller oppretter komponenter, tar det 3 sek før den skjer fordi tråder er på.
 
          1. Admin Controller blir oppdatert
          2. <Items> har jeg endret til <Components>
@@ -43,21 +44,26 @@ public class AdminController implements Initializable {
                  sjekk: <Components> klasse
                - customExceptions kommer jeg til å bruke senere - Exceptions NIMA har laget
          4. DataCollection
-               - Jeg har laget nye metoder
+               - Metodene blir oppdatert
                - filtrering virker nå
                  sjekk: <DataCollection> klasse
          5. Database
                - Kan lagre komponenter i en database
                - Kan slette komponenter fra databasen
                - Oppdater tableviewen automatisk
+               - SaveBin og OpenBin - gjort <RequestDatabase> klasse kortere. :)
                  sjekk: <RequestDatabase> klasse
          6. Categories
                - Måten jeg har tenkt på uten <enum>
                - Gir mulighet til brukeren til å legge nye kategorier
+         5. Metodene i disse klasser blir gjort om til generiske metoder
+               - SaveBin og OpenBin
+               - SaveCSV og OpenCSV
+               - ReaderAbstract og WriterAbstract
+               - ItemsFormat
 
-      <SJEKK NOEN ANDRE KOMMENTAR PÅ:>
-         * 1. ItemsFormat
-         * 2. DataCollection -> loadComponents metode
+     <SJEKK KOMMENTAR PÅ:>
+         1. RequestDatabase -> toLoadDatabase()
      **/
 
     @Override
@@ -78,7 +84,7 @@ public class AdminController implements Initializable {
             String price = this.price.getText();
             CheckBox b = new CheckBox();
 
-            Components component = new Components(nr,name,category,specs,price,b);
+            Components component = new Components(nr,name,category,specs,price, b);
             RequestDatabase.toSaveComponent(component,FILE_DATABASE);
 
             success.setHeaderText("Component created");

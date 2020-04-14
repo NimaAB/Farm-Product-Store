@@ -18,19 +18,19 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
     @SuppressWarnings("unchecked")
     protected ArrayList<T> read(String filePath) throws InvalidItemDataException {
         ArrayList<T> items = new ArrayList<>();
-        try{
+        try {
             FileReader file = new FileReader(filePath);
             BufferedReader reader = new BufferedReader(file);
             String line;
             while((line =reader.readLine())!=null){
-                items.add((T) ParseItems.parseItem(line)); }
+                items.add((T)ParseItems.parseItem(line)); }
         } catch (IOException e) { e.printStackTrace(); }
         return items;
     }
 
     @Override
     public ArrayList<T> call() throws InvalidItemDataException {
-        try{ Thread.sleep(3000); }
+        try { Thread.sleep(3000); }
         catch (InterruptedException ignored){}
         return read(filePath);
     }
