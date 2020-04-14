@@ -11,13 +11,13 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Components implements Serializable {
-    private SimpleIntegerProperty componentNr;
-    private SimpleStringProperty componentName;
-    private SimpleStringProperty componentSpecs;
-    private SimpleStringProperty componentCategory;
-    private SimpleDoubleProperty componentPrice;
-    private final CheckBox CHECKBOX;
-    private final Validations DATA = new Validations();
+    private transient SimpleIntegerProperty componentNr;
+    private transient SimpleStringProperty componentName;
+    private transient SimpleStringProperty componentSpecs;
+    private transient SimpleStringProperty componentCategory;
+    private transient SimpleDoubleProperty componentPrice;
+    private transient final CheckBox CHECKBOX;
+    private transient final Validations DATA = new Validations();
 
     public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox CHECKBOX){
         DATA.validate_componentNumber(componentNr);
@@ -72,13 +72,13 @@ public class Components implements Serializable {
     public double getComponentPrice() { return componentPrice.get(); }
     public CheckBox getCHECKBOX() { return CHECKBOX; }
 
-    private void writeObject(ObjectOutputStream st) throws IOException{
-        st.defaultWriteObject();
-        st.writeInt(getComponentNr());
-        st.writeUTF(getComponentName());
-        st.writeUTF(getComponentCategory());
-        st.writeUTF(getComponentSpecs());
-        st.writeDouble(getComponentPrice());
+    private void writeObject(ObjectOutputStream s) throws IOException{
+        s.defaultWriteObject();
+        s.writeInt(getComponentNr());
+        s.writeUTF(getComponentName());
+        s.writeUTF(getComponentCategory());
+        s.writeUTF(getComponentSpecs());
+        s.writeDouble(getComponentPrice());
     }
     private void readObject(ObjectInputStream st) throws IOException,ClassNotFoundException{
         int componentNr = st.readInt();
