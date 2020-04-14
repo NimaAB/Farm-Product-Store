@@ -1,40 +1,41 @@
 package filehandling.bin;
 
-
-import dataModels.data.Items;
 import filehandling.ReaderAbstract;
-
 import java.io.*;
 import java.util.ArrayList;
 
-public class OpenBin extends ReaderAbstract {
-    private String filePath;
+
+public class OpenBin<T> extends ReaderAbstract<T> {
+    private final String filePath;
+
     public OpenBin(String filePath){
         this.filePath = filePath;
     }
 
+
     @Override
-    public ArrayList<Items> read(String filePath){
-        ArrayList<Items> items = new ArrayList<>();
-        try{
-            FileInputStream fs = new FileInputStream(filePath);
-            ObjectInputStream objFromFile = new ObjectInputStream(fs);
-            Items item;
-            while((item = (Items) objFromFile.readObject()) != null){
-                items.add(item);
-            }
-        }catch (IOException|ClassNotFoundException e){
-            //Denne exception-en er ikke for bruker derfor er det ingen behov for å vise det fram.
-            e.getStackTrace();
-        }
-        return items;
+    protected ArrayList<T> read(String filepath){
+        ArrayList<T> objects = new ArrayList<>();
+        try {
+            File file = new File(filepath);
+            FileInputStream fis = new FileInputStream(file);
+            ObjectInputStream OBJ_inStream = new ObjectInputStream(fis);
+
+            T object;
+
+            while((object = (T) OBJ_inStream.readObject()) != null){
+                objects.add(object); }
+
+        } catch (EOFException ignored) {
+        } catch (ClassNotFoundException | IOException e) { e.printStackTrace(); }
+
+        return objects;
     }
 
     @Override
-    protected ArrayList<Items> call(){
-        try{
-            Thread.sleep(3000);
-        }catch (InterruptedException ignored){}
+    public ArrayList<T> call(){
+        try{ Thread.sleep(3000); }
+        catch (InterruptedException ignored){}
         return read(filePath);
     }
 }

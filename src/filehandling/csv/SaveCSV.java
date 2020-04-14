@@ -1,42 +1,42 @@
 package filehandling.csv;
 
-import dataModels.data.Items;
 import dataModels.dataFormats.ItemsFormat;
 import filehandling.WriterAbstract;
-
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SaveCSV extends WriterAbstract {
-    private ArrayList<Items> items;
-    private String filePath;
-    public SaveCSV(ArrayList<Items> items, String filePath){
+
+public class SaveCSV<T> extends WriterAbstract<T> {
+    private final ArrayList<T> items;
+    private final String filePath;
+    public SaveCSV(ArrayList<T> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
 
     @Override
-    public void write(ArrayList<Items> items, String filePath){
-        FileWriter file;
-        try{
-            file = new FileWriter(filePath);
-            BufferedWriter writer = new BufferedWriter(file);
+
+    protected void write(ArrayList<T> items, String filePath){
+        try {
+            FileWriter fileWriter = new FileWriter(filePath);
+            BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             String itemText = ItemsFormat.rewriteItems(items);
-            writer.write(itemText);
-            writer.close();
-        }catch (IOException e){
+            bufferedWriter.write(itemText);
+
+            fileWriter.close();
+            bufferedWriter.close();
+        } catch (IOException e){
             e.getStackTrace();
         }
     }
 
     @Override
-    protected Void call() {
-        try{
-            Thread.sleep(2000);
-        }catch (InterruptedException ignored){}
+    public T call() {
+        try { Thread.sleep(2000); }
+        catch (InterruptedException ignored){}
+
         write(items,filePath);
         return null;
     }
