@@ -26,7 +26,7 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String ComponentsDatabase = "src/main/db/dbComponents.bin";
+    private final String ComponentsDatabase = "src/database/componentsDB/dbComponents.bin";
 
     /**
      <ENDRINGER:>
@@ -44,7 +44,7 @@ public class AdminController implements Initializable {
                - customExceptions kommer jeg til å bruke senere - Exceptions NIMA har laget
          4. DataCollection
                - Jeg har laget nye metoder
-               - filtrering virker ikke korrekt enda
+               - filtrering virker nå
                  sjekk: <DataCollection> klasse
          5. Database
                - Kan lagre komponenter i en database

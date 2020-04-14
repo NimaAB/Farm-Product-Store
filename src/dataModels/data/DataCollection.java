@@ -16,7 +16,7 @@ public class DataCollection {
 
     public static void loadComponents() {
         if(refreshDatabase){
-            String componentsDatabase = "src/main/db/dbComponents.bin";
+            String componentsDatabase = "src/database/componentsDB/dbComponents.bin";
             RequestDatabase.toLoadDatabase(componentsDatabase);
             components = RequestDatabase.getDatabase();
             refreshDatabase = false; }

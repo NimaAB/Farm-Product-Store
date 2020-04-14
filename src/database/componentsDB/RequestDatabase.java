@@ -5,6 +5,7 @@ import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.CheckBox;
 import java.util.ArrayList;
 
 public class RequestDatabase {
@@ -14,7 +15,13 @@ public class RequestDatabase {
     public static void toLoadDatabase(String FILE_DATABASE) {
         OpenBin<Components> read = new OpenBin<>(FILE_DATABASE);
         ArrayList<Components> components = read.call();
-        DATABASE.addAll(components);
+
+        for(Components c : components){
+            // NØVVENDIG FORDI CHECKBOX KAN IKKE SERIALISERES
+            CheckBox checkBox = new CheckBox();
+            c.setCHECKBOX(checkBox);
+            DATABASE.add(c);
+        }
     }
 
     /** DONE: DELETES COMPONENTS FROM FILE DATABASE WHEN CHECKBOX IS SELECTED. */

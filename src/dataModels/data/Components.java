@@ -2,6 +2,7 @@ package dataModels.data;
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
 import validations.Validations;
@@ -16,7 +17,7 @@ public class Components implements Serializable {
     private transient SimpleStringProperty componentSpecs;
     private transient SimpleStringProperty componentCategory;
     private transient SimpleDoubleProperty componentPrice;
-    private transient final CheckBox CHECKBOX;
+    private transient CheckBox CHECKBOX;
     private transient final Validations DATA = new Validations();
 
     public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox CHECKBOX){
@@ -57,6 +58,10 @@ public class Components implements Serializable {
     public void setComponentPrice(String componentPrice) {
         DATA.validate_componentPrice(componentPrice);
         this.componentPrice.set(DATA.getComponentPrice());
+    }
+
+    public void setCHECKBOX(CheckBox CHECKBOX) {
+        this.CHECKBOX = CHECKBOX;
     }
 
     public String toString(){
