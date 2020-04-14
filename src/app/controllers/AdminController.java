@@ -20,12 +20,13 @@ public class AdminController implements Initializable {
 
     Alert warning = new Alert(Alert.AlertType.WARNING);
     Alert success = new Alert(Alert.AlertType.INFORMATION);
-    @FXML BorderPane adminPane;
-    @FXML TextField nr, name, category, price, txtFilter;
-    @FXML TextArea specifications;
-    @FXML ComboBox<String> optCategories;
-    @FXML ComboBox<String> optFilterBy;
-    @FXML TableView<Components> tableview;
+    @FXML private BorderPane adminPane;
+    @FXML private TextField nr, name, category, price, txtFilter;
+    @FXML private TextArea specifications;
+    @FXML private ComboBox<String> optCategories;
+    @FXML private ComboBox<String> optFilterBy;
+    @FXML private TableView<Components> tableview;
+    private final String ComponentsDatabase = "src/main/db/dbComponents.bin";
 
     /**
      <ENDRINGER:>
@@ -78,7 +79,7 @@ public class AdminController implements Initializable {
             CheckBox b = new CheckBox();
 
             Components component = new Components(nr,name,category,specs,price,b);
-            RequestDatabase.toSaveComponent(component);
+            RequestDatabase.toSaveComponent(component, ComponentsDatabase);
 
             success.setHeaderText("Component created");
             success.showAndWait();
@@ -89,7 +90,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML void slett(ActionEvent event){
-        RequestDatabase.toDeleteSelectedComponents();
+        RequestDatabase.toDeleteSelectedComponents(ComponentsDatabase);
         tableview.refresh();
     }
 

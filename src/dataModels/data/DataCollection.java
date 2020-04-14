@@ -15,10 +15,9 @@ public class DataCollection {
     private static boolean refreshDatabase = true;
 
     public static void loadComponents() {
-        // Boolean er nædvendig for å unngå duplikater fordi denne metode kjører på igjen når vi endrer scenen
-        // Løsning: en boolean :)
         if(refreshDatabase){
-            RequestDatabase.toLoadDatabase();
+            String componentsDatabase = "src/main/db/dbComponents.bin";
+            RequestDatabase.toLoadDatabase(componentsDatabase);
             components = RequestDatabase.getDatabase();
             refreshDatabase = false; }
     }
