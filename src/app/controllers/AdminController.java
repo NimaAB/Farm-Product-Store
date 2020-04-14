@@ -31,7 +31,7 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Categories.categoryOnChange(optCategories,category);
-        DataCollection.loadComponents(FILE_DATABASE);
+        DataCollection.loadComponents(FILE_DATABASE); // TRÅDEN SKJER HER: DEN LESER BINÆR FILEN
         DataCollection.setTableView(tableview);
         DataCollection.filterOnChange(optFilterBy);
         DataCollection.filterTableView(tableview,txtFilter);
@@ -75,6 +75,6 @@ public class AdminController implements Initializable {
     @FXML void loggUt(ActionEvent event){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
-        RequestDatabase.toUpdateDatabase(FILE_DATABASE);
+        RequestDatabase.toUpdateDatabase(FILE_DATABASE); // TRÅDEN SKJER HER: DEN SKRIVER PÅ BINÆR FILEN
     }
 }

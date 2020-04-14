@@ -28,13 +28,13 @@ public class RequestDatabase {
         }
     }
 
-    /** DONE: DELETES COMPONENTS FROM FILE DATABASE WHEN CHECKBOX IS SELECTED. */
+    /** DONE: DELETES COMPONENTS FROM THE TABLEVIEW */
     public static void toDeleteSelectedComponents(){
         DATABASE.removeIf(components -> components.getCHECKBOX().isSelected());
         modified = true;
     }
 
-    /** DONE: SAVES NEW COMPONENTS TO THE FILE DATABASE */
+    /** DONE: ADDS NEW COMPONENT IN THE TABLEVIEW */
     public static void toSaveComponent(Components component){
         DATABASE.add(component);
         modified = true;

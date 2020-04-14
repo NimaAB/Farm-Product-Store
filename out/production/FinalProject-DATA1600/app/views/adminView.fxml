@@ -21,8 +21,8 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem mnemonicParsing="false" text="Open" />
-                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem onAction="#open" mnemonicParsing="false" text="Open" />
+                  <MenuItem onAction="#save" mnemonicParsing="false" text="Save as csv" />
                </items>
             </Menu>
          </menus>
@@ -68,7 +68,6 @@
                         <PropertyValueFactory property="componentPrice" />
                      </cellValueFactory>
                   </TableColumn>
-
                </columns>
             </TableView>
             <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
@@ -112,7 +111,6 @@
                </font>
             </TextField>
             <ComboBox fx:id="optCategories" layoutX="165.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
-
             <Button layoutX="165.0" layoutY="454.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
             <Button layoutX="165.0" layoutY="487.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
             <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#loggUt" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
