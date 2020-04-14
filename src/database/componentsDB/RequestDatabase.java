@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class RequestDatabase {
     private static final ObservableList<Components> DATABASE = FXCollections.observableArrayList();
+    private static boolean modified = false;
 
     /** DONE: READS THE <FILE DATABASE> AND SAVES ITS CONTENTS IN THE <DATABASE> OBSERVABLE LIST */
     public static void toLoadDatabase(String FILE_DATABASE) {
@@ -28,25 +29,24 @@ public class RequestDatabase {
     }
 
     /** DONE: DELETES COMPONENTS FROM FILE DATABASE WHEN CHECKBOX IS SELECTED. */
-    public static void toDeleteSelectedComponents(String FILE_DATABASE){
-        // REMOVES SELECTED COMPONENTS FROM THE TABLEVIEW
+    public static void toDeleteSelectedComponents(){
         DATABASE.removeIf(components -> components.getCHECKBOX().isSelected());
-
-        // DELETES COMPONENTS FROM THE FILE DATABASE
-        ArrayList<Components> updatedDatabase = new ArrayList<>(DATABASE);
-        SaveBin<Components> write = new SaveBin<>(updatedDatabase, FILE_DATABASE);
-        write.call();
+        modified = true;
     }
 
     /** DONE: SAVES NEW COMPONENTS TO THE FILE DATABASE */
-    public static void toSaveComponent(Components component, String FILE_DATABASE){
-        // ADDS THE COMPONENT TO THE TABLEVIEW
+    public static void toSaveComponent(Components component){
         DATABASE.add(component);
+        modified = true;
+    }
 
-        // SAVES NEW COMPONENT IN THE FILE DATABASE
+    /** DONE: UPDATES FILE DATABASE */
+    public static void toUpdateDatabase(String FILE_DATABASE){
         ArrayList<Components> updatedDatabase = new ArrayList<>(DATABASE);
         SaveBin<Components> write = new SaveBin<>(updatedDatabase, FILE_DATABASE);
         write.call();
+
+        modified = false;
     }
 
     public static ObservableList<Components> getDatabase() { return DATABASE; }

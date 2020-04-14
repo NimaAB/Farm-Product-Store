@@ -28,44 +28,6 @@ public class AdminController implements Initializable {
     @FXML private TableView<Components> tableview;
     private final String FILE_DATABASE = "src/database/componentsDB/dbComponents.bin";
 
-    /**
-     <ENDRINGER:>
-
-        PRØV Å KJØRE PROGRAMMEN :)
-
-        <NB>: Når man sletter eller oppretter komponenter, tar det 3 sek før den skjer fordi tråder er på.
-
-         1. Admin Controller blir oppdatert
-         2. <Items> har jeg endret til <Components>
-         3. Validations
-               - Jeg har endret det på min del fordi jeg
-                 vil ikke kalle validering hver gang jeg oppretter en ny komponent. Kontrolleren blir lang
-                 Jeg har gjort det slik at hver gang jeg instansierer Components objektet blir den automatisk validert
-                 sjekk: <Components> klasse
-               - customExceptions kommer jeg til å bruke senere - Exceptions NIMA har laget
-         4. DataCollection
-               - Metodene blir oppdatert
-               - filtrering virker nå
-                 sjekk: <DataCollection> klasse
-         5. Database
-               - Kan lagre komponenter i en database
-               - Kan slette komponenter fra databasen
-               - Oppdater tableviewen automatisk
-               - SaveBin og OpenBin - gjort <RequestDatabase> klasse kortere. :)
-                 sjekk: <RequestDatabase> klasse
-         6. Categories
-               - Måten jeg har tenkt på uten <enum>
-               - Gir mulighet til brukeren til å legge nye kategorier
-         5. Metodene i disse klasser blir gjort om til generiske metoder
-               - SaveBin og OpenBin
-               - SaveCSV og OpenCSV
-               - ReaderAbstract og WriterAbstract
-               - ItemsFormat
-
-     <SJEKK KOMMENTAR PÅ:>
-         1. RequestDatabase -> toLoadDatabase()
-     **/
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         Categories.categoryOnChange(optCategories,category);
@@ -85,7 +47,7 @@ public class AdminController implements Initializable {
             CheckBox b = new CheckBox();
 
             Components component = new Components(nr,name,category,specs,price, b);
-            RequestDatabase.toSaveComponent(component,FILE_DATABASE);
+            RequestDatabase.toSaveComponent(component);
 
             success.setHeaderText("Component created");
             success.showAndWait();
@@ -96,12 +58,13 @@ public class AdminController implements Initializable {
     }
 
     @FXML void slett(ActionEvent event){
-        RequestDatabase.toDeleteSelectedComponents(FILE_DATABASE);
+        RequestDatabase.toDeleteSelectedComponents();
         tableview.refresh();
     }
 
     @FXML void loggUt(ActionEvent event){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
+        RequestDatabase.toUpdateDatabase(FILE_DATABASE);
     }
 }
