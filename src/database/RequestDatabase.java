@@ -50,4 +50,5 @@ public class RequestDatabase {
     }
 
     public static ObservableList<Components> getDatabase() { return DATABASE; }
+    public static boolean isModified(){ return modified; }
 }

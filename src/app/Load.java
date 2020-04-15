@@ -1,9 +1,12 @@
 package app;
 
+import database.RequestDatabase;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import validations.MyAlerts;
+
 import java.io.IOException;
 
 public class Load {
@@ -15,5 +18,19 @@ public class Load {
             stage.setScene(new Scene(root));
             stage.show();
         } catch(IOException e){ e.printStackTrace(); }
+    }
+    /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
+    public static void exit(Stage stage, String FILE_DATABASE){
+        if(RequestDatabase.isModified()){
+            boolean response = MyAlerts.confirmAlert("Do want to save the changes you made?");
+
+            if(response){
+                RequestDatabase.toUpdateDatabase(FILE_DATABASE);
+                MyAlerts.successAlert("All changes has been save.");
+            } else {
+                MyAlerts.successAlert("Changes discarded."); }
+
+            stage.close();
+        } else { System.out.println("DATABASE IS UP TO DATE!"); }
     }
 }
