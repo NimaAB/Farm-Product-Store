@@ -1,5 +1,6 @@
 package filehandling.bin;
 
+import dataModels.data.Components;
 import filehandling.ReaderAbstract;
 import java.io.*;
 import java.util.ArrayList;
