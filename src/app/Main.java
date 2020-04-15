@@ -20,6 +20,9 @@ public class Main extends Application {
         primaryStage.setWidth(1200);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
+        String FILE_DATABASE = "src/database/dbComponents.bin";
+        primaryStage.setOnCloseRequest(e -> Load.exit(primaryStage,FILE_DATABASE));
     }
 
     public static void main(String[] args) {

@@ -1,4 +1,4 @@
-package database.componentsDB;
+package database;
 
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
@@ -12,15 +12,10 @@ public class RequestDatabase {
     private static final ObservableList<Components> DATABASE = FXCollections.observableArrayList();
     private static boolean modified = false;
 
-    /** DONE: READS THE <FILE DATABASE> AND SAVES ITS CONTENTS IN THE <DATABASE> OBSERVABLE LIST */
+    /** DONE: LOADS ALL COMPONENTS FROM A FILE (FILE DATABASE) */
     public static void toLoadDatabase(String FILE_DATABASE) {
         OpenBin<Components> read = new OpenBin<>(FILE_DATABASE);
         ArrayList<Components> components = read.call();
-        //DATABASE.addAll(components);
-
-         /* Når Components objektet er serialisert, CheckBox blir IKKE med derfor vises den ikke på tableview
-            For å se hva jeg mener, kjør koden i linje 18 istedenfor <for loop> */
-
         for(Components c : components){
             CheckBox checkBox = new CheckBox();
             c.setCHECKBOX(checkBox);
@@ -50,4 +45,5 @@ public class RequestDatabase {
     }
 
     public static ObservableList<Components> getDatabase() { return DATABASE; }
+    public static boolean isModified(){ return modified; }
 }

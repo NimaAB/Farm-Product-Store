@@ -4,7 +4,7 @@ import app.Load;
 import dataModels.data.Categories;
 import dataModels.data.Components;
 import dataModels.data.DataCollection;
-import database.componentsDB.RequestDatabase;
+import database.RequestDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -13,20 +13,19 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import validations.MyAlerts;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
-    Alert warning = new Alert(Alert.AlertType.WARNING);
-    Alert success = new Alert(Alert.AlertType.INFORMATION);
     @FXML private BorderPane adminPane;
     @FXML private TextField nr, name, category, price, txtFilter;
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String FILE_DATABASE = "src/database/componentsDB/dbComponents.bin";
+    private final String FILE_DATABASE = "src/database/dbComponents.bin";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -49,11 +48,9 @@ public class AdminController implements Initializable {
             Components component = new Components(nr,name,category,specs,price, b);
             RequestDatabase.toSaveComponent(component);
 
-            success.setHeaderText("Component created");
-            success.showAndWait();
+            MyAlerts.successAlert("Component Created");
         } catch (IllegalArgumentException e) {
-            warning.setHeaderText(e.getMessage());
-            warning.showAndWait();
+            MyAlerts.warningAlert(e.getMessage());
         }
     }
 
