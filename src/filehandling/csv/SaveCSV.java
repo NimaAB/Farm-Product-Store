@@ -11,21 +11,19 @@ import java.util.ArrayList;
 public class SaveCSV<T> extends WriterAbstract<T> {
     private final ArrayList<T> items;
     private final String filePath;
+
     public SaveCSV(ArrayList<T> items, String filePath){
         this.items = items;
         this.filePath = filePath;
     }
 
     @Override
-
     protected void write(ArrayList<T> items, String filePath){
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
             String itemText = ItemsFormat.rewriteItems(items);
             bufferedWriter.write(itemText);
-
-            fileWriter.close();
             bufferedWriter.close();
         } catch (IOException e){
             e.getStackTrace();

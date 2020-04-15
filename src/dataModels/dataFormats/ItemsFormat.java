@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ItemsFormat {
     public static<T> String itemsFormat(T item){
-        return (String) item;
+        return item.toString();
     }
     public static <T> String rewriteItems(ArrayList<T> items){
         StringBuilder itemText = new StringBuilder();

@@ -1,5 +1,6 @@
 package filehandling.csv;
 
+import dataModels.data.Components;
 import dataModels.dataFormats.ParseItems;
 import validations.customExceptions.InvalidItemDataException;
 import filehandling.ReaderAbstract;
@@ -24,7 +25,8 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
 
             String line;
             while((line =reader.readLine())!=null){
-                items.add((T)ParseItems.parseItem(line)); }
+                items.add((T)ParseItems.parseItem(line));
+            }
         } catch (IOException e) { e.printStackTrace(); }
         return items;
     }

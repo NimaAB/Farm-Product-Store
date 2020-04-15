@@ -65,15 +65,15 @@ public class Components implements Serializable {
 
     public String toString(){
         return String.format("%s;%s;%s;%s;%s",
-                componentNr.get(), componentName.get(), componentCategory.get(),
-                componentSpecs.get(), componentPrice.get());
+                componentNr.getValue(), componentName.getValue(), componentCategory.getValue(),
+                componentSpecs.getValue(), componentPrice.getValue());
     }
 
-    public int getComponentNr() { return componentNr.get(); }
-    public String getComponentName() { return componentName.get(); }
-    public String getComponentSpecs() { return componentSpecs.get(); }
-    public String getComponentCategory() { return componentCategory.get(); }
-    public double getComponentPrice() { return componentPrice.get(); }
+    public int getComponentNr() { return componentNr.getValue(); }
+    public String getComponentName() { return componentName.getValue(); }
+    public String getComponentSpecs() { return componentSpecs.getValue(); }
+    public String getComponentCategory() { return componentCategory.getValue(); }
+    public double getComponentPrice() { return componentPrice.getValue(); }
     public CheckBox getCHECKBOX() { return CHECKBOX; }
 
     private void writeObject(ObjectOutputStream s) throws IOException{
