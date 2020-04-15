@@ -34,9 +34,4 @@ public class LoginController {
         } else {
             Load.window("views/costumerView.fxml","Customer",stage); }
     }
-    //read data.bin:
-    private void readbin(){
-        OpenBin ob = new OpenBin(filePath);
-        //fortsetter ...
-    }
 }
