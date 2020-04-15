@@ -1,6 +1,6 @@
 package dataModels.data;
 
-import database.RequestDatabase;
+import database.componentsDB.RequestDatabase;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
