@@ -1,4 +1,4 @@
-package database.componentsDB;
+package database;
 
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;

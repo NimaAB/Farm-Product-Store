@@ -4,7 +4,7 @@ import app.Load;
 import dataModels.data.Categories;
 import dataModels.data.Components;
 import dataModels.data.DataCollection;
-import database.componentsDB.RequestDatabase;
+import database.RequestDatabase;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
