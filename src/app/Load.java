@@ -24,15 +24,15 @@ public class Load {
     /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
     public static void exit(Stage stage, String FILE_DATABASE){
         if(DataCollection.isModified()){
-            boolean response = MyAlerts.confirmAlert("Do want to save the changes you made?");
+            boolean response = MyAlerts.confirmAlert("Vil du lagre alle endringer?");
 
             if(response){
                 DataCollection.saveBinData(FILE_DATABASE);
-                MyAlerts.successAlert("All changes has been save.");
+                MyAlerts.successAlert("Alle engringer er lagret");
             } else {
-                MyAlerts.successAlert("Changes discarded."); }
+                MyAlerts.successAlert("Endringer er ikke lagret"); }
 
             stage.close();
-        } else { System.out.println("BIN FILE IS UP TO DATE"); }
+        } else { System.out.println("Bin filen er oppdatert"); }
     }
 }

@@ -21,8 +21,8 @@
          <menus>
             <Menu mnemonicParsing="false" text="File">
                <items>
-                  <MenuItem fx:id="open" onAction="#open" mnemonicParsing="false" text="Open csv" />
-                  <MenuItem fx:id="save" onAction="#save" mnemonicParsing="false" text="Save as csv" />
+                  <MenuItem onAction="#open" mnemonicParsing="false" text="Open csv" />
+                  <MenuItem onAction="#save" mnemonicParsing="false" text="Save as csv" />
                </items>
             </Menu>
          </menus>

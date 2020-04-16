@@ -6,17 +6,15 @@ import dataModels.data.Components;
 import dataModels.data.DataCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
+import javafx.collections.FXCollections;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import validations.MyAlerts;
-import java.io.File;
+import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -24,13 +22,12 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
 
     @FXML private BorderPane adminPane;
-    @FXML private MenuItem open,save;
     @FXML private TextField nr, name, category, price, txtFilter;
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String BINPATH = "src/binFile/components.bin";
+    private final String BINPATH = "src/database/components.bin";
     private ArrayList<Components> componentsList = new ArrayList<>();
 
     @Override
@@ -40,7 +37,6 @@ public class AdminController implements Initializable {
         DataCollection.filterOnChange(optFilterBy);
         DataCollection.filterTableView(tableview,txtFilter);
         Categories.categoryOnChange(optCategories,category);
-
     }
 
     @FXML void opprettKomponent(){
@@ -70,17 +66,16 @@ public class AdminController implements Initializable {
 
     private OpenCSV<Components> openCSV;
     @FXML void open(){
-        FileChooser file = new FileChooser();
-        file.setTitle("Opning Window");
-        file.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel compatible",".csv")
-        );
-        File selectedFile = file.showOpenDialog(open.getParentPopup().getScene().getWindow());
-        if(selectedFile != null){
-            String pathStr = selectedFile.toString();
-            openCSV = new OpenCSV(pathStr);
+        String melding = "last opp en fil til programmet fra denne plasering: src\\database\\lagringsPlass " +
+                "\nSkriv navnet til fil du vil laste opp: ";
+        String pathStr = JOptionPane.showInputDialog(null,melding);
+        String pathStr1 =pathStr + ".csv";
+        String totalPathStr = "src\\database\\lagringsPlass"+"\\"+pathStr1;
+        if(!pathStr.isEmpty()){
+            openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
-            openCSV.setOnFailed(this::readingFaild);
+            openCSV.setOnFailed(this::readingFailed);
+            DataCollection.loadComponents(pathStr); // alle metoder i dataCollection skal virke på filen som er åpnet
             Thread th = new Thread(openCSV);
             th.setDaemon(true);
             adminPane.setDisable(true);
@@ -89,31 +84,28 @@ public class AdminController implements Initializable {
             MyAlerts.warningAlert("Ingen fil er valgt");
         }
     }
-
     private void readingDone(WorkerStateEvent e){
         componentsList = openCSV.call();
+        tableview.setItems(FXCollections.observableArrayList(componentsList));
         adminPane.setDisable(false);
     }
-
-    private void readingFaild(WorkerStateEvent event){
+    private void readingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
-        MyAlerts.warningAlert("Thread Faild: " + e.getMessage());
+        MyAlerts.warningAlert("Thread Failed: " + e.getMessage());
         adminPane.setDisable(false);
     }
 
-    SaveCSV<Components> saveCSV;
+    private SaveCSV<Components> saveCSV;
     @FXML void save(){
-        FileChooser file = new FileChooser();
-        file.setTitle("Saving Window");
-        file.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Excel compatible",".csv")
-        );
-        File selectedFile = file.showSaveDialog(save.getParentPopup().getScene().getWindow());
-        if(selectedFile != null){
-            String pathStr = selectedFile.toString();
-            saveCSV = new SaveCSV<>(componentsList,pathStr);
+        String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
+                "\ngi filen din et navn: ";
+        String pathStr = JOptionPane.showInputDialog(null,melding);
+        String pathStr1 =pathStr + ".csv";
+        String totalPathStr = "src\\database\\lagringsPlass"+"\\"+pathStr1;
+        if(!pathStr.isEmpty()){
+            saveCSV = new SaveCSV<>(componentsList,totalPathStr);
             saveCSV.setOnSucceeded(this::writingDone);
-            saveCSV.setOnFailed(this::writingFaild);
+            saveCSV.setOnFailed(this::writingFailed);
             Thread th = new Thread(saveCSV);
             th.setDaemon(true);
             adminPane.setDisable(true);
@@ -122,15 +114,13 @@ public class AdminController implements Initializable {
             MyAlerts.warningAlert("Ingen fil er valgt");
         }
     }
-
     private void writingDone(WorkerStateEvent e){
         saveCSV.call();
         adminPane.setDisable(false);
     }
-
-    private void writingFaild(WorkerStateEvent event){
+    private void writingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
-        MyAlerts.warningAlert("Thread Faild: " + e.getMessage());
+        MyAlerts.warningAlert("Thread Failed: " + e.getMessage());
         adminPane.setDisable(false);
     }
 

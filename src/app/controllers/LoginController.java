@@ -5,10 +5,8 @@ import app.Load;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-
 
 public class LoginController {
 
