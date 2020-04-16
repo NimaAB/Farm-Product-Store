@@ -1,30 +1,64 @@
 package dataModels.data;
 
-import database.RequestDatabase;
+import filehandling.bin.OpenBin;
+import filehandling.bin.SaveBin;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import java.util.ArrayList;
 
 public class DataCollection {
-    private static ObservableList<Components> components;
+    private static final ObservableList<Components> components = FXCollections.observableArrayList();
     private static String filterCategory = "Component Name";
     private static boolean refreshDatabase = true;
+    private static boolean modified = false;
 
-    public static void loadComponents(String FILE_DATABASE) {
-        if(refreshDatabase){
-            RequestDatabase.toLoadDatabase(FILE_DATABASE);
-            components = RequestDatabase.getDatabase();
-            refreshDatabase = false; }
+    /** LOADS ALL COMPONENTS FROM BIN FILE AND ADDS IT TO: <b>components</b> */
+    public static void loadComponents(String filepath) {
+        OpenBin<Components> read = new OpenBin<>(filepath);
+        ArrayList<Components> componentsList = read.call();
+        if(refreshDatabase) {
+            for(Components c : componentsList){
+                CheckBox checkBox = new CheckBox();
+                c.setCHECKBOX(checkBox);
+                components.add(c);
+                refreshDatabase = false;
+            }
+        }
     }
 
+    /** DELETES COMPONENTS FROM THE TABLEVIEW */
+    public static void deleteSelectedComponents(){
+        components.removeIf(components -> components.getCHECKBOX().isSelected());
+        modified = true;
+    }
+
+    /** ADDS A NEW COMPONENT IN THE TABLEVIEW */
+    public static void addComponent(Components component){
+        components.add(component);
+        modified = true;
+    }
+
+    /** UPDATES BIN FILE */
+    public static void saveBinData(String filepath){
+        ArrayList<Components> updatedDatabase = new ArrayList<>(components);
+        SaveBin<Components> write = new SaveBin<>(updatedDatabase, filepath);
+        write.call();
+
+        modified = false;
+    }
+
+    /** SHOWS ALL COMPONENTS IN THE TABLE VIEW */
     public static void setTableView(TableView<Components> tableView){
         tableView.setItems(components);
     }
 
+    /** ENABLES TABLE VIEW TO BE FILTERED BY COMPONENT NAME, PRICE ETC */
     public static void filterOnChange(ComboBox<String> filterOptions){
         String[] filterCats = {"Component Number", "Component Name", "Component Type", "Component Specs", "Component Price"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
@@ -35,6 +69,7 @@ public class DataCollection {
             filterCategory = newValue; });
     }
 
+    /** FILTERS AND SEARCHES THROUGH THE TABLE VIEW */
     public static void filterTableView(TableView<Components> tableView, TextField filterTextField){
         FilteredList<Components> filteredList = new FilteredList<>(components, components -> true);
         filterTextField.textProperty().addListener((observable,oldValue,newValue)->{
@@ -61,4 +96,7 @@ public class DataCollection {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
     }
+
+    public static boolean isModified() { return modified; }
+    public static ObservableList<Components> getComponents() { return components; }
 }

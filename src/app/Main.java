@@ -21,7 +21,7 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
 
-        String FILE_DATABASE = "src/database/dbComponents.bin";
+        String FILE_DATABASE = "src/database/components.bin";
         primaryStage.setOnCloseRequest(e -> Load.exit(primaryStage,FILE_DATABASE));
     }
 

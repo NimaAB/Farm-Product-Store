@@ -4,11 +4,9 @@ import app.Load;
 import dataModels.data.Categories;
 import dataModels.data.Components;
 import dataModels.data.DataCollection;
-import database.RequestDatabase;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -18,7 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import validations.MyAlerts;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ArrayList;
@@ -33,19 +30,20 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String FILE_DATABASE = "src/database/componentsDB/dbComponents.bin";
+    private final String BINPATH = "src/binFile/components.bin";
     private ArrayList<Components> componentsList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        Categories.categoryOnChange(optCategories,category);
-        DataCollection.loadComponents(FILE_DATABASE); // TRÅDEN SKJER HER: DEN LESER BINÆR FILEN
+        DataCollection.loadComponents(BINPATH);
         DataCollection.setTableView(tableview);
         DataCollection.filterOnChange(optFilterBy);
         DataCollection.filterTableView(tableview,txtFilter);
+        Categories.categoryOnChange(optCategories,category);
+
     }
 
-    @FXML void opprettKomponent(ActionEvent event){
+    @FXML void opprettKomponent(){
         try {
             String nr = this.nr.getText();
             String name = this.name.getText();
@@ -55,7 +53,7 @@ public class AdminController implements Initializable {
             CheckBox b = new CheckBox();
 
             Components component = new Components(nr,name,category,specs,price, b);
-            RequestDatabase.toSaveComponent(component);
+            DataCollection.addComponent(component);
             componentsList.add(component);
 
             MyAlerts.successAlert("Component Created");
@@ -64,14 +62,14 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void slett(ActionEvent event){
-        RequestDatabase.toDeleteSelectedComponents();
+    @FXML void slett(){
+        DataCollection.deleteSelectedComponents();
         componentsList.removeIf(components -> components.getCHECKBOX().isSelected());
         tableview.refresh();
     }
+
     private OpenCSV<Components> openCSV;
-    @FXML
-    void open(){
+    @FXML void open(){
         FileChooser file = new FileChooser();
         file.setTitle("Opning Window");
         file.getExtensionFilters().addAll(
@@ -91,10 +89,12 @@ public class AdminController implements Initializable {
             MyAlerts.warningAlert("Ingen fil er valgt");
         }
     }
+
     private void readingDone(WorkerStateEvent e){
         componentsList = openCSV.call();
         adminPane.setDisable(false);
     }
+
     private void readingFaild(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
         MyAlerts.warningAlert("Thread Faild: " + e.getMessage());
@@ -102,8 +102,7 @@ public class AdminController implements Initializable {
     }
 
     SaveCSV<Components> saveCSV;
-    @FXML
-    void save(){
+    @FXML void save(){
         FileChooser file = new FileChooser();
         file.setTitle("Saving Window");
         file.getExtensionFilters().addAll(
@@ -123,19 +122,21 @@ public class AdminController implements Initializable {
             MyAlerts.warningAlert("Ingen fil er valgt");
         }
     }
+
     private void writingDone(WorkerStateEvent e){
         saveCSV.call();
         adminPane.setDisable(false);
     }
+
     private void writingFaild(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
         MyAlerts.warningAlert("Thread Faild: " + e.getMessage());
         adminPane.setDisable(false);
     }
 
-    @FXML void loggUt(ActionEvent event){
+    @FXML void loggUt(){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
-        RequestDatabase.toUpdateDatabase(FILE_DATABASE); // TRÅDEN SKJER HER: DEN SKRIVER PÅ BINÆR FILEN
+        DataCollection.saveBinData(BINPATH);
     }
 }
