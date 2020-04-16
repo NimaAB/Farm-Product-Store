@@ -13,10 +13,11 @@ import javafx.scene.control.TextField;
 import java.util.ArrayList;
 
 public class DataCollection {
-    private static final ObservableList<Components> components = FXCollections.observableArrayList();
+    public static ObservableList<Components> components = FXCollections.observableArrayList();
     private static String filterCategory = "Component Name";
     private static boolean refreshDatabase = true;
     private static boolean modified = false;
+
 
     /** LOADS ALL COMPONENTS FROM BIN FILE AND ADDS IT TO: <b>components</b> */
     public static void loadComponents(String filepath) {
@@ -54,9 +55,9 @@ public class DataCollection {
     }
 
     /** SHOWS ALL COMPONENTS IN THE TABLE VIEW */
-    public static void setTableView(TableView<Components> tableView){
+   public static void setTableView(TableView<Components> tableView){
         tableView.setItems(components);
-    }
+   }
 
     /** ENABLES TABLE VIEW TO BE FILTERED BY COMPONENT NAME, PRICE ETC */
     public static void filterOnChange(ComboBox<String> filterOptions){

@@ -6,7 +6,6 @@ import dataModels.data.Components;
 import dataModels.data.DataCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
-import javafx.collections.FXCollections;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -28,7 +27,6 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
     private final String BINPATH = "src/database/components.bin";
-    private ArrayList<Components> componentsList = new ArrayList<>();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -50,7 +48,6 @@ public class AdminController implements Initializable {
 
             Components component = new Components(nr,name,category,specs,price, b);
             DataCollection.addComponent(component);
-            componentsList.add(component);
 
             MyAlerts.successAlert("Component Created");
         } catch (IllegalArgumentException e) {
@@ -60,22 +57,19 @@ public class AdminController implements Initializable {
 
     @FXML void slett(){
         DataCollection.deleteSelectedComponents();
-        componentsList.removeIf(components -> components.getCHECKBOX().isSelected());
         tableview.refresh();
     }
-
     private OpenCSV<Components> openCSV;
     @FXML void open(){
         String melding = "last opp en fil til programmet fra denne plasering: src\\database\\lagringsPlass " +
                 "\nSkriv navnet til fil du vil laste opp: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
-        String pathStr1 =pathStr + ".csv";
-        String totalPathStr = "src\\database\\lagringsPlass"+"\\"+pathStr1;
-        if(!pathStr.isEmpty()){
+        String pathStr1 = "src/database/lagringsPlass/";
+        String totalPathStr =pathStr1+pathStr + ".csv";
+        if(pathStr != null){
             openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
             openCSV.setOnFailed(this::readingFailed);
-            DataCollection.loadComponents(pathStr); // alle metoder i dataCollection skal virke på filen som er åpnet
             Thread th = new Thread(openCSV);
             th.setDaemon(true);
             adminPane.setDisable(true);
@@ -85,8 +79,10 @@ public class AdminController implements Initializable {
         }
     }
     private void readingDone(WorkerStateEvent e){
-        componentsList = openCSV.call();
-        tableview.setItems(FXCollections.observableArrayList(componentsList));
+        ArrayList<Components> componentsList = openCSV.call();
+        for(Components el:componentsList){
+            DataCollection.addComponent(el);
+        }
         adminPane.setDisable(false);
     }
     private void readingFailed(WorkerStateEvent event){
@@ -97,13 +93,14 @@ public class AdminController implements Initializable {
 
     private SaveCSV<Components> saveCSV;
     @FXML void save(){
+        ArrayList<Components> componentsToSave = new ArrayList<>(DataCollection.components);
         String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
                 "\ngi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 =pathStr + ".csv";
         String totalPathStr = "src\\database\\lagringsPlass"+"\\"+pathStr1;
         if(!pathStr.isEmpty()){
-            saveCSV = new SaveCSV<>(componentsList,totalPathStr);
+            saveCSV = new SaveCSV<>(componentsToSave,totalPathStr);
             saveCSV.setOnSucceeded(this::writingDone);
             saveCSV.setOnFailed(this::writingFailed);
             Thread th = new Thread(saveCSV);
