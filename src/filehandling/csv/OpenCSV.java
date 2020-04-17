@@ -1,6 +1,5 @@
 package filehandling.csv;
 
-import dataModels.data.Components;
 import dataModels.dataFormats.ParseItems;
 import validations.customExceptions.InvalidItemDataException;
 import filehandling.ReaderAbstract;

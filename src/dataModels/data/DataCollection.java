@@ -61,7 +61,7 @@ public class DataCollection {
 
     /** ENABLES TABLE VIEW TO BE FILTERED BY COMPONENT NAME, PRICE ETC */
     public static void filterOnChange(ComboBox<String> filterOptions){
-        String[] filterCats = {"Component Number", "Component Name", "Component Type", "Component Specs", "Component Price"};
+        String[] filterCats = {"Component Number", "Component Name", "Component Category", "Component Specs", "Component Price"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
 
         filterOptions.setItems(filterCategories);
@@ -75,19 +75,19 @@ public class DataCollection {
         FilteredList<Components> filteredList = new FilteredList<>(components, components -> true);
         filterTextField.textProperty().addListener((observable,oldValue,newValue)->{
             filteredList.setPredicate((components)->{
-                String fname = Integer.toString(components.getComponentNr());
-                String lname = components.getComponentName().toLowerCase();
-                String email = components.getComponentCategory().toLowerCase();
-                String phone = components.getComponentSpecs();
-                String birthdate = Double.toString(components.getComponentPrice());
+                String nr = Integer.toString(components.getComponentNr());
+                String name = components.getComponentName().toLowerCase();
+                String category = components.getComponentCategory().toLowerCase();
+                String specs = components.getComponentSpecs();
+                String price = Double.toString(components.getComponentPrice());
                 String filter = newValue.toLowerCase();
 
                 switch (filterCategory) {
-                    case "Component Number": if(fname.equals(filter)){ return true; } break;
-                    case "Component Name": if(lname.contains(filter)){ return true; } break;
-                    case "Component Type": if(email.contains(filter)){ return true; } break;
-                    case "Component Specs": if(phone.contains(filter)){ return true; } break;
-                    case "Component Price": if(birthdate.contains(filter)){ return true; } break;
+                    case "Component Number": if(nr.equals(filter)){ return true; } break;
+                    case "Component Name": if(name.contains(filter)){ return true; } break;
+                    case "Component Type": if(category.contains(filter)){ return true; } break;
+                    case "Component Specs": if(specs.contains(filter)){ return true; } break;
+                    case "Component Price": if(price.contains(filter)){ return true; } break;
                 }
                 return newValue.isEmpty();
             });
