@@ -25,16 +25,18 @@ public class DataCollection {
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filepath) {
-        //components.clear();
+        boolean loaded;
         ArrayList<Components> componentsList;
         String fileExtension = filepath.substring(filepath.lastIndexOf("."));
         try {
             if (fileExtension.equals(".bin")) {
                 OpenBin<Components> read = new OpenBin<>(filepath);
                 componentsList = read.call();
+                loaded = false;
             } else {
                 OpenCSV<Components> read = new OpenCSV<>(filepath);
                 componentsList = read.call();
+                loaded = true;
             }
             if (refreshDatabase) {
                 for (Components c : componentsList) {
@@ -46,7 +48,12 @@ public class DataCollection {
             }
             loadedFile = filepath;
             modified = false;
-        }catch (InvalidFileException ignored){}
+        }catch (InvalidFileException ignored){
+            loaded = false;
+        }
+        if(loaded){
+            components.clear();
+        }
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
