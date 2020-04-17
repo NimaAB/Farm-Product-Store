@@ -14,14 +14,6 @@ public class CostumerController {
     BorderPane customerPane;
     //ArrayList av configuration:
 
-    private double totalPrice(ArrayList<Components> configurationList){
-        double totalPris = 0;
-        for(Components item:configurationList){
-            totalPris += item.getComponentPrice();
-        }
-        return totalPris;
-    }
-    //vi trenger et sted for å legge inn komponeneter: konfiguration list.
 
     @FXML
     void open(ActionEvent event){
