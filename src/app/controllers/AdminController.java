@@ -36,7 +36,13 @@ public class AdminController implements Initializable {
         DataCollection.filterTableView(tableview,txtFilter);
         Categories.categoryOnChange(optCategories,category);
     }
-
+    private void resetFields(){
+        nr.setText("");
+        name.setText("");
+        category.setText("");
+        specifications.setText("");
+        price.setText("");
+    }
     @FXML void opprettKomponent(){
         try {
             String nr = this.nr.getText();
@@ -48,6 +54,7 @@ public class AdminController implements Initializable {
 
             Components component = new Components(nr,name,category,specs,price, b);
             DataCollection.addComponent(component);
+            resetFields();
 
             MyAlerts.successAlert("Component Created");
         } catch (IllegalArgumentException e) {
