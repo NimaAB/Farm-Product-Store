@@ -2,6 +2,8 @@ package dataModels.data;
 
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
+import filehandling.csv.OpenCSV;
+import filehandling.csv.SaveCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -14,15 +16,25 @@ import java.util.ArrayList;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
+    public static String loadedFile;
     private static String filterCategory = "Component Name";
     private static boolean refreshDatabase = true;
     private static boolean modified = false;
 
-
-    /** LOADS ALL COMPONENTS FROM BIN FILE AND ADDS IT TO: <b>components</b> */
+    /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filepath) {
-        OpenBin<Components> read = new OpenBin<>(filepath);
-        ArrayList<Components> componentsList = read.call();
+        components.clear();
+        ArrayList<Components> componentsList;
+        String fileExtension = filepath.substring(filepath.lastIndexOf("."));
+
+        if(fileExtension.equals(".bin")){
+            OpenBin<Components> read = new OpenBin<>(filepath);
+            componentsList = read.call();
+        } else {
+            OpenCSV<Components> read = new OpenCSV<>(filepath);
+            componentsList = read.call();
+        }
+
         if(refreshDatabase) {
             for(Components c : componentsList){
                 CheckBox checkBox = new CheckBox();
@@ -31,35 +43,43 @@ public class DataCollection {
                 refreshDatabase = false;
             }
         }
+        loadedFile = filepath;
+        modified = false;
     }
 
-    /** DELETES COMPONENTS FROM THE TABLEVIEW */
+    /** Sletter alle komponenter som er valgt fra tabellen */
     public static void deleteSelectedComponents(){
         components.removeIf(components -> components.getCHECKBOX().isSelected());
         modified = true;
     }
 
-    /** ADDS A NEW COMPONENT IN THE TABLEVIEW */
+    /** Legger en ny komponent i tabellen */
     public static void addComponent(Components component){
         components.add(component);
         modified = true;
     }
 
-    /** UPDATES BIN FILE */
-    public static void saveBinData(String filepath){
-        ArrayList<Components> updatedDatabase = new ArrayList<>(components);
-        SaveBin<Components> write = new SaveBin<>(updatedDatabase, filepath);
-        write.call();
+    /** Oppdaterer filen når bruker logger ut eller programmen slutter */
+    public static void saveData(){
+        ArrayList<Components> data = new ArrayList<>(components);
+        String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
 
+        if(fileExtension.equals(".bin")){
+            SaveBin<Components> write = new SaveBin<>(data,loadedFile);
+            write.call();
+        } else {
+            SaveCSV<Components> write = new SaveCSV<>(data,loadedFile);
+            write.call();
+        }
         modified = false;
     }
 
-    /** SHOWS ALL COMPONENTS IN THE TABLE VIEW */
+    /** Viser alle komponenter i tabellen */
    public static void setTableView(TableView<Components> tableView){
         tableView.setItems(components);
    }
 
-    /** ENABLES TABLE VIEW TO BE FILTERED BY COMPONENT NAME, PRICE ETC */
+    /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void filterOnChange(ComboBox<String> filterOptions){
         String[] filterCats = {"Component Number", "Component Name", "Component Category", "Component Specs", "Component Price"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
@@ -70,7 +90,7 @@ public class DataCollection {
             filterCategory = newValue; });
     }
 
-    /** FILTERS AND SEARCHES THROUGH THE TABLE VIEW */
+    /** Filtrerer og søker gjennom tabellen */
     public static void filterTableView(TableView<Components> tableView, TextField filterTextField){
         FilteredList<Components> filteredList = new FilteredList<>(components, components -> true);
         filterTextField.textProperty().addListener((observable,oldValue,newValue)->{
@@ -99,5 +119,4 @@ public class DataCollection {
     }
 
     public static boolean isModified() { return modified; }
-    public static ObservableList<Components> getComponents() { return components; }
 }

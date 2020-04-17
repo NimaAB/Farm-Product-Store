@@ -111,9 +111,9 @@
                </font>
             </TextField>
             <ComboBox fx:id="optCategories" layoutX="165.0" layoutY="135.0" prefHeight="25.0" prefWidth="200.0" />
-            <Button layoutX="165.0" layoutY="454.0" mnemonicParsing="false" onAction="#opprettKomponent" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
-            <Button layoutX="165.0" layoutY="487.0" mnemonicParsing="false" onAction="#slett" prefHeight="25.0" prefWidth="200.0" text="Slett" />
-            <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#loggUt" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
+            <Button layoutX="165.0" layoutY="454.0" mnemonicParsing="false" onAction="#createComponents" prefHeight="25.0" prefWidth="200.0" text="Opprett Komponent" />
+            <Button layoutX="165.0" layoutY="487.0" mnemonicParsing="false" onAction="#delete" prefHeight="25.0" prefWidth="200.0" text="Slett" />
+            <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#logOut" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
          </children>
       </AnchorPane>
    </left>

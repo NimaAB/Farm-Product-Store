@@ -22,17 +22,17 @@ public class Load {
     }
 
     /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
-    public static void exit(Stage stage, String FILE_DATABASE){
+    public static void exit(Stage stage){
         if(DataCollection.isModified()){
             boolean response = MyAlerts.confirmAlert("Vil du lagre alle endringer?");
 
             if(response){
-                DataCollection.saveBinData(FILE_DATABASE);
+                DataCollection.saveData();
                 MyAlerts.successAlert("Alle engringer er lagret");
             } else {
                 MyAlerts.successAlert("Endringer er ikke lagret"); }
 
             stage.close();
-        } else { System.out.println("Bin filen er oppdatert"); }
+        }
     }
 }

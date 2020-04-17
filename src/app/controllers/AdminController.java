@@ -6,12 +6,15 @@ import dataModels.data.Components;
 import dataModels.data.DataCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
+import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import validations.MyAlerts;
 import javax.swing.*;
 import java.net.URL;
@@ -26,24 +29,18 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> optCategories;
     @FXML private ComboBox<String> optFilterBy;
     @FXML private TableView<Components> tableview;
-    private final String BINPATH = "src/database/components.bin";
+    private String file = "src/database/components.bin";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DataCollection.loadComponents(BINPATH);
+        DataCollection.loadComponents(file);
         DataCollection.setTableView(tableview);
         DataCollection.filterOnChange(optFilterBy);
         DataCollection.filterTableView(tableview,txtFilter);
         Categories.categoryOnChange(optCategories,category);
     }
-    private void resetFields(){
-        nr.setText("");
-        name.setText("");
-        category.setText("");
-        specifications.setText("");
-        price.setText("");
-    }
-    @FXML void opprettKomponent(){
+
+    @FXML void createComponents(){
         try {
             String nr = this.nr.getText();
             String name = this.name.getText();
@@ -56,35 +53,53 @@ public class AdminController implements Initializable {
             DataCollection.addComponent(component);
             resetFields();
 
-            MyAlerts.successAlert("Component Created");
+            MyAlerts.successAlert("Komponent Opprettet");
         } catch (IllegalArgumentException e) {
             MyAlerts.warningAlert(e.getMessage());
         }
     }
 
-    @FXML void slett(){
+    private void resetFields(){
+        nr.setText("");
+        name.setText("");
+        category.setText("");
+        specifications.setText("");
+        price.setText("");
+    }
+
+    @FXML void delete(){
         DataCollection.deleteSelectedComponents();
         tableview.refresh();
     }
+
     private OpenCSV<Components> openCSV;
+
     @FXML void open(){
-        String melding = "last opp en fil til programmet fra denne plasering: src\\database\\lagringsPlass " +
-                "\nSkriv navnet til fil du vil laste opp: ";
+        String melding = "last opp en fil til programmet fra denne plassering: src\\database\\lagringsPlass " +
+                         "\nSkriv navnet til filen du vil laste opp: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
-        String pathStr1 = "src/database/lagringsPlass/";
-        String totalPathStr =pathStr1+pathStr + ".csv";
+        String pathStr1 = "src\\database\\lagringsPlass\\";
+        String totalPathStr = pathStr1 + pathStr + ".csv";
         if(pathStr != null){
+            //Gjør det mulig å bruke alle metoder fra dataCollection til filen bruker åpner
+            DataCollection.loadComponents(totalPathStr);
+            file = totalPathStr;
+
             openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
             openCSV.setOnFailed(this::readingFailed);
             Thread th = new Thread(openCSV);
-            th.setDaemon(true);
             adminPane.setDisable(true);
+            th.setDaemon(true);
             th.start();
-        }else{
+        } else {
             MyAlerts.warningAlert("Ingen fil er valgt");
+
+            //Når en bruker skriver et filnavn som ikke finnes i lagringsPlass, kaster den en exception
+            //TODO - Kode som håndterer FileNotFoundException
         }
     }
+
     private void readingDone(WorkerStateEvent e){
         ArrayList<Components> componentsList = openCSV.call();
         for(Components el:componentsList){
@@ -99,25 +114,27 @@ public class AdminController implements Initializable {
     }
 
     private SaveCSV<Components> saveCSV;
+
     @FXML void save(){
         ArrayList<Components> componentsToSave = new ArrayList<>(DataCollection.components);
         String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
-                "\ngi filen din et navn: ";
+                         "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 =pathStr + ".csv";
-        String totalPathStr = "src\\database\\lagringsPlass"+"\\"+pathStr1;
+        String totalPathStr = "src\\database\\lagringsPlass\\" + pathStr1;
         if(!pathStr.isEmpty()){
             saveCSV = new SaveCSV<>(componentsToSave,totalPathStr);
             saveCSV.setOnSucceeded(this::writingDone);
             saveCSV.setOnFailed(this::writingFailed);
             Thread th = new Thread(saveCSV);
-            th.setDaemon(true);
             adminPane.setDisable(true);
+            th.setDaemon(true);
             th.start();
-        }else{
+        } else {
             MyAlerts.warningAlert("Ingen fil er valgt");
         }
     }
+
     private void writingDone(WorkerStateEvent e){
         saveCSV.call();
         adminPane.setDisable(false);
@@ -128,9 +145,9 @@ public class AdminController implements Initializable {
         adminPane.setDisable(false);
     }
 
-    @FXML void loggUt(){
+    @FXML void logOut(){
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
-        DataCollection.saveBinData(BINPATH);
+        DataCollection.saveData();
     }
 }

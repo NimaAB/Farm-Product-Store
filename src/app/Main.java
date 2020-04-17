@@ -20,9 +20,7 @@ public class Main extends Application {
         primaryStage.setWidth(1200);
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
-        String BINPATH = "src/database/components.bin";
-        primaryStage.setOnCloseRequest(e -> Load.exit(primaryStage,BINPATH));
+        primaryStage.setOnCloseRequest(e -> Load.exit(primaryStage));
     }
 
     public static void main(String[] args) {
