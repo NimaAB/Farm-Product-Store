@@ -1,11 +1,11 @@
 package filehandling.csv;
 
 import dataModels.dataFormats.ParseItems;
+import validations.customExceptions.InvalidFileException;
 import validations.customExceptions.InvalidItemDataException;
 import filehandling.ReaderAbstract;
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+
+import java.io.*;
 import java.util.ArrayList;
 
 
@@ -16,22 +16,26 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
         this.filePath = filePath;
     }
 
-    protected ArrayList<T> read(String filePath) throws InvalidItemDataException {
+    protected ArrayList<T> read(String filePath) throws InvalidItemDataException,InvalidFileException{
         ArrayList<T> items = new ArrayList<>();
-        try {
-            FileReader file = new FileReader(filePath);
-            BufferedReader reader = new BufferedReader(file);
-
-            String line;
-            while((line =reader.readLine())!=null){
-                items.add((T)ParseItems.parseItem(line));
-            }
-        } catch (IOException e) { e.printStackTrace(); }
-        return items;
+        File path = new File(filePath);
+        if(!path.exists()){
+            throw new InvalidFileException("Filen som du skal åpne finnes ikke. Prøv en annen fil.");
+        }else {
+            try {
+                FileReader file = new FileReader(path);
+                BufferedReader reader = new BufferedReader(file);
+                String line;
+                while((line =reader.readLine())!=null){
+                    items.add((T)ParseItems.parseItem(line));
+                }
+            } catch (IOException e) { e.printStackTrace(); }
+            return items;
+        }
     }
 
     @Override
-    public ArrayList<T> call() throws InvalidItemDataException {
+    public ArrayList<T> call() throws InvalidItemDataException,InvalidFileException{
         try { Thread.sleep(3000); }
         catch (InterruptedException ignored){}
         return read(filePath);

@@ -6,16 +6,15 @@ import dataModels.data.Components;
 import dataModels.data.DataCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
-import javafx.application.Platform;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import validations.MyAlerts;
+import validations.customExceptions.InvalidFileException;
+
 import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -84,7 +83,6 @@ public class AdminController implements Initializable {
             //Gjør det mulig å bruke alle metoder fra dataCollection til filen bruker åpner
             DataCollection.loadComponents(totalPathStr);
             file = totalPathStr;
-
             openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
             openCSV.setOnFailed(this::readingFailed);
@@ -94,16 +92,17 @@ public class AdminController implements Initializable {
             th.start();
         } else {
             MyAlerts.warningAlert("Ingen fil er valgt");
-
-            //Når en bruker skriver et filnavn som ikke finnes i lagringsPlass, kaster den en exception
-            //TODO - Kode som håndterer FileNotFoundException
         }
     }
 
     private void readingDone(WorkerStateEvent e){
-        ArrayList<Components> componentsList = openCSV.call();
-        for(Components el:componentsList){
-            DataCollection.addComponent(el);
+        try{
+            ArrayList<Components> componentsList = openCSV.call();
+            for(Components el:componentsList){
+                DataCollection.addComponent(el);
+            }
+        }catch (InvalidFileException exception){
+            MyAlerts.warningAlert(exception.getMessage());
         }
         adminPane.setDisable(false);
     }

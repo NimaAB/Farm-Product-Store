@@ -12,6 +12,8 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import validations.customExceptions.InvalidFileException;
+
 import java.util.ArrayList;
 
 public class DataCollection {
@@ -23,28 +25,28 @@ public class DataCollection {
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filepath) {
-        components.clear();
+        //components.clear();
         ArrayList<Components> componentsList;
         String fileExtension = filepath.substring(filepath.lastIndexOf("."));
-
-        if(fileExtension.equals(".bin")){
-            OpenBin<Components> read = new OpenBin<>(filepath);
-            componentsList = read.call();
-        } else {
-            OpenCSV<Components> read = new OpenCSV<>(filepath);
-            componentsList = read.call();
-        }
-
-        if(refreshDatabase) {
-            for(Components c : componentsList){
-                CheckBox checkBox = new CheckBox();
-                c.setCHECKBOX(checkBox);
-                components.add(c);
-                refreshDatabase = false;
+        try {
+            if (fileExtension.equals(".bin")) {
+                OpenBin<Components> read = new OpenBin<>(filepath);
+                componentsList = read.call();
+            } else {
+                OpenCSV<Components> read = new OpenCSV<>(filepath);
+                componentsList = read.call();
             }
-        }
-        loadedFile = filepath;
-        modified = false;
+            if (refreshDatabase) {
+                for (Components c : componentsList) {
+                    CheckBox checkBox = new CheckBox();
+                    c.setCHECKBOX(checkBox);
+                    components.add(c);
+                    refreshDatabase = false;
+                }
+            }
+            loadedFile = filepath;
+            modified = false;
+        }catch (InvalidFileException ignored){}
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
