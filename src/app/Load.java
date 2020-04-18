@@ -14,7 +14,7 @@ public class Load {
     public static void window(String FXMLFilepath, String title, Stage stage){
         try {
             FXMLLoader loader = new FXMLLoader(Load.class.getResource(FXMLFilepath));
-            Parent root = loader.load();
+            Parent root = loader.<Parent>load();
             stage.setTitle(title);
             stage.setScene(new Scene(root));
             stage.show();
