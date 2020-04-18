@@ -4,14 +4,17 @@ import app.Load;
 import dataModels.data.Components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
+
+
 
 public class CostumerController {
-    @FXML
-    BorderPane customerPane;
+
+    @FXML BorderPane customerPane;
+    @FXML TableView<Components> costumerTV;
     //ArrayList av configuration:
 
 

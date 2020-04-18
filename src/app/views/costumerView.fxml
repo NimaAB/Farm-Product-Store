@@ -30,31 +30,41 @@
     <center>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
             <children>
-                <TableView prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                <TableView fx:id="costumerTV" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                     <columns>
-                        <TableColumn prefWidth="130.0" resizable="false" text="KomponentNr" >
+                        <TableColumn maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" editable="false">
                             <cellValueFactory>
-                                <PropertyValueFactory property="artikkelnr" />
+                                <PropertyValueFactory property="CHECKBOX" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="150.0" prefWidth="150.0" text="Komponent Navn">
+
+                        <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr">
                             <cellValueFactory>
-                                <PropertyValueFactory property="artikkelNavn" />
+                                <PropertyValueFactory property="componentNr" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="150.0" prefWidth="150.0" text="Kategory" >
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn">
                             <cellValueFactory>
-                                <PropertyValueFactory property="kategori" />
+                                <PropertyValueFactory property="componentName" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="400.0" minWidth="200.0" prefWidth="200.0" text="Spesifikasjoner" >
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory">
                             <cellValueFactory>
-                                <PropertyValueFactory property="spesifikasjoner" />
+                                <PropertyValueFactory property="componentCategory" />
                             </cellValueFactory>
                         </TableColumn>
-                        <TableColumn minWidth="150.0" prefWidth="150.0" resizable="false" text="Pris" >
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner">
                             <cellValueFactory>
-                                <PropertyValueFactory property="pris" />
+                                <PropertyValueFactory property="componentSpecs" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentPrice" />
                             </cellValueFactory>
                         </TableColumn>
                     </columns>
