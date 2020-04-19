@@ -17,6 +17,7 @@ import java.util.Observable;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
+    public static ObservableList <Components>  selectedItems = FXCollections.observableArrayList();
     public static String loadedFile;
     private static String filterCategory = "Component Name";
     private static boolean refreshDatabase = true;
@@ -152,17 +153,16 @@ public class DataCollection {
 
     public static void addToShoppingCart(ListView <Components> shoppingCart, TableView customerView){
 
-        ObservableList <Components>  selectedItems = FXCollections.observableArrayList();
-        for ( Components obj : components){
-            if (obj.getCHECKBOX().isSelected()){
-                selectedItems.add(obj);
+
+        for ( Components item : components){
+            if (item.getCHECKBOX().isSelected()){
+                selectedItems.add(item);
 
             }
         }
         SortedList <Components> sortedList = new SortedList<>(selectedItems);
         shoppingCart.setItems(sortedList);
     }
-
 
 
     public static boolean isModified() { return modified; }

@@ -84,7 +84,7 @@
                     </font>
                 </Label>
                 <Button layoutX="100.0" layoutY="467.0" mnemonicParsing="false" onAction="#addItemToCart" prefHeight="25.0" prefWidth="200.0" text="Legg Komponent" />
-                <Button layoutX="100.0" layoutY="500.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Ny Konfigurasjon" />
+                <Button fx:id="clearButton" layoutX="100.0" layoutY="500.0" mnemonicParsing="false" onAction="#clearList" prefHeight="25.0" prefWidth="200.0" text="Ny Konfigurasjon" />
                 <Button layoutX="101.0" layoutY="533.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="200.0" text="Slett" />
                 <Button layoutX="21.0" layoutY="622.0" mnemonicParsing="false" onAction="#loggUt" prefHeight="25.0" prefWidth="78.0" text="Logg ut" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" />
                 <ListView fx:id="shoppingCart" layoutX="69.0" layoutY="136.0" prefHeight="296.0" prefWidth="269.0" />

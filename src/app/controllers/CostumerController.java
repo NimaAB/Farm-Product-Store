@@ -11,6 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -23,6 +24,8 @@ public class CostumerController implements Initializable {
     @FXML TextField txtFilter;
     @FXML private ComboBox<String> filtherCatogry;
     @FXML private ListView <Components> shoppingCart;
+    @FXML private Button clearButton;
+
     private String file = "src/database/components.bin";
 
 
@@ -62,6 +65,10 @@ public class CostumerController implements Initializable {
 
 
     }
+    @FXML  void clearList(ActionEvent event) {
+     shoppingCart.getItems().clear();
+
+    }
 
 
 
@@ -70,6 +77,8 @@ public class CostumerController implements Initializable {
         Stage stage = (Stage) customerPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
     }
+
+
 
 
 }
