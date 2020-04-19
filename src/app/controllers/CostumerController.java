@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -21,6 +22,7 @@ public class CostumerController implements Initializable {
     @FXML TableView<Components> costumerTV;
     @FXML TextField txtFilter;
     @FXML private ComboBox<String> filtherCatogry;
+    @FXML private ListView <Components> shoppingCart;
     private String file = "src/database/components.bin";
 
 
@@ -53,6 +55,15 @@ public class CostumerController implements Initializable {
         DataCollection.selectedTable(choosenCatogry,costumerTV);
 
     }
+
+    @FXML
+    void addItemToCart(ActionEvent event) {
+        DataCollection.addToShoppingCart(shoppingCart,costumerTV);
+
+
+    }
+
+
 
     @FXML
     void loggUt(ActionEvent event){
