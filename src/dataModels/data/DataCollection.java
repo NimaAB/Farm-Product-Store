@@ -84,9 +84,9 @@ public class DataCollection {
     }
 
     /** Viser alle komponenter i tabellen */
-   public static void setTableView(TableView<Components> tableView){
+    public static void setTableView(TableView<Components> tableView){
         tableView.setItems(components);
-   }
+    }
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void filterOnChange(ComboBox<String> filterOptions){
@@ -126,6 +126,30 @@ public class DataCollection {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
     }
+    public static void fillCombox (ComboBox <String> comboBox ){
+        comboBox.setValue("Velg Katogri");
+
+        // den katogrie listen må vi koble til katogriene som allerede bestemt på admin nivå.
+        comboBox.getItems().addAll("Processor", "Screen", "RAM", "Keyboard", "Mouse");
+
+
+    }
+    public static void selectedTable (String categoryName, TableView tableView ){
+        ObservableList<Components> selectedCatogries = FXCollections.observableArrayList();
+
+        for (Components obj : components){
+            if (obj.getComponentCategory().equals(categoryName)){
+                selectedCatogries.add(obj);
+
+            }
+        }
+        SortedList sortedList = new SortedList(selectedCatogries);
+        tableView.setItems(sortedList);
+
+    }
+
+
+
 
     public static boolean isModified() { return modified; }
 }
