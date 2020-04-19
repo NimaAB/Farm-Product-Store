@@ -1,4 +1,3 @@
-
 package app.controllers;
 
 import app.Load;
@@ -8,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -18,14 +18,11 @@ import java.util.ResourceBundle;
 
 
 public class CostumerController implements Initializable {
-    @FXML
-    BorderPane customerPane;
-    @FXML
-    TableView<Components> costumerTV;
-    @FXML
-    TextField txtFilter;
-    @FXML
-    private ComboBox<String> filtherCatogry;
+    @FXML BorderPane customerPane;
+    @FXML TableView<Components> costumerTV;
+    @FXML TextField txtFilter;
+    @FXML private ComboBox<String> filtherCatogry;
+    @FXML private ListView <Components> shoppingCart;
     private String file = "src/database/components.bin";
 
 
@@ -33,20 +30,21 @@ public class CostumerController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         DataCollection.loadComponents(file);
         DataCollection.setTableView(costumerTV);
-        DataCollection.filterTableView(costumerTV, txtFilter);
+        DataCollection.filterTableView(costumerTV,txtFilter);
         DataCollection.fillCombox(filtherCatogry);
 
 
     }
 
 
+
     @FXML
-    void open(ActionEvent event) {
+    void open(ActionEvent event){
         //brukes for csv fil.
     }
 
     @FXML
-    void save(ActionEvent event) {
+    void save(ActionEvent event){
         //brukes for csv fil.
     }
 
@@ -54,13 +52,24 @@ public class CostumerController implements Initializable {
     void changeTable(ActionEvent event) {
 
         String choosenCatogry = filtherCatogry.getValue().toString();
-        DataCollection.selectedTable(choosenCatogry, costumerTV);
+        DataCollection.selectedTable(choosenCatogry,costumerTV);
 
     }
 
     @FXML
-    void loggUt(ActionEvent event) {
-        Stage stage = (Stage) customerPane.getScene().getWindow();
-        Load.window("views/loginView.fxml", "Login", stage);
+    void addItemToCart(ActionEvent event) {
+        DataCollection.addToShoppingCart(shoppingCart,costumerTV);
+
+
     }
+
+
+
+    @FXML
+    void loggUt(ActionEvent event){
+        Stage stage = (Stage) customerPane.getScene().getWindow();
+        Load.window("views/loginView.fxml","Login",stage);
+    }
+
+
 }

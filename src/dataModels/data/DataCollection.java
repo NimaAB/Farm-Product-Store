@@ -1,3 +1,4 @@
+
 package dataModels.data;
 
 import filehandling.bin.OpenBin;
@@ -8,13 +9,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import validations.customExceptions.InvalidFileException;
 
 import java.util.ArrayList;
+import java.util.Observable;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
@@ -148,6 +147,21 @@ public class DataCollection {
 
     }
 
+
+
+
+    public static void addToShoppingCart(ListView <Components> shoppingCart, TableView customerView){
+
+        ObservableList <Components>  selectedItems = FXCollections.observableArrayList();
+        for ( Components obj : components){
+            if (obj.getCHECKBOX().isSelected()){
+                selectedItems.add(obj);
+
+            }
+        }
+        SortedList <Components> sortedList = new SortedList<>(selectedItems);
+        shoppingCart.setItems(sortedList);
+    }
 
 
 
