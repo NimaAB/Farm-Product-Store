@@ -61,7 +61,9 @@ public class CostumerController implements Initializable {
     }
 
     @FXML void clearList(ActionEvent event) {
-        shoppingCart.setItems(null);
+        //shoppingCart.setItems(null);
+        // Forslag:
+        DataCollection.clearShoppingCart();
     }
 
     @FXML

@@ -19,7 +19,7 @@ public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
     public static ObservableList <Components>  selectedItems = FXCollections.observableArrayList();
     public static String loadedFile;
-    private static String filterCategory = "Component Name";
+    private static String filterCategory = "Komponent Navn";
     private static boolean refreshDatabase = true;
     private static boolean modified = false;
 
@@ -48,7 +48,7 @@ public class DataCollection {
             }
             loadedFile = filepath;
             modified = false;
-        }catch (InvalidFileException ignored){
+        } catch (InvalidFileException ignored){
             loaded = false;
         }
         if(loaded){
@@ -90,7 +90,7 @@ public class DataCollection {
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void filterOnChange(ComboBox<String> filterOptions){
-        String[] filterCats = {"Component Number", "Component Name", "Component Category", "Component Specs", "Component Price"};
+        String[] filterCats = {"Komponent Nr", "Komponent Navn", "Komponent Kategori", "Komponent Speks.", "Komponent Pris"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
 
         filterOptions.setItems(filterCategories);
@@ -112,11 +112,11 @@ public class DataCollection {
                 String filter = newValue.toLowerCase();
 
                 switch (filterCategory) {
-                    case "Component Number": if(nr.equals(filter)){ return true; } break;
-                    case "Component Name": if(name.contains(filter)){ return true; } break;
-                    case "Component Type": if(category.contains(filter)){ return true; } break;
-                    case "Component Specs": if(specs.contains(filter)){ return true; } break;
-                    case "Component Price": if(price.contains(filter)){ return true; } break;
+                    case "Komponent Nr": if(nr.equals(filter)){ return true; } break;
+                    case "Komponent Navn": if(name.contains(filter)){ return true; } break;
+                    case "Komponent Kategori": if(category.contains(filter)){ return true; } break;
+                    case "Komponent Speks.": if(specs.contains(filter)){ return true; } break;
+                    case "Komponent Pris": if(price.contains(filter)){ return true; } break;
                 }
                 return newValue.isEmpty();
             });
@@ -126,6 +126,7 @@ public class DataCollection {
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
     }
+
     public static void fillCombox (ComboBox <String> comboBox ){
         comboBox.setValue("Velg Katogri");
 
@@ -162,6 +163,16 @@ public class DataCollection {
         }
         SortedList <Components> sortedList = new SortedList<>(selectedItems);
         shoppingCart.setItems(sortedList);
+    }
+
+    /** Sletter alle items fra listView */
+    public static void clearShoppingCart(){
+        selectedItems.clear();
+        for ( Components item : components){
+            if (item.getCHECKBOX().isSelected()){
+                item.getCHECKBOX().setSelected(false);
+            }
+        }
     }
 
 
