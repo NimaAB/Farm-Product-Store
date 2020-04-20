@@ -1,9 +1,17 @@
 package dataModels.dataFormats;
 
+import dataModels.data.ConfigurationItems;
+
 import java.util.ArrayList;
 
 public class ItemsFormat {
-    public static<T> String itemsFormat(T item){
+    public static String configFormat(ConfigurationItems item){
+        return item.toString(";");
+    }
+    public static <T> String itemsFormat(T item){
+        if(item instanceof ConfigurationItems){
+            return configFormat((ConfigurationItems) item);
+        }
         return item.toString();
     }
     public static <T> String rewriteItems(ArrayList<T> items){

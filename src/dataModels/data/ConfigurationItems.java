@@ -2,12 +2,12 @@ package dataModels.data;
 
 import java.util.ArrayList;
 
-public class Configuration {
+public class ConfigurationItems {
     private int nr;
     private String name;
     private double price;
 
-    public Configuration(int nr,String name,double price){
+    public ConfigurationItems(int nr, String name, double price){
         this.nr=nr;
         this.name=name;
         this.price=price;
@@ -34,14 +34,14 @@ public class Configuration {
         return price;
     }
 
-    public String toString(){
-        return String.format("%s;%s;%s",getNr(),getName(),getPrice());
+    public String toString(String delimiter){
+        return String.format("%s"+delimiter+"%s"+delimiter+"%s",getNr(),getName(),getPrice());
     }
 
-    public double totalPrice(ArrayList<Components> configurationList){
+    public double totalPrice(ArrayList<ConfigurationItems> configurationItemsList){
         double totalPris = 0;
-        for(Components item:configurationList){
-            totalPris += item.getComponentPrice();
+        for(ConfigurationItems item: configurationItemsList){
+            totalPris += item.getPrice();
         }
         return totalPris;
     }

@@ -64,14 +64,14 @@ public class Components implements Serializable {
     }
 
     public String toString(){
-        return String.format("%s,%s,%s,%s,%s",
+        return String.format("%s;%s;%s;%s;%s",
                 componentNr.getValue(), componentName.getValue(), componentCategory.getValue(),
                 componentSpecs.getValue(), componentPrice.getValue());
     }
 
     public int getComponentNr() { return componentNr.getValue(); }
-    public String getComponentName() { return componentName.getValue().toString(); }
-    public String getComponentSpecs() { return componentSpecs.getValue().toString(); }
+    public String getComponentName() { return componentName.getValue(); }
+    public String getComponentSpecs() { return componentSpecs.getValue(); }
     public String getComponentCategory() { return componentCategory.getValue(); }
     public double getComponentPrice() { return componentPrice.getValue(); }
     public CheckBox getCHECKBOX() { return CHECKBOX; }
