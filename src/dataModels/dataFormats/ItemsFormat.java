@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ItemsFormat {
     public static String configFormat(ConfigurationItems item){
-        return item.toString(";");
+        return item.toString(",");
     }
     public static <T> String itemsFormat(T item){
         if(item instanceof ConfigurationItems){
