@@ -9,6 +9,8 @@ import validations.customExceptions.InvalidItemDataException;
 public class ParseItems {
     public static Object parseItem(String str) throws InvalidItemDataException {
         String[] stringArray = str.split(";");
+        String[] itemsArray = str.split(",");
+
         if(stringArray.length ==3){
             String nrStr = stringArray[0];
             String name = stringArray[1];
@@ -21,7 +23,7 @@ public class ParseItems {
                 MyAlerts.warningAlert(e.getMessage());
             }
         }
-        else if(stringArray.length==5){
+        else if(itemsArray.length==5){
             String componentNumber = stringArray[0];
             String componentName = stringArray[1];
             String componentCategory = stringArray[2];

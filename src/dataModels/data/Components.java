@@ -64,7 +64,7 @@ public class Components implements Serializable {
     }
 
     public String toString(){
-        return String.format("%s;%s;%s;%s;%s",
+        return String.format("%s,%s,%s,%s,%s",
                 componentNr.getValue(), componentName.getValue(), componentCategory.getValue(),
                 componentSpecs.getValue(), componentPrice.getValue());
     }
