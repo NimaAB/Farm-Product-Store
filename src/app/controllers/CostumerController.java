@@ -52,7 +52,7 @@ public class CostumerController implements Initializable {
 
     @FXML
     void changeTable(ActionEvent event) {
-        String choosenCatogry = filtherCatogry.getValue().toString();
+        String choosenCatogry = filtherCatogry.getValue();
         DataCollection.selectedTable(choosenCatogry,costumerTV);
     }
 
@@ -62,9 +62,7 @@ public class CostumerController implements Initializable {
     }
 
     @FXML void clearList(ActionEvent event) {
-        //shoppingCart.setItems(null);
-        // Forslag:
-        DataCollection.clearShoppingCart();
+        DataCollection.selectedItems.clear();
     }
 
     @FXML
