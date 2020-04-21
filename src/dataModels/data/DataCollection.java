@@ -136,7 +136,7 @@ public class DataCollection {
 
 
     }
-    public static void selectedTable (String categoryName, TableView tableView ){
+    public static void selectedTable (String categoryName, TableView<Components> tableView ){
         ObservableList<Components> selectedCatogries = FXCollections.observableArrayList();
 
         for (Components obj : components){
@@ -145,7 +145,7 @@ public class DataCollection {
 
             }
         }
-        SortedList sortedList = new SortedList(selectedCatogries);
+        SortedList<Components> sortedList = new SortedList<>(selectedCatogries);
         tableView.setItems(sortedList);
 
     }

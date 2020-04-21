@@ -36,7 +36,7 @@ public class ConfigurationItems {
 
     @Override
     public String toString() {
-        return nr + " "+ name + " "+ price;
+        return String.format("%s\t%s\t%s",getNr(),getName(),getPrice());
     }
     public String toString(String delimiter){
         return String.format("%s"+delimiter+"%s"+delimiter+"%s",getNr(),getName(),getPrice());
