@@ -18,7 +18,7 @@ import java.util.Observable;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
-    public static ObservableList <ConfigurationItems>  selectedItems = FXCollections.observableArrayList();
+    public static ObservableList<ConfigurationItems> selectedItems = FXCollections.observableArrayList();
     public static String loadedFile;
     private static String filterCategory = "Komponent Navn";
     private static boolean refreshDatabase = true;
@@ -142,63 +142,25 @@ public class DataCollection {
         for (Components obj : components){
             if (obj.getComponentCategory().equals(categoryName)){
                 selectedCatogries.add(obj);
-
             }
         }
         SortedList<Components> sortedList = new SortedList<>(selectedCatogries);
         tableView.setItems(sortedList);
-
     }
 
-
-
-
     public static void addToShoppingCart(ListView <ConfigurationItems> shoppingCart){
-
-
         for ( Components itemObj : components){
             if (itemObj.getCHECKBOX().isSelected()){
                 String itemName = itemObj.getComponentName();
                 double  itemPrice = itemObj.getComponentPrice();
                 int itemNr = itemObj.getComponentNr();
-                System.out.println(itemName +" "+itemObj +" " + itemNr);
 
                 ConfigurationItems item = new ConfigurationItems(itemNr,itemName,itemPrice);
-                System.out.println(item);
                 selectedItems.add(item);
             }
-
-
         }
         shoppingCart.setItems(selectedItems);
-
-
-
-        /*
-        for ( Components item : components){
-            if (item.getCHECKBOX().isSelected()){
-                selectedItems.add(item);
-
-            }
-        }
-        SortedList <Components> sortedList = new SortedList<>(selectedItems);
-        shoppingCart.setItems(sortedList);*/
     }
-
-
-
-
-
-    /** Sletter alle items fra listView */
-    public static void clearShoppingCart(){
-        selectedItems.clear();
-        for ( Components item : components){
-            if (item.getCHECKBOX().isSelected()){
-                item.getCHECKBOX().setSelected(false);
-            }
-        }
-    }
-
 
     public static boolean isModified() { return modified; }
 }
