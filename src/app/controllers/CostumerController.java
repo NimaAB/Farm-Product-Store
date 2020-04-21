@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Load;
 import dataModels.data.Components;
+import dataModels.data.ConfigurationItems;
 import dataModels.data.DataCollection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +23,7 @@ public class CostumerController implements Initializable {
     @FXML TableView<Components> costumerTV;
     @FXML TextField txtFilter;
     @FXML private ComboBox<String> filtherCatogry;
-    @FXML private ListView <Components> shoppingCart;
+    @FXML private ListView <ConfigurationItems> shoppingCart;
 
     private final String file = "src/database/components.bin";
 
@@ -57,7 +58,7 @@ public class CostumerController implements Initializable {
 
     @FXML
     void addItemToCart(ActionEvent event) {
-        DataCollection.addToShoppingCart(shoppingCart,costumerTV);
+        DataCollection.addToShoppingCart(shoppingCart);
     }
 
     @FXML void clearList(ActionEvent event) {

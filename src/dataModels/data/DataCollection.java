@@ -17,7 +17,7 @@ import java.util.Observable;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
-    public static ObservableList <Components>  selectedItems = FXCollections.observableArrayList();
+    public static ObservableList <ConfigurationItems>  selectedItems = FXCollections.observableArrayList();
     public static String loadedFile;
     private static String filterCategory = "Komponent Navn";
     private static boolean refreshDatabase = true;
@@ -152,9 +152,25 @@ public class DataCollection {
 
 
 
-    public static void addToShoppingCart(ListView <Components> shoppingCart, TableView customerView){
+    public static void addToShoppingCart(ListView <ConfigurationItems> shoppingCart){
 
 
+        for ( Components itemObj : components){
+            if (itemObj.getCHECKBOX().isSelected()){
+                String itemName = itemObj.getComponentName();
+                double  itemPrice = itemObj.getComponentPrice();
+                int itemNr = itemObj.getComponentNr();
+                System.out.println(itemName +" "+itemObj +" " + itemNr);
+
+                ConfigurationItems item = new ConfigurationItems(itemNr,itemName,itemPrice);
+                System.out.println(item);
+                selectedItems.add(item);
+            }
+
+
+        } shoppingCart.setItems(selectedItems);
+
+        /*
         for ( Components item : components){
             if (item.getCHECKBOX().isSelected()){
                 selectedItems.add(item);
@@ -162,8 +178,12 @@ public class DataCollection {
             }
         }
         SortedList <Components> sortedList = new SortedList<>(selectedItems);
-        shoppingCart.setItems(sortedList);
+        shoppingCart.setItems(sortedList);*/
     }
+
+
+
+
 
     /** Sletter alle items fra listView */
     public static void clearShoppingCart(){
