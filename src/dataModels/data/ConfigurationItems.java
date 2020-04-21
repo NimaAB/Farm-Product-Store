@@ -34,9 +34,14 @@ public class ConfigurationItems {
         return price;
     }
 
+    @Override
+    public String toString() {
+        return nr + " "+ name + " "+ price;
+    }
     public String toString(String delimiter){
         return String.format("%s"+delimiter+"%s"+delimiter+"%s",getNr(),getName(),getPrice());
     }
+
 
     public double totalPrice(ArrayList<ConfigurationItems> configurationItemsList){
         double totalPris = 0;

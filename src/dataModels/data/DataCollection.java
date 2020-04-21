@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
+import validations.MyAlerts;
 import validations.customExceptions.InvalidFileException;
 
 import java.util.ArrayList;
@@ -168,7 +169,10 @@ public class DataCollection {
             }
 
 
-        } shoppingCart.setItems(selectedItems);
+        }
+        shoppingCart.setItems(selectedItems);
+
+
 
         /*
         for ( Components item : components){
