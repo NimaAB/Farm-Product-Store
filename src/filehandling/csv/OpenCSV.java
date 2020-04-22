@@ -4,10 +4,8 @@ import dataModels.dataFormats.ParseItems;
 import validations.customExceptions.InvalidFileException;
 import validations.customExceptions.InvalidItemDataException;
 import filehandling.ReaderAbstract;
-
 import java.io.*;
 import java.util.ArrayList;
-
 
 public class OpenCSV<T> extends ReaderAbstract<T> {
     private final String filePath;
@@ -16,20 +14,23 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
         this.filePath = filePath;
     }
 
+    @SuppressWarnings("unchecked")
     protected ArrayList<T> read(String filePath) throws InvalidItemDataException,InvalidFileException{
         ArrayList<T> items = new ArrayList<>();
         File path = new File(filePath);
         if(!path.exists()){
-            throw new InvalidFileException("Filen som du skal åpne finnes ikke. Prøv en annen fil.");
-        }else {
+            throw new InvalidFileException("Filen du prøver å åpne finnes ikke. Prøv en annen fil.");
+        } else {
             try {
                 FileReader file = new FileReader(path);
                 BufferedReader reader = new BufferedReader(file);
                 String line;
-                while((line =reader.readLine())!=null){
+                while((line =reader.readLine()) != null){
                     items.add((T)ParseItems.parseItem(line));
                 }
-            } catch (IOException e) { e.printStackTrace(); }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return items;
         }
     }

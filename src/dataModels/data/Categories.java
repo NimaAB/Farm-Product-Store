@@ -6,10 +6,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class Categories {
-    public static final String[] categories = { "All","RAM","Processor","Screen","Keyboard","Mouse","New Category..." };
+    private static final String[] categories = { "All","RAM","Processor","Screen","Keyboard","Mouse","New Category..." };
     private static final ObservableList<String> categories_obsList = FXCollections.observableArrayList(categories);
 
-    public static void categoryOnChange(ComboBox<String> categoryOptions, TextField txtNewCategory){
+    public static void fillCategoryCombobox(ComboBox<String> categoryOptions, TextField txtNewCategory){
         categoryOptions.setItems(categories_obsList);
         categoryOptions.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)->{
             if(newValue.equals("New Category...")){

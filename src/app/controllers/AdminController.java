@@ -25,8 +25,8 @@ public class AdminController implements Initializable {
     @FXML private BorderPane adminPane;
     @FXML private TextField nr, name, category, price, txtFilter;
     @FXML private TextArea specifications;
-    @FXML private ComboBox<String> optCategories;
-    @FXML private ComboBox<String> optFilterBy;
+    @FXML private ComboBox<String> categoriesCombobox;
+    @FXML private ComboBox<String> filterComboBox;
     @FXML private TableView<Components> tableview;
     private String file = "src/database/components.bin";
 
@@ -34,9 +34,9 @@ public class AdminController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         DataCollection.loadComponents(file);
         DataCollection.setTableView(tableview);
-        DataCollection.filterOnChange(optFilterBy);
+        DataCollection.fillFilterComboBox(filterComboBox);
         DataCollection.filterTableView(tableview,txtFilter);
-        Categories.categoryOnChange(optCategories,category);
+        Categories.fillCategoryCombobox(categoriesCombobox,category);
     }
 
     @FXML void createComponents(){
@@ -96,16 +96,17 @@ public class AdminController implements Initializable {
     }
 
     private void readingDone(WorkerStateEvent e){
-        try{
+        try {
             ArrayList<Components> componentsList = openCSV.call();
             for(Components el:componentsList){
                 DataCollection.addComponent(el);
             }
-        }catch (InvalidFileException exception){
+        } catch (InvalidFileException exception){
             MyAlerts.warningAlert(exception.getMessage());
         }
         adminPane.setDisable(false);
     }
+
     private void readingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
         MyAlerts.warningAlert("Thread Failed: " + e.getMessage());
@@ -119,7 +120,7 @@ public class AdminController implements Initializable {
         String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
                          "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
-        String pathStr1 =pathStr + ".csv";
+        String pathStr1 = pathStr + ".csv";
         String totalPathStr = "src\\database\\lagringsPlass\\" + pathStr1;
         if(!pathStr.isEmpty()){
             saveCSV = new SaveCSV<>(componentsToSave,totalPathStr);
@@ -138,6 +139,7 @@ public class AdminController implements Initializable {
         saveCSV.call();
         adminPane.setDisable(false);
     }
+
     private void writingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
         MyAlerts.warningAlert("Thread Failed: " + e.getMessage());

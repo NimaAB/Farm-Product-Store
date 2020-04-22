@@ -33,7 +33,7 @@ public class CostumerController implements Initializable {
         DataCollection.loadComponents(file);
         DataCollection.setTableView(costumerTV);
         DataCollection.filterTableView(costumerTV,txtFilter);
-        DataCollection.fillCombox(filtherCatogry);
+        DataCollection.fillCategoryComboBox(filtherCatogry);
 
 
     }
