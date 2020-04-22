@@ -133,7 +133,7 @@ public class DataCollection {
         comboBox.setValue("Velg Katogri");
 
         // den katogrie listen må vi koble til katogriene som allerede bestemt på admin nivå.
-        comboBox.getItems().addAll("All","Processor", "Screen", "RAM", "Keyboard", "Mouse");
+        comboBox.getItems().addAll(Categories.categories);
 
 
     }

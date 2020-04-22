@@ -6,7 +6,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
 public class Categories {
-    private static final String[] categories = { "RAM","Processor","Screen","Keyboard","Mouse","New Category..." };
+    public static final String[] categories = { "All","RAM","Processor","Screen","Keyboard","Mouse","New Category..." };
     private static final ObservableList<String> categories_obsList = FXCollections.observableArrayList(categories);
 
     public static void categoryOnChange(ComboBox<String> categoryOptions, TextField txtNewCategory){

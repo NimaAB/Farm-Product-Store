@@ -15,7 +15,7 @@ public class Validations {
     }
 
     public void validate_componentCategory(String componentCategory){
-        if(componentCategory.isEmpty()){ throw new IllegalArgumentException("Component category cannot be empty"); }
+        if(componentCategory.isEmpty()||componentCategory.equals("All")){ throw new IllegalArgumentException("Component category cannot be empty"); }
         this.componentCategory = componentCategory;
     }
 
