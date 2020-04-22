@@ -135,6 +135,7 @@ public class DataCollection {
     /** Viser alle komponent kategorier */
     public static void fillCategoryComboBox(ComboBox<String> comboBox ){
         ObservableList<String> categories = FXCollections.observableArrayList();
+        categories.add("All");
         for(Components item : components){
             if(!categories.contains(item.getComponentCategory())){
                 categories.add(item.getComponentCategory());
