@@ -189,6 +189,10 @@ public class DataCollection {
         }
         shoppingCart.setItems(selectedItems);
     }
+    public static void showTotalPrice(Label totalPriceLbl){
+        double totalPrice = ConfigurationItems.totalPrice(selectedItems);
+        totalPriceLbl.setText(Double.toString(totalPrice));
+    }
 
     public static boolean isModified() { return modified; }
 }
