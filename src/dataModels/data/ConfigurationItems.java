@@ -18,7 +18,7 @@ public class ConfigurationItems {
     private void setNr(int nr){
         this.nr=nr;
     }
-    private int getNr(){
+    public int getNr(){
         return nr;
     }
 

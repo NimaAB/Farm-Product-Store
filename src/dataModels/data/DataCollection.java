@@ -194,5 +194,11 @@ public class DataCollection {
         totalPriceLbl.setText(Double.toString(totalPrice));
     }
 
+    public static void  deleteItemList (ListView<ConfigurationItems> list, Label totalPriceLbl){
+        selectedItems.removeIf(item -> item.getNr() == list.getSelectionModel().getSelectedItem().getNr());
+        showTotalPrice(totalPriceLbl);
+
+    }
+
     public static boolean isModified() { return modified; }
 }

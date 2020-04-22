@@ -71,6 +71,11 @@ public class CostumerController implements Initializable {
     }
 
 
+    @FXML
+    void deleteItem(ActionEvent event) {
+        DataCollection.deleteItemList(shoppingCart, totalPriceLbl);
+
+    }
 
 
 }
