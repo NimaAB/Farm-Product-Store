@@ -1,5 +1,7 @@
 package dataModels.data;
 
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 
 public class ConfigurationItems {
@@ -43,7 +45,7 @@ public class ConfigurationItems {
     }
 
 
-    public double totalPrice(ArrayList<ConfigurationItems> configurationItemsList){
+    public static double totalPrice(ObservableList<ConfigurationItems> configurationItemsList){
         double totalPris = 0;
         for(ConfigurationItems item: configurationItemsList){
             totalPris += item.getPrice();
