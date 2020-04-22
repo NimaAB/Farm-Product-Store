@@ -145,6 +145,7 @@ public class DataCollection {
                 selectedCatogries.add(obj);
             }
         }
+        //Sjekk om All-Categories er valgt, Hvis ja så setter den TV som før:
         if(categoryName.equals("All")){
             selectedCatogries = components;
         }
@@ -156,6 +157,7 @@ public class DataCollection {
 
         for ( Components itemObj : components){
             if (itemObj.getCHECKBOX().isSelected()){
+                itemObj.getCHECKBOX().setSelected(false);
                 String itemName = itemObj.getComponentName();
                 double  itemPrice = itemObj.getComponentPrice();
                 int itemNr = itemObj.getComponentNr();
@@ -167,19 +169,18 @@ public class DataCollection {
                     if (doesItExist.toString().equals(item.toString())){
                         alerta = MyAlerts.confirmAlert("Varen finnes allerede i handlekurven.\n Vil du legge til ? " );
                         sjekk = true;
-                    if (alerta){
-                        selectedItems.add(item);
+                        if (alerta){
+                            selectedItems.add(item);
+                            break;
                         }
                     }
                 }
                 if (!sjekk){
                     selectedItems.add(item);
+                    break;
                 }
             }
         }
-
-       ;
-
         shoppingCart.setItems(selectedItems);
     }
 
