@@ -38,12 +38,11 @@ public class CostumerController implements Initializable {
 
     }
 
-
-
     @FXML
     void open(ActionEvent event){
         //brukes for csv fil.
     }
+
 
     @FXML
     void save(ActionEvent event){

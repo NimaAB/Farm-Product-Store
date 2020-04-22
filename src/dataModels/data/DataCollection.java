@@ -133,7 +133,7 @@ public class DataCollection {
         comboBox.setValue("Velg Katogri");
 
         // den katogrie listen må vi koble til katogriene som allerede bestemt på admin nivå.
-        comboBox.getItems().addAll("Processor", "Screen", "RAM", "Keyboard", "Mouse");
+        comboBox.getItems().addAll("All","Processor", "Screen", "RAM", "Keyboard", "Mouse");
 
 
     }
@@ -145,13 +145,15 @@ public class DataCollection {
                 selectedCatogries.add(obj);
             }
         }
+        if(categoryName.equals("All")){
+            selectedCatogries = components;
+        }
         SortedList<Components> sortedList = new SortedList<>(selectedCatogries);
         tableView.setItems(sortedList);
     }
 
     public static void addToShoppingCart(ListView <ConfigurationItems> shoppingCart){
-        Boolean alerta;
-        Boolean sjekk=false;
+
         for ( Components itemObj : components){
             if (itemObj.getCHECKBOX().isSelected()){
                 String itemName = itemObj.getComponentName();
@@ -159,19 +161,20 @@ public class DataCollection {
                 int itemNr = itemObj.getComponentNr();
 
                 ConfigurationItems item = new ConfigurationItems(itemNr,itemName,itemPrice);
-
+                boolean alerta;
+                boolean sjekk = false;
                 for ( ConfigurationItems doesItExist : selectedItems){
                     if (doesItExist.toString().equals(item.toString())){
-                    alerta = MyAlerts.confirmAlert("Varen finnes allerede i handlekurven.\n Vil du legge til ? " );
-                    sjekk =true;
-                    if (alerta){selectedItems.add(item);
+                        alerta = MyAlerts.confirmAlert("Varen finnes allerede i handlekurven.\n Vil du legge til ? " );
+                        sjekk = true;
+                    if (alerta){
+                        selectedItems.add(item);
+                        }
                     }
-                    }
-
-
                 }
                 if (!sjekk){
-                selectedItems.add(item);}
+                    selectedItems.add(item);
+                }
             }
         }
 
