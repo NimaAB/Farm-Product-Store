@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import validations.MyAlerts;
 import validations.customExceptions.InvalidFileException;
 
+import javax.print.attribute.standard.Finishings;
 import java.util.ArrayList;
 import java.util.Observable;
 
@@ -149,6 +150,8 @@ public class DataCollection {
     }
 
     public static void addToShoppingCart(ListView <ConfigurationItems> shoppingCart){
+        Boolean alerta;
+        Boolean sjekk=false;
         for ( Components itemObj : components){
             if (itemObj.getCHECKBOX().isSelected()){
                 String itemName = itemObj.getComponentName();
@@ -156,9 +159,24 @@ public class DataCollection {
                 int itemNr = itemObj.getComponentNr();
 
                 ConfigurationItems item = new ConfigurationItems(itemNr,itemName,itemPrice);
-                selectedItems.add(item);
+
+                for ( ConfigurationItems doesItExist : selectedItems){
+                    if (doesItExist.toString().equals(item.toString())){
+                    alerta = MyAlerts.confirmAlert("Varen finnes allerede i handlekurven.\n Vil du legge til ? " );
+                    sjekk =true;
+                    if (alerta){selectedItems.add(item);
+                    }
+                    }
+
+
+                }
+                if (!sjekk){
+                selectedItems.add(item);}
             }
         }
+
+       ;
+
         shoppingCart.setItems(selectedItems);
     }
 
