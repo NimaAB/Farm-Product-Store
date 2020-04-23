@@ -18,7 +18,7 @@ import java.util.ArrayList;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
-    private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
+    protected static ObservableList<Components> selectedItems = FXCollections.observableArrayList();
     public static ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
     public static boolean modified = false;
     private static boolean reloadComponents = true;
@@ -134,8 +134,6 @@ public class DataCollection {
     }
 
 
-
-
     /** Viser alle komponent kategorier i en comboBox */
     public static void fillCategoryComboBox(ComboBox<String> comboBox ){
         ObservableList<String> categories = FXCollections.observableArrayList();
@@ -171,18 +169,18 @@ public class DataCollection {
 
     /** Legger ConfigItems i listview */
     public static void addToShoppingCart(){
-        for(Components c : components){
-            if(c.getCHECKBOX().isSelected()){
-                if(selectedItems.contains(c)){
-                    boolean response = MyAlerts.confirmAlert("<"+c.getComponentName()+"> finnes allerede i kurven.\nVil du legge en til?");
-                    if(response){
+        for(Components c : components) {
+            if (c.getCHECKBOX().isSelected()) {
+                if (selectedItems.contains(c)) {
+                    boolean response = MyAlerts.confirmAlert("<" + c.getComponentName() + "> finnes allerede i kurven.\nVil du legge en til?");
+                    if (response) {
                         selectedItems.add(c);
                         c.getCHECKBOX().setSelected(false);
 
                         int nr = c.getComponentNr();
                         String navn = c.getComponentName();
                         double pris = c.getComponentPrice();
-                        configItems.add(new ConfigurationItems(nr,navn,pris));
+                        configItems.add(new ConfigurationItems(nr, navn, pris));
                     }
                 } else {
                     selectedItems.add(c);
@@ -191,16 +189,22 @@ public class DataCollection {
                     int nr = c.getComponentNr();
                     String navn = c.getComponentName();
                     double pris = c.getComponentPrice();
-                    configItems.add(new ConfigurationItems(nr,navn,pris));
+                    configItems.add(new ConfigurationItems(nr, navn, pris));
                 }
             }
         }
     }
     //Sjekker om configItems er tom eller ikke:
     public static void loadingConfig(ArrayList<ConfigurationItems> items){
-        configItems.clear();
+        clearList();
         configItems.addAll(items);
-
+        for(ConfigurationItems item: items){
+            for(Components c:components){
+                if(c.getComponentNr() == item.getNr()){
+                    selectedItems.add(c);
+                }
+            }
+        }
     }
 
     /** Viser total prisen til alle ConfigItems */
@@ -216,8 +220,11 @@ public class DataCollection {
     }
 
     /** Sletter ConfigItems fra listview */
-    public static void  deleteItemList (ListView<ConfigurationItems> list, Label totalPriceLbl){
-        configItems.remove(list.getSelectionModel().getSelectedItem());
+    public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
+        for(ConfigurationItems item : items){
+            selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
+            configItems.remove(item);
+        }
         showTotalPrice(totalPriceLbl);
     }
 }

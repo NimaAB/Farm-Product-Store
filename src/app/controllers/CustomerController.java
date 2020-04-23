@@ -6,6 +6,7 @@ import dataModels.data.ConfigurationItems;
 import dataModels.data.DataCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
+import javafx.collections.ObservableList;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -124,7 +125,8 @@ public class CustomerController implements Initializable {
 
     @FXML
     void deleteItem() {
-        DataCollection.deleteItemList(shoppingCart, totalPriceLbl);
+        ObservableList<ConfigurationItems> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
+        DataCollection.deleteItemList(selectedItems,totalPriceLbl);
     }
 
     @FXML
