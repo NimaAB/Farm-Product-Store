@@ -30,15 +30,13 @@ public class DataCollection {
         String fileExtension = filepath.substring(filepath.lastIndexOf("."));
         ArrayList<Components> componentsList;
         boolean loaded;
-
         try {
             loadedFile = filepath;
-
             if (fileExtension.equals(".bin")) {
                 OpenBin<Components> read = new OpenBin<>(filepath);
                 componentsList = read.call();
                 loaded = false;
-            } else {
+            } else{
                 OpenCSV<Components> read = new OpenCSV<>(filepath);
                 componentsList = read.call();
                 loaded = true;
