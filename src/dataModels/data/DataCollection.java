@@ -174,7 +174,7 @@ public class DataCollection {
         for(Components c : components){
             if(c.getCHECKBOX().isSelected()){
                 if(selectedItems.contains(c)){
-                    boolean response = MyAlerts.confirmAlert("Vil du legge <" + c.getComponentName() + "> igjen?");
+                    boolean response = MyAlerts.confirmAlert("<"+c.getComponentName()+"> finnes allerede i kruven.\nVil du legge en til?");
                     if(response){
                         selectedItems.add(c);
                         int nr = c.getComponentNr();
@@ -207,7 +207,7 @@ public class DataCollection {
 
     /** Sletter ConfigItems fra listview */
     public static void  deleteItemList (ListView<ConfigurationItems> list, Label totalPriceLbl){
-        configItems.removeIf(item -> item.getNr() == list.getSelectionModel().getSelectedItem().getNr());
+        configItems.remove(list.getSelectionModel().getSelectedItem());
         showTotalPrice(totalPriceLbl);
     }
 }
