@@ -18,7 +18,7 @@ public class CostumerController implements Initializable {
     @FXML BorderPane customerPane;
     @FXML TableView<Components> costumerTV;
     @FXML TextField txtFilter;
-    @FXML private ComboBox<String> filtherCatogry;
+    @FXML private ComboBox<String> categoryComboBox;
     @FXML private ListView <ConfigurationItems> shoppingCart;
     @FXML private Label totalPriceLbl;
 
@@ -29,7 +29,7 @@ public class CostumerController implements Initializable {
         DataCollection.loadComponents(file);
         DataCollection.setTableView(costumerTV);
         DataCollection.filterTableView(costumerTV,txtFilter);
-        DataCollection.fillCategoryComboBox(filtherCatogry);
+        DataCollection.fillCategoryComboBox(categoryComboBox);
         DataCollection.setListView(shoppingCart);
     }
 
@@ -46,26 +46,25 @@ public class CostumerController implements Initializable {
     }
 
     @FXML
-    void changeTable(ActionEvent event) {
-        String choosenCatogry = filtherCatogry.getValue();
+    void changeTable() {
+        String choosenCatogry = categoryComboBox.getValue();
         DataCollection.selectedTable(choosenCatogry,costumerTV);
     }
 
     @FXML
-    void addItemToCart(ActionEvent event) {
+    void addItemToCart() {
         DataCollection.addToShoppingCart();
         DataCollection.showTotalPrice(totalPriceLbl);
     }
 
-    @FXML void clearList(ActionEvent event) {
-        DataCollection.newConfiguration();
+    @FXML void clearList() {
+        DataCollection.clearList();
         DataCollection.showTotalPrice(totalPriceLbl);
     }
 
     @FXML
-    void deleteItem(ActionEvent event) {
+    void deleteItem() {
         DataCollection.deleteItemList(shoppingCart, totalPriceLbl);
-
     }
 
     @FXML

@@ -174,7 +174,7 @@ public class DataCollection {
         for(Components c : components){
             if(c.getCHECKBOX().isSelected()){
                 if(selectedItems.contains(c)){
-                    boolean response = MyAlerts.confirmAlert("<"+c.getComponentName()+"> finnes allerede i kruven.\nVil du legge en til?");
+                    boolean response = MyAlerts.confirmAlert("<"+c.getComponentName()+"> finnes allerede i kurven.\nVil du legge en til?");
                     if(response){
                         selectedItems.add(c);
                         int nr = c.getComponentNr();
@@ -200,7 +200,7 @@ public class DataCollection {
     }
 
     /** Resetter listview for en ny konfigurasjon */
-    public static void newConfiguration(){
+    public static void clearList(){
         selectedItems.clear();
         configItems.clear();
     }
