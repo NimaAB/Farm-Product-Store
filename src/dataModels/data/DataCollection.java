@@ -15,10 +15,11 @@ import validations.customExceptions.InvalidFileException;
 
 import java.util.ArrayList;
 
+
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
     private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
-    private static final ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
+    public static ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
     public static boolean modified = false;
     private static boolean reloadComponents = true;
     private static String loadedFile;
@@ -193,6 +194,15 @@ public class DataCollection {
                     configItems.add(new ConfigurationItems(nr,navn,pris));
                 }
             }
+        }
+    }
+    //Sjekker om configItems er tom eller ikke:
+    public static void loadingConfig(ArrayList<ConfigurationItems> items){
+        if(configItems.isEmpty()){
+            configItems.addAll(items);
+        }else{
+            configItems.removeAll();
+            configItems.addAll(items);
         }
     }
 

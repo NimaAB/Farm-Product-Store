@@ -72,7 +72,6 @@ public class AdminController implements Initializable {
     }
 
     private OpenCSV<Components> openCSV;
-
     @FXML void open(){
         String melding = "last opp en fil til programmet fra denne plassering: src\\database\\lagringsPlass " +
                          "\nSkriv navnet til filen du vil laste opp: ";

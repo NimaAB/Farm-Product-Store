@@ -20,6 +20,6 @@ public class LoginController {
         if(isAdmin.isSelected()){
             Load.window("views/adminView.fxml","Admin",stage);
         } else {
-            Load.window("views/costumerView.fxml","Customer",stage); }
+            Load.window("views/customerView.fxml","Customer",stage); }
     }
 }
