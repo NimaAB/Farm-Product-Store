@@ -23,7 +23,7 @@ public class Load {
 
     /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
     public static void exit(Stage stage){
-        if(DataCollection.isModified()){
+        if(DataCollection.modified){
             boolean response = MyAlerts.confirmAlert("Vil du lagre alle endringer?");
 
             if(response){
