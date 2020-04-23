@@ -177,6 +177,8 @@ public class DataCollection {
                     boolean response = MyAlerts.confirmAlert("<"+c.getComponentName()+"> finnes allerede i kurven.\nVil du legge en til?");
                     if(response){
                         selectedItems.add(c);
+                        c.getCHECKBOX().setSelected(false);
+
                         int nr = c.getComponentNr();
                         String navn = c.getComponentName();
                         double pris = c.getComponentPrice();
@@ -184,6 +186,8 @@ public class DataCollection {
                     }
                 } else {
                     selectedItems.add(c);
+                    c.getCHECKBOX().setSelected(false);
+
                     int nr = c.getComponentNr();
                     String navn = c.getComponentName();
                     double pris = c.getComponentPrice();
