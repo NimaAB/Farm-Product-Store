@@ -76,7 +76,6 @@ public class DataCollection {
     public static void saveData(){
         ArrayList<Components> data = new ArrayList<>(components);
         String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
-
         if(fileExtension.equals(".bin")){
             SaveBin<Components> write = new SaveBin<>(data, loadedFile);
             write.call();
@@ -195,7 +194,11 @@ public class DataCollection {
     }
 
     public static void  deleteItemList (ListView<ConfigurationItems> list, Label totalPriceLbl){
-        selectedItems.removeIf(item -> item.getNr() == list.getSelectionModel().getSelectedItem().getNr());
+        //selectedItems.removeIf(item -> item.getNr() == list.getSelectionModel().getSelectedItem().getNr());
+        ObservableList<ConfigurationItems> items = list.getSelectionModel().getSelectedItems();
+        for(ConfigurationItems item: items){
+            selectedItems.remove(item);
+        }
         showTotalPrice(totalPriceLbl);
 
     }
