@@ -113,7 +113,6 @@ public class AdminController implements Initializable {
     }
 
     private SaveCSV<Components> saveCSV;
-
     @FXML void save(){
         ArrayList<Components> componentsToSave = new ArrayList<>(DataCollection.components);
         String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +

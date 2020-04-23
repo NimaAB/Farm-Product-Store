@@ -198,12 +198,9 @@ public class DataCollection {
     }
     //Sjekker om configItems er tom eller ikke:
     public static void loadingConfig(ArrayList<ConfigurationItems> items){
-        if(configItems.isEmpty()){
-            configItems.addAll(items);
-        }else{
-            configItems.removeAll();
-            configItems.addAll(items);
-        }
+        configItems.clear();
+        configItems.addAll(items);
+
     }
 
     /** Viser total prisen til alle ConfigItems */
