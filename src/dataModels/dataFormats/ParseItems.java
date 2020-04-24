@@ -8,13 +8,12 @@ import validations.customExceptions.InvalidItemDataException;
 
 public class ParseItems {
     public static Object parseItem(String str) throws InvalidItemDataException {
-        String[] stringArray = str.split(";");
         String[] itemsArray = str.split(",");
 
-        if(stringArray.length ==3){
-            String nrStr = stringArray[0];
-            String name = stringArray[1];
-            String priceStr = stringArray[2].replace(",",".");
+        if(itemsArray.length ==3){
+            String nrStr = itemsArray[0];
+            String name = itemsArray[1];
+            String priceStr = itemsArray[2].replace(",",".");
             try{
                int nr = Integer.parseInt(nrStr);
                double price= Double.parseDouble(priceStr);
@@ -24,11 +23,11 @@ public class ParseItems {
             }
         }
         else if(itemsArray.length==5){
-            String componentNumber = stringArray[0];
-            String componentName = stringArray[1];
-            String componentCategory = stringArray[2];
-            String componentSpecs = stringArray[3];
-            String componentPrice = stringArray[4];
+            String componentNumber = itemsArray[0];
+            String componentName = itemsArray[1];
+            String componentCategory = itemsArray[2];
+            String componentSpecs = itemsArray[3];
+            String componentPrice = itemsArray[4];
             CheckBox b = new CheckBox();
             return new Components(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
         }

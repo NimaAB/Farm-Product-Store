@@ -12,13 +12,12 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import validations.Alerts;
 import validations.customExceptions.InvalidFileException;
-
 import java.util.ArrayList;
 
 public class DataCollection {
     public static ObservableList<Components> components = FXCollections.observableArrayList();
-    private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
-    private static final ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
+    protected static ObservableList<Components> selectedItems = FXCollections.observableArrayList();
+    public static ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
     public static boolean modified = false;
     private static boolean reloadComponents = true;
     private static String loadedFile;
@@ -29,15 +28,13 @@ public class DataCollection {
         String fileExtension = filepath.substring(filepath.lastIndexOf("."));
         ArrayList<Components> componentsList;
         boolean loaded;
-
         try {
             loadedFile = filepath;
-
             if (fileExtension.equals(".bin")) {
                 OpenBin<Components> read = new OpenBin<>(filepath);
                 componentsList = read.call();
                 loaded = false;
-            } else {
+            } else{
                 OpenCSV<Components> read = new OpenCSV<>(filepath);
                 componentsList = read.call();
                 loaded = true;
@@ -77,7 +74,6 @@ public class DataCollection {
     public static void saveData(){
         ArrayList<Components> data = new ArrayList<>(components);
         String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
-
         if(fileExtension.equals(".bin")){
             SaveBin<Components> write = new SaveBin<>(data, loadedFile);
             write.call();
@@ -134,8 +130,6 @@ public class DataCollection {
     }
 
 
-
-
     /** Viser alle komponent kategorier i en comboBox */
     public static void fillCategoryComboBox(ComboBox<String> comboBox ){
         ObservableList<String> categories = FXCollections.observableArrayList();
@@ -171,18 +165,18 @@ public class DataCollection {
 
     /** Legger ConfigItems i listview */
     public static void addToShoppingCart(){
-        for(Components c : components){
-            if(c.getCheckBox().isSelected()){
-                if(selectedItems.contains(c)){
-                    boolean response = Alerts.confirm("<"+c.getComponentName()+"> finnes allerede i kurven.\nVil du legge en til?");
-                    if(response){
+        for(Components c : components) {
+            if (c.getCheckBox().isSelected()) {
+                if (selectedItems.contains(c)) {
+                    boolean response = Alerts.confirm("\"" + c.getComponentName() + "\" finnes allerede i kurven.\nVil du legge en til?");
+                    if (response) {
                         selectedItems.add(c);
                         c.getCheckBox().setSelected(false);
 
                         int nr = c.getComponentNr();
                         String navn = c.getComponentName();
                         double pris = c.getComponentPrice();
-                        configItems.add(new ConfigurationItems(nr,navn,pris));
+                        configItems.add(new ConfigurationItems(nr, navn, pris));
                     }
                 } else {
                     selectedItems.add(c);
@@ -191,7 +185,20 @@ public class DataCollection {
                     int nr = c.getComponentNr();
                     String navn = c.getComponentName();
                     double pris = c.getComponentPrice();
-                    configItems.add(new ConfigurationItems(nr,navn,pris));
+                    configItems.add(new ConfigurationItems(nr, navn, pris));
+                }
+            }
+        }
+    }
+
+    /**Sjekker om configItems er tom eller ikke:*/
+    public static void loadingConfig(ArrayList<ConfigurationItems> items){
+        clearList();
+        configItems.addAll(items);
+        for(ConfigurationItems item: items){
+            for(Components c:components){
+                if(c.getComponentNr() == item.getNr()){
+                    selectedItems.add(c);
                 }
             }
         }
@@ -210,8 +217,11 @@ public class DataCollection {
     }
 
     /** Sletter ConfigItems fra listview */
-    public static void  deleteItemList (ListView<ConfigurationItems> list, Label totalPriceLbl){
-        configItems.remove(list.getSelectionModel().getSelectedItem());
+    public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
+        for(ConfigurationItems item : items){
+            selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
+            configItems.remove(item);
+        }
         showTotalPrice(totalPriceLbl);
     }
 }
