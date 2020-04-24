@@ -35,7 +35,7 @@
                     <columns>
                         <TableColumn editable="false" maxWidth="92.0" minWidth="40.0" prefWidth="77.0" resizable="false" text="Velg">
                             <cellValueFactory>
-                                <PropertyValueFactory property="CHECKBOX" />
+                                <PropertyValueFactory property="checkbox" />
                             </cellValueFactory>
                         </TableColumn>
 

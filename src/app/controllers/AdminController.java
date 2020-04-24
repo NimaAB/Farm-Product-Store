@@ -12,9 +12,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import validations.MyAlerts;
+import validations.Alerts;
 import validations.customExceptions.InvalidFileException;
-
 import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
@@ -52,9 +51,9 @@ public class AdminController implements Initializable {
             DataCollection.addComponent(component);
             resetFields();
 
-            MyAlerts.successAlert("Komponent Opprettet");
+            Alerts.success("Komponent Opprettet");
         } catch (IllegalArgumentException e) {
-            MyAlerts.warningAlert(e.getMessage());
+            Alerts.warning(e.getMessage());
         }
     }
 
@@ -91,7 +90,7 @@ public class AdminController implements Initializable {
             th.setDaemon(true);
             th.start();
         } else {
-            MyAlerts.warningAlert("Ingen fil er valgt");
+            Alerts.warning("Ingen fil er valgt");
         }
     }
 
@@ -102,14 +101,14 @@ public class AdminController implements Initializable {
                 DataCollection.addComponent(el);
             }
         } catch (InvalidFileException exception){
-            MyAlerts.warningAlert(exception.getMessage());
+            Alerts.warning(exception.getMessage());
         }
         adminPane.setDisable(false);
     }
 
     private void readingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
-        MyAlerts.warningAlert("Thread Failed: " + e.getMessage());
+        Alerts.warning("Thread Failed: " + e.getMessage());
         adminPane.setDisable(false);
     }
 
@@ -131,7 +130,7 @@ public class AdminController implements Initializable {
             th.setDaemon(true);
             th.start();
         } else {
-            MyAlerts.warningAlert("Ingen fil er valgt");
+            Alerts.warning("Ingen fil er valgt");
         }
     }
 
@@ -142,7 +141,7 @@ public class AdminController implements Initializable {
 
     private void writingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
-        MyAlerts.warningAlert("Thread Failed: " + e.getMessage());
+        Alerts.warning("Thread Failed: " + e.getMessage());
         adminPane.setDisable(false);
     }
 

@@ -35,7 +35,7 @@
                <columns>
                   <TableColumn maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" editable="false">
                      <cellValueFactory>
-                        <PropertyValueFactory property="CHECKBOX" />
+                        <PropertyValueFactory property="checkbox" />
                      </cellValueFactory>
                   </TableColumn>
 

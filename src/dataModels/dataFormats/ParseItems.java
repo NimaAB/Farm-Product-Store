@@ -3,7 +3,7 @@ package dataModels.dataFormats;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
 import javafx.scene.control.CheckBox;
-import validations.MyAlerts;
+import validations.Alerts;
 import validations.customExceptions.InvalidItemDataException;
 
 public class ParseItems {
@@ -20,7 +20,7 @@ public class ParseItems {
                double price= Double.parseDouble(priceStr);
                return new ConfigurationItems(nr,name,price);
             }catch (NumberFormatException e){
-                MyAlerts.warningAlert(e.getMessage());
+                Alerts.warning(e.getMessage());
             }
         }
         else if(itemsArray.length==5){

@@ -10,8 +10,7 @@ public class Validations {
     private transient double componentPrice;
 
     private String replaceComma(String toValidate){
-        String comma = ",";
-        if(toValidate.contains(comma)){
+        if(toValidate.contains(",")){
             toValidate = toValidate.replace(',','-');
         }
         return toValidate;
