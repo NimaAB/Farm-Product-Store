@@ -33,9 +33,10 @@
          <children>
             <TableView fx:id="tableview" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <columns>
+
                   <TableColumn maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" editable="false">
                      <cellValueFactory>
-                        <PropertyValueFactory property="checkbox" />
+                        <PropertyValueFactory property="checkBox"/>
                      </cellValueFactory>
                   </TableColumn>
 
@@ -68,6 +69,7 @@
                         <PropertyValueFactory property="componentPrice" />
                      </cellValueFactory>
                   </TableColumn>
+
                </columns>
             </TableView>
             <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />

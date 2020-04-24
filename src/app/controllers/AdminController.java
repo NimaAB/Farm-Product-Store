@@ -47,7 +47,7 @@ public class AdminController implements Initializable {
             String price = this.price.getText();
             CheckBox b = new CheckBox();
 
-            Components component = new Components(nr,name,category,specs,price, b);
+            Components component = new Components(nr,name,category,specs,price,b);
             DataCollection.addComponent(component);
             resetFields();
 

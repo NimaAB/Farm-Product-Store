@@ -46,7 +46,7 @@ public class DataCollection {
             if (reloadComponents) {
                 for (Components c : componentsList) {
                     CheckBox checkBox = new CheckBox();
-                    c.setCheckbox(checkBox);
+                    c.setCheckBox(checkBox);
                     components.add(c);
                     reloadComponents = false;
                 }
@@ -63,7 +63,7 @@ public class DataCollection {
 
     /** Sletter alle komponenter som er valgt fra tabellen */
     public static void deleteSelectedComponents(){
-        components.removeIf(components -> components.getCheckbox().isSelected());
+        components.removeIf(components -> components.getCheckBox().isSelected());
         modified = true;
     }
 
@@ -172,12 +172,12 @@ public class DataCollection {
     /** Legger ConfigItems i listview */
     public static void addToShoppingCart(){
         for(Components c : components){
-            if(c.getCheckbox().isSelected()){
+            if(c.getCheckBox().isSelected()){
                 if(selectedItems.contains(c)){
                     boolean response = Alerts.confirm("<"+c.getComponentName()+"> finnes allerede i kurven.\nVil du legge en til?");
                     if(response){
                         selectedItems.add(c);
-                        c.getCheckbox().setSelected(false);
+                        c.getCheckBox().setSelected(false);
 
                         int nr = c.getComponentNr();
                         String navn = c.getComponentName();
@@ -186,7 +186,7 @@ public class DataCollection {
                     }
                 } else {
                     selectedItems.add(c);
-                    c.getCheckbox().setSelected(false);
+                    c.getCheckBox().setSelected(false);
 
                     int nr = c.getComponentNr();
                     String navn = c.getComponentName();

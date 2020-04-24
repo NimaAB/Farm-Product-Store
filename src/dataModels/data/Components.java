@@ -16,10 +16,10 @@ public class Components implements Serializable {
     private transient SimpleStringProperty componentSpecs;
     private transient SimpleStringProperty componentCategory;
     private transient SimpleDoubleProperty componentPrice;
-    private transient CheckBox checkbox;
+    private transient CheckBox checkBox;
     private transient final Validations DATA = new Validations();
 
-    public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox checkbox){
+    public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox checkBox){
         DATA.validate_componentNumber(componentNr);
         DATA.validate_componentName(componentName);
         DATA.validate_componentCategory(componentCategory);
@@ -31,7 +31,7 @@ public class Components implements Serializable {
         this.componentCategory = new SimpleStringProperty(DATA.getComponentCategory());
         this.componentSpecs = new SimpleStringProperty(DATA.getComponentSpecs());
         this.componentPrice = new SimpleDoubleProperty(DATA.getComponentPrice());
-        this.checkbox = checkbox;
+        this.checkBox = checkBox;
     }
 
     public void setComponentNr(String componentNr) {
@@ -59,8 +59,8 @@ public class Components implements Serializable {
         this.componentPrice.set(DATA.getComponentPrice());
     }
 
-    public void setCheckbox(CheckBox checkbox) {
-        this.checkbox = checkbox;
+    public void setCheckBox(CheckBox checkBox) {
+        this.checkBox = checkBox;
     }
 
     public String toString(){
@@ -74,7 +74,7 @@ public class Components implements Serializable {
     public String getComponentSpecs() { return componentSpecs.getValue(); }
     public String getComponentCategory() { return componentCategory.getValue(); }
     public double getComponentPrice() { return componentPrice.getValue(); }
-    public CheckBox getCheckbox() { return checkbox; }
+    public CheckBox getCheckBox() { return checkBox; }
 
     private void writeObject(ObjectOutputStream s) throws IOException{
         s.defaultWriteObject();

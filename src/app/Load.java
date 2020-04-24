@@ -18,7 +18,7 @@ public class Load {
             stage.setTitle(title);
             stage.setScene(new Scene(root));
             stage.show();
-        } catch(IOException e){ e.printStackTrace(); }
+        } catch (IOException e){ e.printStackTrace(); }
     }
 
     /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
