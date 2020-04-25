@@ -4,59 +4,59 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
-import validations.Validations;
+import validations.Validator;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 public class Components implements Serializable {
+    private static final long serialVersionUID = 1;
     private transient SimpleIntegerProperty componentNr;
     private transient SimpleStringProperty componentName;
     private transient SimpleStringProperty componentSpecs;
     private transient SimpleStringProperty componentCategory;
     private transient SimpleDoubleProperty componentPrice;
     private transient CheckBox checkBox;
-    private transient final Validations DATA = new Validations();
 
     public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox checkBox){
-        DATA.validate_componentNumber(componentNr);
-        DATA.validate_componentName(componentName);
-        DATA.validate_componentCategory(componentCategory);
-        DATA.validate_componentSpecs(componentSpecs);
-        DATA.validate_componentPrice(componentPrice);
+        Validator.validate_componentNumber(componentNr);
+        Validator.validate_componentName(componentName);
+        Validator.validate_componentCategory(componentCategory);
+        Validator.validate_componentSpecs(componentSpecs);
+        Validator.validate_componentPrice(componentPrice);
 
-        this.componentNr = new SimpleIntegerProperty(DATA.getComponentNumber());
-        this.componentName = new SimpleStringProperty(DATA.getComponentName());
-        this.componentCategory = new SimpleStringProperty(DATA.getComponentCategory());
-        this.componentSpecs = new SimpleStringProperty(DATA.getComponentSpecs());
-        this.componentPrice = new SimpleDoubleProperty(DATA.getComponentPrice());
+        this.componentNr = new SimpleIntegerProperty(Validator.getComponentNumber());
+        this.componentName = new SimpleStringProperty(Validator.getComponentName());
+        this.componentCategory = new SimpleStringProperty(Validator.getComponentCategory());
+        this.componentSpecs = new SimpleStringProperty(Validator.getComponentSpecs());
+        this.componentPrice = new SimpleDoubleProperty(Validator.getComponentPrice());
         this.checkBox = checkBox;
     }
 
     public void setComponentNr(String componentNr) {
-        DATA.validate_componentNumber(componentNr);
-        this.componentNr.set(DATA.getComponentNumber());
+        Validator.validate_componentNumber(componentNr);
+        this.componentNr.set(Validator.getComponentNumber());
     }
 
     public void setComponentName(String componentName) {
-        DATA.validate_componentName(componentName);
-        this.componentName.set(DATA.getComponentName());
+        Validator.validate_componentName(componentName);
+        this.componentName.set(Validator.getComponentName());
     }
 
     public void setComponentSpecs(String componentSpecs) {
-        DATA.validate_componentSpecs(componentSpecs);
-        this.componentSpecs.set(DATA.getComponentSpecs());
+        Validator.validate_componentSpecs(componentSpecs);
+        this.componentSpecs.set(Validator.getComponentSpecs());
     }
 
     public void setComponentCategory(String componentCategory) {
-        DATA.validate_componentCategory(componentCategory);
-        this.componentCategory.set(DATA.getComponentCategory());
+        Validator.validate_componentCategory(componentCategory);
+        this.componentCategory.set(Validator.getComponentCategory());
     }
 
     public void setComponentPrice(String componentPrice) {
-        DATA.validate_componentPrice(componentPrice);
-        this.componentPrice.set(DATA.getComponentPrice());
+        Validator.validate_componentPrice(componentPrice);
+        this.componentPrice.set(Validator.getComponentPrice());
     }
 
     public void setCheckBox(CheckBox checkBox) {

@@ -3,7 +3,8 @@ package app.controllers;
 import app.Load;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
-import dataModels.data.DataCollection;
+import dataModels.dataCollection.ListViewCollection;
+import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.collections.ObservableList;
@@ -28,16 +29,15 @@ public class CustomerController implements Initializable {
     @FXML private ComboBox<String> categoryComboBox;
     @FXML private ListView <ConfigurationItems> shoppingCart;
     @FXML private Label totalPriceLbl;
-
-    private String file = "src/database/components.bin";
+    private final String file = "src/database/components.bin"; // inneholder komponenter som vises i tableView
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        DataCollection.loadComponents(file);
-        DataCollection.setTableView(costumerTV);
-        DataCollection.filterTableView(costumerTV,txtFilter);
-        DataCollection.fillCategoryComboBox(categoryComboBox);
-        DataCollection.setListView(shoppingCart);
+        TableViewCollection.loadComponents(file);
+        TableViewCollection.setTableView(costumerTV);
+        TableViewCollection.filterTableView(costumerTV,txtFilter);
+        ListViewCollection.fillCategoryComboBox(categoryComboBox);
+        ListViewCollection.setListView(shoppingCart);
     }
 
     private OpenCSV<ConfigurationItems> openCSV;
@@ -49,8 +49,8 @@ public class CustomerController implements Initializable {
         String pathStr1 = "src\\database\\lagringsPlass\\";
         String totalPathStr = pathStr1 + pathStr + ".csv";
         if(pathStr != null){
-            file = totalPathStr;
-            openCSV = new OpenCSV<>(file);
+            ListViewCollection.setOpenedFile(totalPathStr);
+            openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
             openCSV.setOnFailed(this::readingFailed);
             Thread thread = new Thread(openCSV);
@@ -60,31 +60,34 @@ public class CustomerController implements Initializable {
         }
     }
     private void readingDone(WorkerStateEvent e) {
-        try{
+        try {
             ArrayList<ConfigurationItems> configFromFile = openCSV.call();
-            DataCollection.loadingConfig(configFromFile);
-            DataCollection.showTotalPrice(totalPriceLbl);
-        }catch (InvalidFileException exception){
+            ListViewCollection.loadingConfig(configFromFile);
+            ListViewCollection.showTotalPrice(totalPriceLbl);
+            ListViewCollection.setModified(false);
+        } catch (InvalidFileException exception){
             Alerts.warning(exception.getMessage());
+            exception.printStackTrace();
         }
         customerPane.setDisable(false);
     }
     private void readingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
-        Alerts.warning("Thread Faild: " + e.getMessage());
+        Alerts.warning("Thread Failed: " + e.getMessage());
+        e.printStackTrace();
         customerPane.setDisable(false);
     }
     private SaveCSV<ConfigurationItems>saveCSV;
     @FXML
     void save(ActionEvent event){
-        //brukes for csv fil.
-        ArrayList<ConfigurationItems> configToSave = new ArrayList<>(DataCollection.configItems);
+        ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 = pathStr + ".csv";
         String totalPathStr = "src\\database\\lagringsPlass\\" + pathStr1;
         if(!pathStr.isEmpty()){
+            ListViewCollection.setModified(false);
             saveCSV = new SaveCSV<>(configToSave,totalPathStr);
             saveCSV.setOnSucceeded(this::writingDone);
             saveCSV.setOnFailed(this::writingFailed);
@@ -107,30 +110,43 @@ public class CustomerController implements Initializable {
     @FXML
     void changeTable() {
         String choosenCatogry = categoryComboBox.getValue();
-        DataCollection.selectedTable(choosenCatogry,costumerTV);
+        ListViewCollection.selectedTable(choosenCatogry,costumerTV);
     }
 
     @FXML
     void addItemToCart() {
-        DataCollection.addToShoppingCart();
-        DataCollection.showTotalPrice(totalPriceLbl);
+        ListViewCollection.addToShoppingCart();
+        ListViewCollection.showTotalPrice(totalPriceLbl);
     }
 
     @FXML void clearList() {
-        DataCollection.clearList();
-        DataCollection.showTotalPrice(totalPriceLbl);
+        ListViewCollection.clearList();
+        ListViewCollection.showTotalPrice(totalPriceLbl);
     }
 
     @FXML
     void deleteItem() {
         ObservableList<ConfigurationItems> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
-        DataCollection.deleteItemList(selectedItems,totalPriceLbl);
+        ListViewCollection.deleteItemList(selectedItems,totalPriceLbl);
     }
 
     @FXML
     void loggUt(ActionEvent event){
-        Stage stage = (Stage) customerPane.getScene().getWindow();
-        Load.window("views/loginView.fxml","Login",stage);
-    }
+        if(ListViewCollection.isModified()){
+            boolean respone = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
 
+            if(respone){
+                save(event);
+                Alerts.success("Konfigurasjonen er lagret");
+            }
+
+            ListViewCollection.clearList();
+            Stage stage = (Stage) customerPane.getScene().getWindow();
+            Load.window("views/loginView.fxml","Login",stage);
+        } else {
+            ListViewCollection.clearList();
+            Stage stage = (Stage) customerPane.getScene().getWindow();
+            Load.window("views/loginView.fxml", "Login", stage);
+        }
+    }
 }

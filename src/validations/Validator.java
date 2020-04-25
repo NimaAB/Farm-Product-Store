@@ -1,55 +1,56 @@
 package validations;
 
 import validations.customExceptions.InvalidItemDataException;
+import java.io.Serializable;
 
-public class Validations {
-    private transient int componentNumber;
-    private transient String componentName;
-    private transient String componentCategory;
-    private transient String componentSpecs;
-    private transient double componentPrice;
+public class Validator implements Serializable {
+    private static transient int componentNumber;
+    private static transient String componentName;
+    private static transient String componentCategory;
+    private static transient String componentSpecs;
+    private static transient double componentPrice;
 
-    private String replaceComma(String toValidate){
+    private static String replaceComma(String toValidate){
         if(toValidate.contains(",")){
             toValidate = toValidate.replace(',','-');
         }
         return toValidate;
     }
 
-    public void validate_componentName(String componentName){
+    public static void validate_componentName(String componentName){
         if(componentName.isEmpty()){ throw new IllegalArgumentException("Komponent navn kan ikke være tomt"); }
-        this.componentName = replaceComma(componentName);
+        Validator.componentName = replaceComma(componentName);
     }
 
-    public void validate_componentCategory(String componentCategory){
+    public static void validate_componentCategory(String componentCategory){
         if(componentCategory.isEmpty() || componentCategory.equals("All")){
             throw new IllegalArgumentException("Komponent kategori kan ikke være tomt"); }
-        this.componentCategory = componentCategory;
+        Validator.componentCategory = componentCategory;
     }
 
-    public void validate_componentSpecs(String componentSpecs){
+    public static void validate_componentSpecs(String componentSpecs){
         if(componentSpecs.isEmpty()){ throw new IllegalArgumentException("Spesifikasjoner kan ikke være tomt"); }
-        this.componentSpecs = replaceComma(componentSpecs);
+        Validator.componentSpecs = replaceComma(componentSpecs);
     }
 
-    public void validate_componentNumber(String txtComponentNumber){
+    public static void validate_componentNumber(String txtComponentNumber){
         try {
-            this.componentNumber = Integer.parseInt(txtComponentNumber);
+            componentNumber = Integer.parseInt(txtComponentNumber);
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent nummer format"); }
     }
 
-    public void validate_componentPrice(String txtComponentPrice){
+    public static void validate_componentPrice(String txtComponentPrice){
         try {
             if(txtComponentPrice.contains(",")){
                 String strPrice = txtComponentPrice.replace(',','.');
                 double componentPrice = Double.parseDouble(strPrice);
                 if(componentPrice <= 0) { throw new InvalidItemDataException("Prisen må være større enn 0."); }
-                this.componentPrice = componentPrice;
+                Validator.componentPrice = componentPrice;
             } else {
                 double componentPrice = Double.parseDouble(txtComponentPrice);
                 if(componentPrice <= 0) { throw new InvalidItemDataException("Prisen må være større enn 0."); }
-                this.componentPrice = componentPrice;
+                Validator.componentPrice = componentPrice;
             }
         } catch (InvalidItemDataException e) {
             throw new IllegalArgumentException(e.getMessage());
@@ -58,9 +59,9 @@ public class Validations {
         }
     }
 
-    public String getComponentName(){ return componentName; }
-    public String getComponentCategory(){ return componentCategory; }
-    public String getComponentSpecs(){ return componentSpecs; }
-    public double getComponentPrice(){ return componentPrice; }
-    public int getComponentNumber(){ return componentNumber; }
+    public static String getComponentName(){ return componentName; }
+    public static String getComponentCategory(){ return componentCategory; }
+    public static String getComponentSpecs(){ return componentSpecs; }
+    public static double getComponentPrice(){ return componentPrice; }
+    public static int getComponentNumber(){ return componentNumber; }
 }

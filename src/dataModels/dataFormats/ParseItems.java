@@ -18,7 +18,7 @@ public class ParseItems {
                int nr = Integer.parseInt(nrStr);
                double price= Double.parseDouble(priceStr);
                return new ConfigurationItems(nr,name,price);
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e){
                 Alerts.warning(e.getMessage());
             }
         }

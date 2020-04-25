@@ -1,6 +1,7 @@
 package app;
 
-import dataModels.data.DataCollection;
+import dataModels.dataCollection.ListViewCollection;
+import dataModels.dataCollection.TableViewCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -23,14 +24,26 @@ public class Load {
 
     /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
     public static void exit(Stage stage){
-        if(DataCollection.modified){
+        if(TableViewCollection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
 
             if(response){
-                DataCollection.saveData();
-                Alerts.success("Alle engringer er lagret");
+                TableViewCollection.saveData();
+                Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret"); }
+
+            stage.close();
+        }
+
+        if(ListViewCollection.isModified()){
+            boolean response = Alerts.confirm("Vil du lagre konfigurasjonen?");
+
+            if(response){
+                ListViewCollection.saveConfig();
+                Alerts.success("Konfigurasjonen er lagret");
+            } else {
+                Alerts.success("Konfigurasjonen er ikke lagret"); }
 
             stage.close();
         }

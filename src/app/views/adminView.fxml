@@ -14,6 +14,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.TextFieldTableCell?>
 
 <BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
    <top>
@@ -31,7 +32,7 @@
    <center>
       <AnchorPane prefHeight="700.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <TableView fx:id="tableview" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+            <TableView fx:id="tableview" editable="true" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <columns>
 
                   <TableColumn maxWidth="40.0" minWidth="40.0" prefWidth="40.0" resizable="false" editable="false">
@@ -40,31 +41,40 @@
                      </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr">
+                  <TableColumn fx:id="nrCol" onEditCommit="#nrEdited" maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="KomponentNr">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentNr" />
                      </cellValueFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn">
+                  <TableColumn onEditCommit="#nameEdited" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Komponent Navn">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentName" />
                      </cellValueFactory>
+                     <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                     </cellFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory">
+                  <TableColumn onEditCommit="#categoryEdited" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Kategory">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentCategory" />
                      </cellValueFactory>
+                     <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                     </cellFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner">
+                  <TableColumn onEditCommit="#specsEdited" maxWidth="300.0" minWidth="50.0" prefWidth="150.0" text="Spesifikasjoner">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentSpecs" />
                      </cellValueFactory>
+                     <cellFactory>
+                        <TextFieldTableCell fx:factory="forTableColumn" />
+                     </cellFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris">
+                  <TableColumn fx:id="prisCol" onEditCommit="#priceEdited" maxWidth="150.0" minWidth="50.0" prefWidth="100.0" resizable="false" text="Pris">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentPrice" />
                      </cellValueFactory>

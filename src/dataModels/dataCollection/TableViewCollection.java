@@ -1,6 +1,7 @@
 
-package dataModels.data;
+package dataModels.dataCollection;
 
+import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
 import filehandling.csv.OpenCSV;
@@ -10,18 +11,15 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import validations.Alerts;
 import validations.customExceptions.InvalidFileException;
 import java.util.ArrayList;
 
-public class DataCollection {
-    public static ObservableList<Components> components = FXCollections.observableArrayList();
-    protected static ObservableList<Components> selectedItems = FXCollections.observableArrayList();
-    public static ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
-    public static boolean modified = false;
+public class TableViewCollection {
+    private static final ObservableList<Components> components = FXCollections.observableArrayList();
     private static boolean reloadComponents = true;
-    private static String loadedFile;
+    private static boolean modified = false;
     private static String filterChoice = "Komponent Navn";
+    private static String loadedFile;
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filepath) {
@@ -74,6 +72,7 @@ public class DataCollection {
     public static void saveData(){
         ArrayList<Components> data = new ArrayList<>(components);
         String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
+
         if(fileExtension.equals(".bin")){
             SaveBin<Components> write = new SaveBin<>(data, loadedFile);
             write.call();
@@ -129,99 +128,8 @@ public class DataCollection {
         tableView.setItems(sortedList);
     }
 
-
-    /** Viser alle komponent kategorier i en comboBox */
-    public static void fillCategoryComboBox(ComboBox<String> comboBox ){
-        ObservableList<String> categories = FXCollections.observableArrayList();
-        categories.add("All");
-        for(Components item : components){
-            if(!categories.contains(item.getComponentCategory())){
-                categories.add(item.getComponentCategory());
-            }
-        }
-        comboBox.setValue("Velg Kategori");
-        comboBox.setItems(categories);
-    }
-
-    /** Viser komponenter i tabellen basert på kategori */
-    public static void selectedTable (String categoryName, TableView<Components> tableView ){
-        ObservableList<Components> selectedCatogries = FXCollections.observableArrayList();
-        for (Components obj : components){
-            if (obj.getComponentCategory().equals(categoryName)){
-                selectedCatogries.add(obj);
-            }
-        }
-        if(categoryName.equals("All")){
-            selectedCatogries = components;
-        }
-        SortedList<Components> sortedList = new SortedList<>(selectedCatogries);
-        tableView.setItems(sortedList);
-    }
-
-    /** Viser valgte ConfigItems i listview */
-    public static void setListView(ListView <ConfigurationItems> shoppingCart){
-        shoppingCart.setItems(configItems);
-    }
-
-    /** Legger ConfigItems i listview */
-    public static void addToShoppingCart(){
-        for(Components c : components) {
-            if (c.getCheckBox().isSelected()) {
-                if (selectedItems.contains(c)) {
-                    boolean response = Alerts.confirm("\"" + c.getComponentName() + "\" finnes allerede i kurven.\nVil du legge en til?");
-                    if (response) {
-                        selectedItems.add(c);
-                        c.getCheckBox().setSelected(false);
-
-                        int nr = c.getComponentNr();
-                        String navn = c.getComponentName();
-                        double pris = c.getComponentPrice();
-                        configItems.add(new ConfigurationItems(nr, navn, pris));
-                    }
-                } else {
-                    selectedItems.add(c);
-                    c.getCheckBox().setSelected(false);
-
-                    int nr = c.getComponentNr();
-                    String navn = c.getComponentName();
-                    double pris = c.getComponentPrice();
-                    configItems.add(new ConfigurationItems(nr, navn, pris));
-                }
-            }
-        }
-    }
-
-    /**Sjekker om configItems er tom eller ikke:*/
-    public static void loadingConfig(ArrayList<ConfigurationItems> items){
-        clearList();
-        configItems.addAll(items);
-        for(ConfigurationItems item: items){
-            for(Components c:components){
-                if(c.getComponentNr() == item.getNr()){
-                    selectedItems.add(c);
-                }
-            }
-        }
-    }
-
-    /** Viser total prisen til alle ConfigItems */
-    public static void showTotalPrice(Label totalPriceLbl){
-        double totalPrice = ConfigurationItems.totalPrice(configItems);
-        totalPriceLbl.setText(Double.toString(totalPrice));
-    }
-
-    /** Resetter listview for en ny konfigurasjon */
-    public static void clearList(){
-        selectedItems.clear();
-        configItems.clear();
-    }
-
-    /** Sletter ConfigItems fra listview */
-    public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
-        for(ConfigurationItems item : items){
-            selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
-            configItems.remove(item);
-        }
-        showTotalPrice(totalPriceLbl);
-    }
+    /** Getter og Setter methods */
+    public static ObservableList<Components> getComponents() { return components; }
+    public static void setModified(boolean modified) { TableViewCollection.modified = modified; }
+    public static boolean isModified() { return modified; }
 }
