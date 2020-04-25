@@ -145,6 +145,7 @@ public class AdminController implements Initializable {
     @FXML void nameEdited(TableColumn.CellEditEvent<Components, String> event){
         try {
             event.getRowValue().setComponentName(event.getNewValue());
+            TableViewCollection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -155,6 +156,7 @@ public class AdminController implements Initializable {
     @FXML void specsEdited(TableColumn.CellEditEvent<Components, String> event){
         try {
             event.getRowValue().setComponentSpecs(event.getNewValue());
+            TableViewCollection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -165,6 +167,7 @@ public class AdminController implements Initializable {
     @FXML void categoryEdited(TableColumn.CellEditEvent<Components, String> event){
         try {
             event.getRowValue().setComponentCategory(event.getNewValue());
+            TableViewCollection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -175,6 +178,7 @@ public class AdminController implements Initializable {
     @FXML void nrEdited(TableColumn.CellEditEvent<Components, Integer> event){
         try {
             event.getRowValue().setComponentNr(Integer.toString(event.getNewValue()));
+            TableViewCollection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -187,6 +191,7 @@ public class AdminController implements Initializable {
     @FXML void priceEdited(TableColumn.CellEditEvent<Components, Double> event){
         try {
             event.getRowValue().setComponentPrice(Double.toString(event.getNewValue()));
+            TableViewCollection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
