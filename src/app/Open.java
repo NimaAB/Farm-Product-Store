@@ -37,14 +37,17 @@ public class Open<T> {
         try {
             ArrayList<T> itemsFromFile = openCSV.call();
             Object obj = itemsFromFile.get(0);
-            if(obj instanceof ConfigurationItems){
+            if(obj instanceof ConfigurationItems && currentPane.toString().equals("customerPane")){
                 ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
                 ListViewCollection.showTotalPrice(lbl);
                 ListViewCollection.setModified(false);
-            }else{
+            }
+            if(obj instanceof Components && currentPane.toString().equals("adminPane")){
                 for(Components el:(ArrayList<Components>)itemsFromFile){
                     TableViewCollection.addComponent(el);
                 }
+            }else{
+                Alerts.warning("filen kan ikke lastes opp");
             }
         } catch (InvalidFileException exception){
             Alerts.warning(exception.getMessage());
