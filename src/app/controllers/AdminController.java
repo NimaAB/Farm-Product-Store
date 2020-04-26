@@ -1,8 +1,12 @@
 package app.controllers;
 
 import app.Load;
+import app.Open;
+import app.Save;
 import dataModels.data.Categories;
 import dataModels.data.Components;
+import dataModels.data.ConfigurationItems;
+import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
@@ -32,8 +36,6 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
     private String file = "src/database/components.bin";
-    private OpenCSV<Components> openCSV;
-    private SaveCSV<Components> saveCSV;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -75,73 +77,29 @@ public class AdminController implements Initializable {
     }
 
     @FXML void open(){
-        String melding = "last opp en fil til programmet fra denne plassering: src\\database\\lagringsPlass\nSkriv navnet til filen du vil laste opp: ";
-        String filename = JOptionPane.showInputDialog(null,melding);
-        String filepath = "src\\database\\lagringsPlass\\" + filename + ".csv";
-
-        if(filename != null){
-            TableViewCollection.loadComponents(filepath);
-            file = filepath;
-            openCSV = new OpenCSV<>(filepath);
-            openCSV.setOnSucceeded(this::readingDone);
-            openCSV.setOnFailed(this::readingFailed);
-            Thread th = new Thread(openCSV);
-            adminPane.setDisable(true);
-            th.setDaemon(true);
-            th.start();
+        String path = Save.pathDialog("src\\database\\lagringsPlass");
+        if(path != null){
+            TableViewCollection.loadComponents(path);
+            file = path;
+            OpenCSV<Components> openCSV = new OpenCSV<>(path);
+            Open<Components> open = new Open<>(adminPane,openCSV,null);
+            open.openFile();
         } else {
             Alerts.warning("Ingen fil er valgt");
         }
     }
 
     @FXML void save(){
-        ArrayList<Components> componentsToSave = new ArrayList<>(TableViewCollection.getComponents());
-        String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass\nGi filen et navn: ";
-        String filename = JOptionPane.showInputDialog(null,melding);
-        String filepath = "src\\database\\lagringsPlass\\" + filename + ".csv";
+        ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
+        String path = Save.pathDialog("src\\database\\lagringsPlass");
 
-        if(!filename.isEmpty()){
-            saveCSV = new SaveCSV<>(componentsToSave,filepath);
-            saveCSV.setOnSucceeded(this::writingDone);
-            saveCSV.setOnFailed(this::writingFailed);
-            Thread th = new Thread(saveCSV);
-            adminPane.setDisable(true);
-            th.setDaemon(true);
-            th.start();
+        if(path != null){
+            SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
+            Save<Components> saveObj = new Save<>(adminPane, saveCSV);
+            saveObj.saveFile();
         } else {
             Alerts.warning("Ingen fil er valgt");
         }
-    }
-
-    private void readingDone(WorkerStateEvent e){
-        try {
-            ArrayList<Components> componentsList = openCSV.call();
-            for(Components el:componentsList){
-                TableViewCollection.addComponent(el);
-            }
-        } catch (InvalidFileException exception){
-            Alerts.warning(exception.getMessage());
-        } catch (ClassCastException ignored){
-            Alerts.warning("Filen er ugyldig eller inneholder feil data. Prøv å åpne en annen fil");
-        }
-        adminPane.setDisable(false);
-    }
-
-    private void readingFailed(WorkerStateEvent event){
-        Throwable e = event.getSource().getException();
-        Alerts.warning("Thread Failed: " + e.getMessage());
-        adminPane.setDisable(false);
-    }
-
-    private void writingDone(WorkerStateEvent e){
-        saveCSV.call();
-        adminPane.setDisable(false);
-    }
-
-    private void writingFailed(WorkerStateEvent event){
-        Throwable e = event.getSource().getException();
-        Alerts.warning("Thread Failed: " + e.getMessage());
-        adminPane.setDisable(false);
     }
 
     @FXML void nameEdited(TableColumn.CellEditEvent<Components, String> event){

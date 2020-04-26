@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Load;
+import app.Open;
 import app.Save;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
@@ -28,10 +29,11 @@ public class CustomerController implements Initializable {
     @FXML private ComboBox<String> categoryComboBox;
     @FXML private ListView <ConfigurationItems> shoppingCart;
     @FXML private Label totalPriceLbl;
-    private final String file = "src/database/components.bin"; // inneholder komponenter som vises i tableView
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        // inneholder komponenter som vises i tableView
+        String file = "src/database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV,txtFilter);
@@ -39,12 +41,18 @@ public class CustomerController implements Initializable {
         ListViewCollection.setListView(shoppingCart);
     }
 
-    private OpenCSV<ConfigurationItems> openCSV;
     @FXML
     void open(ActionEvent event) {
-        if(pathStr != null){
-            ListViewCollection.setOpenedFile(totalPathStr);
+        String path = Save.pathDialog("src\\database\\lagringsPlass");
+        if(path != null){
+            OpenCSV<Components> openCSV = new OpenCSV<>(path);
+            Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
+            open.openFile();
+            ListViewCollection.setOpenedFile(path);
             ListViewCollection.setOpen(true);
+        } else {
+            Alerts.warning("Ingen fil er valgt");
+        }
     }
 
     @FXML
@@ -59,7 +67,6 @@ public class CustomerController implements Initializable {
             Alerts.warning("Filen har ikke navn, prøv pånytt!");
         }
     }
-
 
     @FXML
     void changeTable() {
