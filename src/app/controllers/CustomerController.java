@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Load;
+import app.Save;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
 import dataModels.dataCollection.ListViewCollection;
@@ -8,7 +9,6 @@ import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.collections.ObservableList;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileException;
-import javax.swing.*;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -42,71 +41,25 @@ public class CustomerController implements Initializable {
 
     private OpenCSV<ConfigurationItems> openCSV;
     @FXML
-    void open(ActionEvent event){
-        String melding = "last opp en fil til programmet fra denne plassering: src\\database\\lagringsPlass " +
-                "\nSkriv navnet til filen du vil laste opp: ";
-        String pathStr = JOptionPane.showInputDialog(null,melding);
-        String pathStr1 = "src\\database\\lagringsPlass\\";
-        String totalPathStr = pathStr1 + pathStr + ".csv";
+    void open(ActionEvent event) {
         if(pathStr != null){
             ListViewCollection.setOpenedFile(totalPathStr);
             ListViewCollection.setOpen(true);
-            openCSV = new OpenCSV<>(totalPathStr);
-            openCSV.setOnSucceeded(this::readingDone);
-            openCSV.setOnFailed(this::readingFailed);
-            Thread thread = new Thread(openCSV);
-            customerPane.setDisable(true);
-            thread.setDaemon(true);
-            thread.start();
-        }
     }
-    private void readingDone(WorkerStateEvent e) {
-        try {
-            ArrayList<ConfigurationItems> configFromFile = openCSV.call();
-            ListViewCollection.loadingConfig(configFromFile);
-            ListViewCollection.showTotalPrice(totalPriceLbl);
-            ListViewCollection.setModified(false);
-        } catch (InvalidFileException exception){
-            Alerts.warning(exception.getMessage());
-            exception.printStackTrace();
-        }
-        customerPane.setDisable(false);
-    }
-    private void readingFailed(WorkerStateEvent event){
-        Throwable e = event.getSource().getException();
-        Alerts.warning("Thread Failed: " + e.getMessage());
-        e.printStackTrace();
-        customerPane.setDisable(false);
-    }
-    private SaveCSV<ConfigurationItems>saveCSV;
+
     @FXML
     void save(ActionEvent event){
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
-        String melding = "filen din blir lagert i denne plasering: src\\database\\lagringsPlass" +
-                "\nGi filen din et navn: ";
-        String pathStr = JOptionPane.showInputDialog(null,melding);
-        String pathStr1 = pathStr + ".csv";
-        String totalPathStr = "src\\database\\lagringsPlass\\" + pathStr1;
-        if(!pathStr.isEmpty()){
-            ListViewCollection.setModified(false);
-            saveCSV = new SaveCSV<>(configToSave,totalPathStr);
-            saveCSV.setOnSucceeded(this::writingDone);
-            saveCSV.setOnFailed(this::writingFailed);
-            Thread thread = new Thread(saveCSV);
-            customerPane.setDisable(true);
-            thread.setDaemon(true);
-            thread.start();
+        String path = Save.pathDialog("src\\database\\lagringsPlass");
+        if(path != null){
+            SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
+            Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
+            saveObj.saveFile();
+        }else{
+            Alerts.warning("Filen har ikke navn, prøv pånytt!");
         }
     }
-    private void writingDone(WorkerStateEvent e){
-        saveCSV.call();
-        customerPane.setDisable(false);
-    }
-    private void writingFailed(WorkerStateEvent event){
-        Throwable e = event.getSource().getException();
-        Alerts.warning("Thread Failed: "+e.getMessage());
-        customerPane.setDisable(false);
-    }
+
 
     @FXML
     void changeTable() {

@@ -1,5 +1,6 @@
 package dataModels.dataCollection;
 
+import app.Save;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
 import filehandling.csv.SaveCSV;
@@ -85,9 +86,16 @@ public class ListViewCollection {
     public static void saveConfig(){
         if(isModified()){
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
-            SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
-            saveCSV.call();
-            modified = false;
+
+            if(openedFile == null){
+                openedFile = Save.pathDialog("src\\database\\lagringsPlass");
+                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
+                saveCSV.call();
+            }else {
+                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave, openedFile);
+                saveCSV.call();
+                modified = false;
+            }
         }
     }
 
