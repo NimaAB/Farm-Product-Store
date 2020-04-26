@@ -83,14 +83,18 @@ public class ListViewCollection {
     }
 
     /** Lagrer konfigurasjoner ved logg ut og når programmen slutter */
-    public static void saveConfig(){
+    public static void saveConfig() {
         if(isModified()){
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
 
             if(openedFile == null){
-                openedFile = Save.pathDialog("src\\database\\database.lagringsPlass");
-                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
-                saveCSV.call();
+                try{
+                    openedFile = Save.pathDialog("src\\database\\lagringsPlass");
+                    SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
+                    saveCSV.call();
+                }catch (Exception e){
+                    Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+                }
             }else {
                 SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave, openedFile);
                 saveCSV.call();

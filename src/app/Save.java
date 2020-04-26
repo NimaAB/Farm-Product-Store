@@ -21,15 +21,15 @@ public class Save<T> {
         this.saveCSV = saveCSV;
     }
 
-    public static String pathDialog(String filePath){
+    public static String pathDialog(String filePath) throws Exception {
         String melding = "filen din blir lagert i denne plaseringen: "+filePath +
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 = pathStr + ".csv";
         if (pathStr.isEmpty()){
-            return null;
+            throw new Exception();
         }
-        return filePath+"\\"+ pathStr1;
+        return filePath+ "\\" + pathStr1;
     }
 
     public void saveFile(){

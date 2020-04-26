@@ -77,29 +77,30 @@ public class AdminController implements Initializable {
     }
 
     @FXML void open(){
-        String path = Save.pathDialog("src\\database\\lagringsPlass");
-        if(path != null){
+        try {
+            String path = Save.pathDialog("src\\database\\lagringsPlass");
             TableViewCollection.loadComponents(path);
             file = path;
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
             open.openFile();
-        } else {
-            Alerts.warning("Ingen fil er valgt");
+        }catch (Exception e){
+            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
         }
+
     }
 
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
-        String path = Save.pathDialog("src\\database\\lagringsPlass");
-
-        if(path != null){
+        try{
+            String path = Save.pathDialog("src\\database\\lagringsPlass");
             SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
             Save<Components> saveObj = new Save<>(adminPane, saveCSV);
             saveObj.saveFile();
-        } else {
-            Alerts.warning("Ingen fil er valgt");
+        }catch (Exception e){
+            Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
         }
+
     }
 
     @FXML void nameEdited(TableColumn.CellEditEvent<Components, String> event){
