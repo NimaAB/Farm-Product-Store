@@ -43,28 +43,28 @@ public class CustomerController implements Initializable {
 
     @FXML
     void open(ActionEvent event) {
-        String path = Save.pathDialog("src\\database\\lagringsPlass");
-        if(path != null){
+        try{
+            String path = Save.pathDialog("src\\database\\lagringsPlass");
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
             open.openFile();
             ListViewCollection.setOpenedFile(path);
             ListViewCollection.setOpen(true);
-        } else {
-            Alerts.warning("Ingen fil er valgt");
+        }catch (Exception e){
+            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
         }
     }
 
     @FXML
     void save(ActionEvent event){
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
-        String path = Save.pathDialog("src\\database\\lagringsPlass");
-        if(path != null){
+        try{
+            String path = Save.pathDialog("src\\database\\lagringsPlass");
             SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
             Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
             saveObj.saveFile();
-        }else{
-            Alerts.warning("Filen har ikke navn, prøv pånytt!");
+        }catch (Exception e){
+            Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
         }
     }
 
