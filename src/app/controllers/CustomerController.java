@@ -33,7 +33,7 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        String file = "src/database/components.bin";
+        String file = "DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV,txtFilter);
@@ -44,7 +44,7 @@ public class CustomerController implements Initializable {
     @FXML
     void open(ActionEvent event) {
         try{
-            String path = Save.pathDialog("src\\database\\lagringsPlass");
+            String path = Save.pathDialog("DataFraApp");
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
             open.openFile();
@@ -59,7 +59,7 @@ public class CustomerController implements Initializable {
     void save(ActionEvent event){
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         try{
-            String path = Save.pathDialog("src\\database\\lagringsPlass");
+            String path = Save.pathDialog("DataFraApp");
             SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
             Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
             saveObj.saveFile();

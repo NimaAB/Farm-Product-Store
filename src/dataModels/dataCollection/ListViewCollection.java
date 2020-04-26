@@ -88,7 +88,7 @@ public class ListViewCollection {
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
             if(openedFile == null){
                 try{
-                    openedFile = Save.pathDialog("src\\database\\lagringsPlass");
+                    openedFile = Save.pathDialog("DataFraApp");
                     SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
                     saveCSV.call();
                 }catch (Exception e){

@@ -35,7 +35,7 @@ public class AdminController implements Initializable {
     @FXML private TableView<Components> tableview;
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
-    private String file = "src/database/components.bin";
+    private String file = "DataFraApp/Database/components.bin";
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -78,7 +78,7 @@ public class AdminController implements Initializable {
 
     @FXML void open(){
         try {
-            String path = Save.pathDialog("src\\database\\lagringsPlass");
+            String path = Save.pathDialog("DataFraApp");
             TableViewCollection.loadComponents(path);
             file = path;
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
@@ -93,7 +93,7 @@ public class AdminController implements Initializable {
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
         try{
-            String path = Save.pathDialog("src\\database\\lagringsPlass");
+            String path = Save.pathDialog("DataFraApp");
             SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
             Save<Components> saveObj = new Save<>(adminPane, saveCSV);
             saveObj.saveFile();
