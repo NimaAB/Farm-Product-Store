@@ -36,18 +36,21 @@ public class Open<T> {
     private void readingDone(WorkerStateEvent e) {
         try {
             ArrayList<T> itemsFromFile = openCSV.call();
-            Object obj = itemsFromFile.get(0);
-            if(obj instanceof ConfigurationItems && currentPane.getId().equals("customerPane")){
-                ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
-                ListViewCollection.showTotalPrice(lbl);
-                ListViewCollection.setModified(false);
-            }
-            else if(obj instanceof Components && currentPane.getId().equals("adminPane")){
-                for(Components el:(ArrayList<Components>)itemsFromFile){
-                    TableViewCollection.addComponent(el);
+            if(itemsFromFile.isEmpty()){
+                Alerts.warning("filen er tom! Prøv en annen fil.");
+            }else {
+                Object obj = itemsFromFile.get(0);
+                if (obj instanceof ConfigurationItems && currentPane.getId().equals("customerPane")) {
+                    ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
+                    ListViewCollection.showTotalPrice(lbl);
+                    ListViewCollection.setModified(false);
+                } else if (obj instanceof Components && currentPane.getId().equals("adminPane")) {
+                    for (Components el : (ArrayList<Components>) itemsFromFile) {
+                        TableViewCollection.addComponent(el);
+                    }
+                } else {
+                    Alerts.warning("filen kan ikke lastes opp! Prøv en annen fil.");
                 }
-            }else{
-                Alerts.warning("filen kan ikke lastes opp");
             }
         } catch (InvalidFileException exception){
             Alerts.warning(exception.getMessage());
