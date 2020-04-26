@@ -50,6 +50,7 @@ public class CustomerController implements Initializable {
         String totalPathStr = pathStr1 + pathStr + ".csv";
         if(pathStr != null){
             ListViewCollection.setOpenedFile(totalPathStr);
+            ListViewCollection.setOpen(true);
             openCSV = new OpenCSV<>(totalPathStr);
             openCSV.setOnSucceeded(this::readingDone);
             openCSV.setOnFailed(this::readingFailed);
@@ -132,18 +133,27 @@ public class CustomerController implements Initializable {
 
     @FXML
     void loggUt(ActionEvent event){
-        if(ListViewCollection.isModified()){
-            boolean respone = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
-
-            if(respone){
-                save(event);
+        // hvis man åpner en fil og legger nye items i den, spør programmen om å lagre endringer ved logg ut
+        if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
+            boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
+            if(response){
+                ArrayList<ConfigurationItems> toSave = new ArrayList<>(ListViewCollection.getConfigItems());
+                String openedFilepath = ListViewCollection.getOpenedFile();
+                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFilepath);
+                saveCSV.call();
                 Alerts.success("Konfigurasjonen er lagret");
             }
-
             ListViewCollection.clearList();
             Stage stage = (Stage) customerPane.getScene().getWindow();
             Load.window("views/loginView.fxml","Login",stage);
+
+        // hvis man logger ut uten å lagre konfigurasjonen man har gjort, spør programmen deg om du vil lagre den
         } else {
+            boolean response = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
+            if(response){
+                save(event);
+                Alerts.success("Konfigurasjonen er lagret");
+            }
             ListViewCollection.clearList();
             Stage stage = (Stage) customerPane.getScene().getWindow();
             Load.window("views/loginView.fxml", "Login", stage);

@@ -121,6 +121,8 @@ public class AdminController implements Initializable {
             }
         } catch (InvalidFileException exception){
             Alerts.warning(exception.getMessage());
+        } catch (ClassCastException ignored){
+            Alerts.warning("Filen er ugyldig eller inneholder feil data. Prøv å åpne en annen fil");
         }
         adminPane.setDisable(false);
     }

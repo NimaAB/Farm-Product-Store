@@ -18,6 +18,7 @@ public class ListViewCollection {
     private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
     private static final ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
     private static boolean modified = false;
+    private static boolean open = false;
     private static String openedFile;
 
     /** Viser alle komponent kategorier i en comboBox */
@@ -113,6 +114,7 @@ public class ListViewCollection {
     public static void clearList(){
         selectedItems.clear();
         configItems.clear();
+        modified = false;
     }
 
     /** Sletter ConfigItems fra listview */
@@ -127,7 +129,11 @@ public class ListViewCollection {
 
     /** Getter og Setter methods */
     public static ObservableList<ConfigurationItems> getConfigItems() { return configItems; }
+    public static String getOpenedFile() { return openedFile; }
     public static boolean isModified() { return modified; }
+    public static boolean isOpen() { return open; }
+
     public static void setModified(boolean modified) { ListViewCollection.modified = modified; }
+    public static void setOpen(boolean open) { ListViewCollection.open = open; }
     public static void setOpenedFile(String file) { openedFile = file; }
 }
