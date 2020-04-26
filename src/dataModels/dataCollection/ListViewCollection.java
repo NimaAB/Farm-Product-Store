@@ -86,7 +86,6 @@ public class ListViewCollection {
     public static void saveConfig() {
         if(isModified()){
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
-
             if(openedFile == null){
                 try{
                     openedFile = Save.pathDialog("src\\database\\lagringsPlass");

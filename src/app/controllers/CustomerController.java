@@ -97,10 +97,7 @@ public class CustomerController implements Initializable {
         if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
             if(response){
-                ArrayList<ConfigurationItems> toSave = new ArrayList<>(ListViewCollection.getConfigItems());
-                String openedFilepath = ListViewCollection.getOpenedFile();
-                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFilepath);
-                saveCSV.call();
+                ListViewCollection.saveConfig();
                 Alerts.success("Konfigurasjonen er lagret");
             }
             ListViewCollection.clearList();
