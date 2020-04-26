@@ -105,13 +105,16 @@ public class CustomerController implements Initializable {
             Load.window("views/loginView.fxml","Login",stage);
 
         // hvis man logger ut uten å lagre konfigurasjonen man har gjort, spør programmen deg om du vil lagre den
-        } else {
+        } else if(ListViewCollection.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
             if(response){
                 save(event);
                 Alerts.success("Konfigurasjonen er lagret");
             }
             ListViewCollection.clearList();
+            Stage stage = (Stage) customerPane.getScene().getWindow();
+            Load.window("views/loginView.fxml", "Login", stage);
+        }else {
             Stage stage = (Stage) customerPane.getScene().getWindow();
             Load.window("views/loginView.fxml", "Login", stage);
         }
