@@ -5,12 +5,9 @@ import app.Open;
 import app.Save;
 import dataModels.data.Categories;
 import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
-import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
-import javafx.concurrent.WorkerStateEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -19,8 +16,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
-import validations.customExceptions.InvalidFileException;
-import javax.swing.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -53,7 +48,7 @@ public class AdminController implements Initializable {
         try {
             String nr = this.nr.getText();
             String name = this.name.getText();
-            String category = this.category.getText();
+            String category = categoriesCombobox.getValue();
             String specs = specifications.getText();
             String price = this.price.getText();
             CheckBox b = new CheckBox();
@@ -84,7 +79,7 @@ public class AdminController implements Initializable {
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
             open.openFile();
-        }catch (Exception e){
+        } catch (Exception e){
             Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
         }
 
@@ -92,12 +87,12 @@ public class AdminController implements Initializable {
 
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
-        try{
+        try {
             String path = Save.pathDialog("DataFraApp");
             SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
             Save<Components> saveObj = new Save<>(adminPane, saveCSV);
             saveObj.saveFile();
-        }catch (Exception e){
+        } catch (Exception e){
             Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
         }
 

@@ -94,7 +94,7 @@ public class ListViewCollection {
                 }catch (Exception e){
                     Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
                 }
-            }else {
+            } else {
                 SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave, openedFile);
                 saveCSV.call();
                 modified = false;
@@ -143,7 +143,6 @@ public class ListViewCollection {
     public static String getOpenedFile() { return openedFile; }
     public static boolean isModified() { return modified; }
     public static boolean isOpen() { return open; }
-
     public static void setModified(boolean modified) { ListViewCollection.modified = modified; }
     public static void setOpen(boolean open) { ListViewCollection.open = open; }
     public static void setOpenedFile(String file) { openedFile = file; }
