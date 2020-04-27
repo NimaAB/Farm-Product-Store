@@ -1,6 +1,10 @@
 package validations;
 
+import dataModels.data.Components;
+import dataModels.dataCollection.TableViewCollection;
 import validations.customExceptions.InvalidItemDataException;
+import validations.customExceptions.InvalidNumberException;
+
 import java.io.Serializable;
 
 public class Validator implements Serializable {
@@ -36,6 +40,13 @@ public class Validator implements Serializable {
     public static void validate_componentNumber(String txtComponentNumber){
         try {
             componentNumber = Integer.parseInt(txtComponentNumber);
+            for(Components c : TableViewCollection.getComponents()){
+                if(c.getComponentNr() == componentNumber){
+                    throw new InvalidNumberException("Komponent nummeret \"" + componentNumber + "\" er tatt");
+                }
+            }
+        } catch (InvalidNumberException e){
+            throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent nummer format"); }
     }

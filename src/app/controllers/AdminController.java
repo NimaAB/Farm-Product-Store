@@ -55,7 +55,6 @@ public class AdminController implements Initializable {
 
             Components component = new Components(nr,name,category,specs,price,b);
             TableViewCollection.addComponent(component);
-            Categories.fillCategoryCombobox(categoriesCombobox,this.category);
             resetFields();
 
             Alerts.success("Komponent Opprettet");
