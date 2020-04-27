@@ -24,10 +24,7 @@
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv" />
                   <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv" />
-<<<<<<< HEAD
                   <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut" />
-=======
->>>>>>> 4a58d09d163304af0c5bbf0e1434f3a7ad56a535
                </items>
             </Menu>
          </menus>
@@ -60,7 +57,7 @@
                      </cellFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#categoryEdited" prefWidth="154.0" text="Kategory">
+                  <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#categoryEdited" prefWidth="154.0" text="Kategory">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentCategory" />
                      </cellValueFactory>

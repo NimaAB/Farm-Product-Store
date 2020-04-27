@@ -89,6 +89,40 @@ public class TableViewCollection {
         tableView.setItems(components);
     }
 
+    /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
+    public static void fillCategoryComboBox(ComboBox<String> categoryOptions, TextField categoryChoice){
+        // Inneholder alle kategorier - både definert og nye
+        ObservableList<String> categories = FXCollections.observableArrayList();
+
+        // Definert kategorier
+        String[] definedCategories = {"Nytt Kategori","Minne","Prosessor","Grafikkort"};
+        categories.addAll(definedCategories);
+
+        // Legger nye kategorier i dropdown-en
+        for(Components c : components){
+            if(!categories.contains(c.getComponentCategory())){
+                categories.add(c.getComponentCategory());
+            }
+        }
+
+        // Passer på verdien av dropdown
+        categoryOptions.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)->{
+            try {
+                if(newValue.equals("Nytt Kategori")){
+                    categoryChoice.setText("");
+                    categoryChoice.setDisable(false);
+                    categoryChoice.setText(categoryChoice.getText());
+                } else {
+                    categoryChoice.setDisable(true);
+                    categoryChoice.setText(newValue);
+                }
+            } catch (NullPointerException ignored){}
+
+        });
+        categoryOptions.setValue("Minne");
+        categoryOptions.setItems(categories);
+    }
+
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void fillFilterComboBox(ComboBox<String> filterOptions){
         String[] filterCats = {"Komponent Nr", "Komponent Navn", "Komponent Kategori", "Komponent Speks.", "Komponent Pris"};
@@ -126,6 +160,17 @@ public class TableViewCollection {
         SortedList<Components> sortedList = new SortedList<>(filteredList);
         sortedList.comparatorProperty().bind(tableView.comparatorProperty());
         tableView.setItems(sortedList);
+    }
+
+    /** Dropdown som vises når kategori blir oppdatert direkte i tableview-en */
+    public static ObservableList<String> onEditCategories(){
+        ObservableList<String> onEditCategories = FXCollections.observableArrayList();
+        for(Components c : components){
+            if(!onEditCategories.contains(c.getComponentCategory())){
+                onEditCategories.add(c.getComponentCategory());
+            }
+        }
+        return onEditCategories;
     }
 
     /** Getter og Setter methods */

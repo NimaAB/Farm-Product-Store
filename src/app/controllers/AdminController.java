@@ -3,7 +3,6 @@ package app.controllers;
 import app.Load;
 import app.Open;
 import app.Save;
-import dataModels.data.Categories;
 import dataModels.data.Components;
 import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
@@ -11,6 +10,7 @@ import filehandling.csv.SaveCSV;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -28,6 +28,7 @@ public class AdminController implements Initializable {
     @FXML private ComboBox<String> categoriesCombobox;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TableView<Components> tableview;
+    @FXML private TableColumn<Components,String> categoryCol;
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
     private String file = "DataFraApp/Database/components.bin";
@@ -38,8 +39,9 @@ public class AdminController implements Initializable {
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
         TableViewCollection.filterTableView(tableview,txtFilter);
-        Categories.fillCategoryCombobox(categoriesCombobox,category);
+        TableViewCollection.fillCategoryComboBox(categoriesCombobox,category);
 
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.onEditCategories()));
         nrCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringtoInteger()));
         prisCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
     }
@@ -48,7 +50,7 @@ public class AdminController implements Initializable {
         try {
             String nr = this.nr.getText();
             String name = this.name.getText();
-            String category = categoriesCombobox.getValue();
+            String category = this.category.getText();
             String specs = specifications.getText();
             String price = this.price.getText();
             CheckBox b = new CheckBox();
@@ -64,11 +66,16 @@ public class AdminController implements Initializable {
     }
 
     private void resetFields(){
+        // Resetter feltene
         nr.setText("");
         name.setText("");
         category.setText("");
         specifications.setText("");
         price.setText("");
+
+        // Resetter dropdown - legger nye kategorier om det finnes
+        TableViewCollection.fillCategoryComboBox(categoriesCombobox,category);
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.onEditCategories()));
     }
 
     @FXML void open(){

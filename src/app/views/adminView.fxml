@@ -57,7 +57,7 @@
                      </cellFactory>
                   </TableColumn>
 
-                  <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#categoryEdited" prefWidth="154.0" text="Kategory">
+                  <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#categoryEdited" prefWidth="154.0" text="Kategory">
                      <cellValueFactory>
                         <PropertyValueFactory property="componentCategory" />
                      </cellValueFactory>
