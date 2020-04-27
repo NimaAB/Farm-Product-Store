@@ -9,26 +9,26 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="loginPane" minHeight="500.0" minWidth="500.0" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
+<BorderPane fx:id="loginPane" minHeight="359.0" minWidth="500.0" prefHeight="406.0" prefWidth="585.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
    <center>
       <AnchorPane maxHeight="452.0" maxWidth="600.0" prefHeight="452.0" prefWidth="600.0" BorderPane.alignment="CENTER">
-         <Label alignment="CENTER" layoutX="259.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="83.0" text="LOGIN" AnchorPane.leftAnchor="259.0" AnchorPane.rightAnchor="258.0" AnchorPane.topAnchor="0.0">
+         <Label alignment="CENTER" layoutX="242.0" layoutY="101.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="117.0" text="LOGG INN" AnchorPane.leftAnchor="242.0" AnchorPane.rightAnchor="241.0" AnchorPane.topAnchor="101.0">
             <font>
                <Font name="System Bold" size="20.0" />
             </font>
          </Label>
-         <TextField fx:id="txtUsername" layoutX="213.0" layoutY="42.0" maxWidth="175.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Username" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="212.0" AnchorPane.topAnchor="42.0">
+         <TextField fx:id="txtUsername" layoutX="212.0" layoutY="162.0" maxWidth="175.0" minHeight="-Infinity" minWidth="-Infinity" promptText="Username" AnchorPane.leftAnchor="212.0" AnchorPane.rightAnchor="213.0" AnchorPane.topAnchor="162.0">
             <font>
                <Font size="14.0" />
             </font>
          </TextField>
-         <PasswordField fx:id="txtPassword" layoutX="213.0" layoutY="84.0" prefHeight="25.0" prefWidth="175.0" promptText="Password">
+         <PasswordField fx:id="txtPassword" layoutX="212.0" layoutY="203.0" prefHeight="25.0" prefWidth="175.0" promptText="Password">
             <font>
                <Font size="14.0" />
             </font>
          </PasswordField>
-         <CheckBox fx:id="isAdmin" layoutX="213.0" layoutY="123.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="175.0" text="Administrator" AnchorPane.leftAnchor="213.0" AnchorPane.rightAnchor="212.0" AnchorPane.topAnchor="123.0" />
-         <Button layoutX="213.0" layoutY="150.0" mnemonicParsing="false" onAction="#loggInn" prefHeight="25.0" prefWidth="175.0" text="Log in" />
+         <CheckBox fx:id="isAdmin" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="175.0" text="Administrator" AnchorPane.leftAnchor="212.0" AnchorPane.rightAnchor="213.0" AnchorPane.topAnchor="254.0" />
+         <Button layoutX="212.0" layoutY="281.0" mnemonicParsing="false" onAction="#loggInn" prefHeight="25.0" prefWidth="175.0" text="Logg inn" />
       </AnchorPane>
    </center>
 </BorderPane>

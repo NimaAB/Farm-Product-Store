@@ -92,7 +92,7 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void loggUt(ActionEvent event){
+    void logOut(ActionEvent event){
         // hvis man åpner en fil og legger nye items i den, spør programmen om å lagre endringer ved logg ut
         if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
