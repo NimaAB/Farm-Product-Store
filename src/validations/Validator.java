@@ -6,6 +6,10 @@ import validations.customExceptions.InvalidItemDataException;
 import validations.customExceptions.InvalidNumberException;
 import java.io.Serializable;
 
+/** Denne klasse brukes til å validere input verdier på feltene
+ *  når admin oppretter nye komponenter og når verdier blir redigert
+ *  direkte på tableView-en */
+
 public class Validator implements Serializable {
     private static transient int componentNumber;
     private static transient String componentName;
