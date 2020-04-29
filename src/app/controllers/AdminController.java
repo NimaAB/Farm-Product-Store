@@ -23,7 +23,7 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
 
     @FXML private BorderPane adminPane;
-    @FXML private TextField nr, name, category, price, txtFilter;
+    @FXML private TextField nr, name, price, txtFilter;
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> categoriesCombobox;
     @FXML private ComboBox<String> filterComboBox;
@@ -39,9 +39,9 @@ public class AdminController implements Initializable {
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
         TableViewCollection.filterTableView(tableview,txtFilter);
-        TableViewCollection.fillCategoryComboBox(categoriesCombobox,category);
+        TableViewCollection.fillCategoryComboBox(categoriesCombobox);
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.onEditCategories()));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
         nrCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringtoInteger()));
         prisCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
     }
@@ -50,7 +50,7 @@ public class AdminController implements Initializable {
         try {
             String nr = this.nr.getText();
             String name = this.name.getText();
-            String category = this.category.getText();
+            String category = categoriesCombobox.getValue();
             String specs = specifications.getText();
             String price = this.price.getText();
             CheckBox b = new CheckBox();
@@ -69,13 +69,12 @@ public class AdminController implements Initializable {
         // Resetter feltene
         nr.setText("");
         name.setText("");
-        category.setText("");
         specifications.setText("");
         price.setText("");
 
-        // Resetter dropdown - legger nye kategorier om det finnes
-        TableViewCollection.fillCategoryComboBox(categoriesCombobox,category);
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.onEditCategories()));
+        // legger nye kategorier på dropdown om det finnes om det finnes
+        TableViewCollection.fillCategoryComboBox(categoriesCombobox);
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
     }
 
     @FXML void open(){

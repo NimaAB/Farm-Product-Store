@@ -15,13 +15,14 @@ import validations.customExceptions.InvalidFileException;
 import java.util.ArrayList;
 
 /**
- * klassen samler date til TabelView og metodene gir muligehet for å behandle data.
+ * klassen samler data til TableView og metodene gir muligheten for å behandle data.
  * */
 public class TableViewCollection {
     private static final ObservableList<Components> components = FXCollections.observableArrayList();
+    private static ObservableList<String> categories = FXCollections.observableArrayList();
     private static boolean reloadComponents = true;
     private static boolean modified = false;
-    private static String filterChoice = "Komponent Navn";
+    private static String filterChoice = "Navn";
     private static String loadedFile;
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
@@ -93,48 +94,28 @@ public class TableViewCollection {
     }
 
     /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
-    public static void fillCategoryComboBox(ComboBox<String> categoryOptions, TextField categoryChoice){
-        // Inneholder alle kategorier - både definert og nye
-        ObservableList<String> categories = FXCollections.observableArrayList();
+    public static void fillCategoryComboBox(ComboBox<String> categoryOptions){
+        String[] definedCategories = {"Minne","Prosessor","Grafikkort"};
+        ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
-        // Definert kategorier
-        String[] definedCategories = {"Nytt Kategori","Minne","Prosessor","Grafikkort"};
-        categories.addAll(definedCategories);
-
-        // Legger nye kategorier i dropdown-en
         for(Components c : components){
             if(!categories.contains(c.getComponentCategory())){
                 categories.add(c.getComponentCategory());
             }
         }
-
-        // Passer på verdien av dropdown
-        categoryOptions.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)->{
-            try {
-                if(newValue.equals("Nytt Kategori")){
-                    categoryChoice.setText("");
-                    categoryChoice.setDisable(false);
-                    categoryChoice.setText(categoryChoice.getText());
-                } else {
-                    categoryChoice.setDisable(true);
-                    categoryChoice.setText(newValue);
-                }
-            } catch (NullPointerException ignored){}
-
-        });
-        categoryOptions.setValue("Minne");
+        categoryOptions.setEditable(true);
+        categoryOptions.setPromptText("Velg Kategori");
         categoryOptions.setItems(categories);
+        TableViewCollection.categories = categories;
     }
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void fillFilterComboBox(ComboBox<String> filterOptions){
         String[] filterCats = {"Komponent Nr", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
-
         filterOptions.setItems(filterCategories);
         filterOptions.setValue("Navn");
-        filterOptions.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)->{
-            filterChoice = newValue; });
+        filterOptions.setOnAction(e -> filterChoice = filterOptions.getValue());
     }
 
     /** Filtrerer og søker gjennom tabellen */
@@ -165,19 +146,9 @@ public class TableViewCollection {
         tableView.setItems(sortedList);
     }
 
-    /** Dropdown som vises når kategori blir oppdatert direkte i tableview-en */
-    public static ObservableList<String> onEditCategories(){
-        ObservableList<String> onEditCategories = FXCollections.observableArrayList();
-        for(Components c : components){
-            if(!onEditCategories.contains(c.getComponentCategory())){
-                onEditCategories.add(c.getComponentCategory());
-            }
-        }
-        return onEditCategories;
-    }
-
     /** Getter og Setter methods */
     public static ObservableList<Components> getComponents() { return components; }
+    public static ObservableList<String> getCategories() { return categories; }
     public static void setModified(boolean modified) { TableViewCollection.modified = modified; }
     public static boolean isModified() { return modified; }
 }
