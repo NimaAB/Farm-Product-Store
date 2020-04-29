@@ -128,11 +128,11 @@ public class TableViewCollection {
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public static void fillFilterComboBox(ComboBox<String> filterOptions){
-        String[] filterCats = {"Komponent Nr", "Komponent Navn", "Komponent Kategori", "Komponent Speks.", "Komponent Pris"};
+        String[] filterCats = {"Komponent Nr", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
 
         filterOptions.setItems(filterCategories);
-        filterOptions.setValue("Komponent Navn");
+        filterOptions.setValue("Navn");
         filterOptions.getSelectionModel().selectedItemProperty().addListener((observable,oldValue,newValue)->{
             filterChoice = newValue; });
     }
@@ -151,10 +151,10 @@ public class TableViewCollection {
 
                 switch (filterChoice) {
                     case "Komponent Nr": if(nr.equals(filter)){ return true; } break;
-                    case "Komponent Navn": if(name.contains(filter)){ return true; } break;
-                    case "Komponent Kategori": if(category.contains(filter)){ return true; } break;
-                    case "Komponent Speks.": if(specs.contains(filter)){ return true; } break;
-                    case "Komponent Pris": if(price.contains(filter)){ return true; } break;
+                    case "Navn": if(name.contains(filter)){ return true; } break;
+                    case "Kategori": if(category.contains(filter)){ return true; } break;
+                    case "Spesifikasjoner": if(specs.contains(filter)){ return true; } break;
+                    case "Pris": if(price.contains(filter)){ return true; } break;
                 }
                 return newValue.isEmpty();
             });

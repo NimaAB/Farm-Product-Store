@@ -11,7 +11,7 @@ import java.io.IOException;
 
 public class Load {
 
-    /** LOADS AN FXML FILE */
+    /** Laster opp en fxml fil */
     public static void window(String FXMLFilepath, String title, Stage stage){
         try {
             FXMLLoader loader = new FXMLLoader(Load.class.getResource(FXMLFilepath));
@@ -22,7 +22,7 @@ public class Load {
         } catch (IOException e){ e.printStackTrace(); }
     }
 
-    /** THIS METHOD ASKS THE ADMIN IF THEY WANT TO SAVE THE CHANGES THEY MADE BEFORE QUITTING THE APP */
+    /** Spør brukeren om å lagre endringer før programmen slutter */
     public static void exit(Stage stage){
         if(TableViewCollection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");

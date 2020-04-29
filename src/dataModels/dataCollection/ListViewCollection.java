@@ -26,7 +26,7 @@ public class ListViewCollection {
     private static boolean open = false;
     private static String openedFile;
 
-    /** Viser alle komponent kategorier i en comboBox */
+    /** Viser alle komponent kategorier i en dropdown */
     public static void fillCategoryComboBox(ComboBox<String> comboBox ){
         ObservableList<String> categories = FXCollections.observableArrayList();
         categories.add("All");
@@ -39,7 +39,7 @@ public class ListViewCollection {
         comboBox.setItems(categories);
     }
 
-    /** Viser komponenter i tabellen basert på kategori */
+    /** Viser komponenter i tabellen basert på kategori som er valgt i dropdown */
     public static void selectedTable (String categoryName, TableView<Components> tableView ){
         ObservableList<Components> selectedCatogries = FXCollections.observableArrayList();
         for (Components obj : components){
@@ -91,11 +91,11 @@ public class ListViewCollection {
         if(isModified()){
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
             if(openedFile == null){
-                try{
+                try {
                     openedFile = Save.pathDialog("DataFraApp");
                     SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
                     saveCSV.call();
-                }catch (Exception e){
+                } catch (Exception e){
                     Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
                 }
             } else {
