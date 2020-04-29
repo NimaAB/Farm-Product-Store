@@ -18,6 +18,7 @@ public class Load {
             Parent root = loader.load();
             stage.setTitle(title);
             stage.setScene(new Scene(root));
+            stage.getScene().getWindow().centerOnScreen();
             stage.show();
         } catch (IOException e){ e.printStackTrace(); }
     }
