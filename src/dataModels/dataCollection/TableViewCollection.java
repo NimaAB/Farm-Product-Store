@@ -14,6 +14,9 @@ import javafx.scene.control.*;
 import validations.customExceptions.InvalidFileException;
 import java.util.ArrayList;
 
+/**
+ * klassen samler date til TabelView og metodene gir muligehet for å behandle data.
+ * */
 public class TableViewCollection {
     private static final ObservableList<Components> components = FXCollections.observableArrayList();
     private static boolean reloadComponents = true;

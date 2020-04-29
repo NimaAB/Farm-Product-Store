@@ -2,8 +2,9 @@ package dataModels.data;
 
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
-
+/**
+ * En model av Typen ConfigurationItems
+ * */
 public class ConfigurationItems {
     private int nr;
     private String name;

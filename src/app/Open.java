@@ -13,6 +13,12 @@ import validations.customExceptions.InvalidFileException;
 
 import java.util.ArrayList;
 
+/**
+ * En generisk klasse som bruker metodene fra OpenCSV.
+ * Klassen aktiver lesings tråden.
+ * metodene i denne klassen er brukt AdminController og CustomerController.
+ * */
+
 public class Open<T> {
     private final BorderPane currentPane;
     private final OpenCSV <T> openCSV;

@@ -7,6 +7,10 @@ import filehandling.ReaderAbstract;
 import java.io.*;
 import java.util.ArrayList;
 
+/**
+ * Generisk klasse som arver fra ReaderAbstrakt
+ * Klassen implimenterer read() fra ReaderAbstrakt og call() fra Task<>
+ */
 public class OpenCSV<T> extends ReaderAbstract<T> {
     private final String filePath;
 

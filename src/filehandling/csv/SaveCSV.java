@@ -7,7 +7,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * Generisk klasse som arver fra WriterAbstrakt
+ * Klassen implimenterer write() fra WriterAbstrakt og call() fra Task<>
+ */
 public class SaveCSV<T> extends WriterAbstract<T> {
     private final ArrayList<T> items;
     private final String filePath;
@@ -22,7 +25,7 @@ public class SaveCSV<T> extends WriterAbstract<T> {
         try {
             FileWriter fileWriter = new FileWriter(filePath);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-            String itemText = ItemsFormat.rewriteItems(items);
+            String itemText = ItemsFormat.itemsText(items);
             bufferedWriter.write(itemText);
             bufferedWriter.close();
         } catch (IOException e){

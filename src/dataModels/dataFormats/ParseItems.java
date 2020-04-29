@@ -6,6 +6,11 @@ import javafx.scene.control.CheckBox;
 import validations.Alerts;
 import validations.customExceptions.InvalidItemDataException;
 
+/**
+ * Klassens metode parseItem() tar imot en text fil som string etter at denne skannet
+ * og drivr med å endre hver linje av texten til objekter av type Components eller ConfigurationItems
+ * avhengig av lengden på linjen
+ * */
 public class ParseItems {
     public static Object parseItem(String str) throws InvalidItemDataException {
         String[] itemsArray = str.split(",");
@@ -31,6 +36,7 @@ public class ParseItems {
             CheckBox b = new CheckBox();
             return new Components(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
         }
-        throw new InvalidItemDataException("Invalid Type of data");
+        throw new InvalidItemDataException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
+                "attributter enn det programmet forventer");
     }
 }

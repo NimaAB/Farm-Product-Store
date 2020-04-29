@@ -1,11 +1,14 @@
 package filehandling.bin;
 
-import dataModels.data.Components;
+
 import filehandling.ReaderAbstract;
 import java.io.*;
 import java.util.ArrayList;
 
-
+/**
+ * Generisk klasse som arver fra ReaderAbstrakt
+ * Klassen implimenterer read() fra ReaderAbstrakt og call() fra Task<>
+ */
 public class OpenBin<T> extends ReaderAbstract<T> {
     private final String filePath;
 
@@ -35,7 +38,7 @@ public class OpenBin<T> extends ReaderAbstract<T> {
 
     @Override
     public ArrayList<T> call(){
-        try{ Thread.sleep(3000); }
+        try{ Thread.sleep(2000); }
         catch (InterruptedException ignored){}
         return read(filePath);
     }

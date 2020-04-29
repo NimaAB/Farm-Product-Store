@@ -4,6 +4,13 @@ import dataModels.data.ConfigurationItems;
 
 import java.util.ArrayList;
 
+/**
+ * All Data som blir skrevet til csv fil
+ * går gjennom denne klassen for å få sin text format.
+ * to av metodene er generiske pga. vi printer ut to Typer til csv-fil
+ * Components og ConfigurationItems.
+ */
+
 public class ItemsFormat {
     public static String configFormat(ConfigurationItems item){
         return item.toString(",");
@@ -14,7 +21,7 @@ public class ItemsFormat {
         }
         return item.toString();
     }
-    public static <T> String rewriteItems(ArrayList<T> items){
+    public static <T> String itemsText(ArrayList<T> items){
         StringBuilder itemText = new StringBuilder();
         for(T item: items){
             itemText.append(itemsFormat(item));

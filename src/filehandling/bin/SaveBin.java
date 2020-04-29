@@ -5,10 +5,14 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
+/**
+ * Generisk klasse som arver fra WriterAbstrakt
+ * Klassen implimenterer write() fra WriterAbstrakt og call() fra Task<>
+ */
 public class SaveBin<T> extends WriterAbstract<T> {
     private final ArrayList<T> items;
     private final String filePath;
+
     public SaveBin(ArrayList<T> items, String filePath){
         this.items = items;
         this.filePath = filePath;

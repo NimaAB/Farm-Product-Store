@@ -14,6 +14,10 @@ import javafx.scene.control.TableView;
 import validations.Alerts;
 import java.util.ArrayList;
 
+/**
+ * klassen samler date til ListView(PC-Configuration) og metodene gir muligehet for å behandle data.
+ * */
+
 public class ListViewCollection {
     private static final ObservableList<Components> components = TableViewCollection.getComponents();
     private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();

@@ -10,6 +10,10 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
+/**
+ * En model av Typen Component som er Serialisert.
+ * */
+
 public class Components implements Serializable {
     private static final long serialVersionUID = 1;
     private transient SimpleIntegerProperty componentNr;
