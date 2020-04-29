@@ -57,7 +57,7 @@ public class AdminController implements Initializable {
 
             Components component = new Components(nr,name,category,specs,price,b);
             TableViewCollection.addComponent(component);
-            resetFields();
+            reset();
 
             Alerts.success("Komponent Opprettet");
         } catch (IllegalArgumentException e) {
@@ -65,7 +65,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    private void resetFields(){
+    private void reset(){
         // Resetter feltene
         nr.setText("");
         name.setText("");

@@ -41,7 +41,7 @@ public class CustomerController implements Initializable {
     }
 
     @FXML
-    void open(ActionEvent event) {
+    void open() {
         try {
             String path = Save.pathDialog("DataFraApp");
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
@@ -92,7 +92,6 @@ public class CustomerController implements Initializable {
 
     @FXML
     void logOut(ActionEvent event){
-        // hvis man åpner en fil og legger nye items i den, spør programmen om å lagre endringer ved logg ut
         if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
             if(response){
@@ -102,7 +101,6 @@ public class CustomerController implements Initializable {
             ListViewCollection.clearList();
             Stage stage = (Stage) customerPane.getScene().getWindow();
             Load.window("views/loginView.fxml","Login",stage);
-
         } else if(ListViewCollection.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
             if(response){

@@ -1,16 +1,10 @@
 package app;
 
-import dataModels.data.ConfigurationItems;
-import dataModels.dataCollection.ListViewCollection;
-import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileException;
-
 import javax.swing.*;
-import java.util.ArrayList;
 
 public class Save<T> {
     private final BorderPane currentPane;

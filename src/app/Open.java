@@ -10,7 +10,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
 import validations.customExceptions.InvalidFileException;
-
 import java.util.ArrayList;
 
 public class Open<T> {
