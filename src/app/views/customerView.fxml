@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CustomerController">
+<BorderPane fx:id="customerPane" stylesheets="@style.css" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CustomerController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -74,7 +74,7 @@
                     </columns>
                 </TableView>
                 <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
-                <ComboBox fx:id="categoryComboBox" layoutX="636.0" layoutY="7.0" onAction="#changeTable" prefWidth="150.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
+                <ComboBox styleClass="filterOptions" fx:id="categoryComboBox" layoutX="636.0" layoutY="7.0" onAction="#changeTable" prefWidth="150.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
             </children>
         </AnchorPane>
     </center>

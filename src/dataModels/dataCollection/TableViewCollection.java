@@ -95,7 +95,7 @@ public class TableViewCollection {
 
     /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
     public static void fillCategoryComboBox(ComboBox<String> categoryOptions){
-        String[] definedCategories = {"Minne","Prosessor","Grafikkort"};
+        String[] definedCategories = {"Minne","Prosessor","Grafikkort","Harddisk","Hovedkort","Utvidelseskort"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
         for(Components c : components){

@@ -12,18 +12,17 @@ Button {
 }
 
 Button:hover {
-    -fx-background-color: #2471A3;
+    -fx-background-color: dodgerblue;
     -fx-cursor: hand;
 }
 
 .text-field, .text-area {
-    //-fx-background-color: #EBEDEF;
     -fx-border-color: white white #28a3f4 white;
-    -fx-border-width: 1px;
+    -fx-border-width: 2px;
+    -fx-prompt-text-fill: grey;
     -fx-text-fill: black;
 }
 .text-area .content{
-    //-fx-background-color: #EBEDEF;
     -fx-background-insets: 0;
 }
 
@@ -43,7 +42,7 @@ Button:hover {
 .combo-box{
     -fx-background-color: white;
     -fx-border-color: white;
-    -fx-border-width: 1px;
+    -fx-border-width: 2px;
     -fx-text-fill: white;
     -fx-prompt-text-fill: #5DADE2;
 }
@@ -53,6 +52,7 @@ Button:hover {
 .combo-box .arrow-button{
     -fx-background-color: #EBEDEF;
     -fx-border-color: white white #28a3f4 white;
+    -fx-border-width: 2px;
 }
 .combo-box .cell:selected {
     -fx-text-fill: #5DADE2;
@@ -92,7 +92,7 @@ Button:hover {
 /* Gjelder bare til filterOptions dropdown */
 .combo-box.filterOptions {
     -fx-border-color: white white #28a3f4 white;
-    -fx-border-width: 1px;
+    -fx-border-width: 2px;
 }
 .combo-box.filterOptions .arrow-button{
     -fx-background-color: transparent;

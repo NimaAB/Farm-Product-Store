@@ -72,7 +72,7 @@ public class AdminController implements Initializable {
         specifications.setText("");
         price.setText("");
 
-        // legger nye kategorier på dropdown om det finnes om det finnes
+        // legger nye kategorier på dropdown om det finnes
         TableViewCollection.fillCategoryComboBox(categoriesCombobox);
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
     }
