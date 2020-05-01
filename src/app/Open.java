@@ -22,7 +22,7 @@ public class Open<T> {
     private final BorderPane currentPane;
     private final OpenCSV <T> openCSV;
     private final Label lbl;
-
+    private boolean readingSucceed;
     public Open(BorderPane pane, OpenCSV<T> openCSV,Label lbl) {
         this.currentPane = pane;
         this.openCSV = openCSV;
@@ -39,6 +39,7 @@ public class Open<T> {
     }
 
     private void readingDone(WorkerStateEvent e) {
+        currentPane.setDisable(false);
         try {
             ArrayList<T> itemsFromFile = openCSV.call();
             if(itemsFromFile.isEmpty()){
@@ -50,9 +51,7 @@ public class Open<T> {
                     ListViewCollection.showTotalPrice(lbl);
                     ListViewCollection.setModified(false);
                 } else if (obj instanceof Components && currentPane.getId().equals("adminPane")) {
-                    for (Components el : (ArrayList<Components>) itemsFromFile) {
-                        TableViewCollection.addComponent(el);
-                    }
+                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile);
                 } else {
                     Alerts.warning("filen kan ikke lastes opp! Prøv en annen fil.");
                 }
@@ -61,7 +60,6 @@ public class Open<T> {
             Alerts.warning(exception.getMessage());
             exception.printStackTrace();
         }
-        currentPane.setDisable(false);
     }
 
     private void readingFailed(WorkerStateEvent event){
@@ -69,5 +67,8 @@ public class Open<T> {
         Alerts.warning("Thread Failed: " + e.getMessage());
         e.printStackTrace();
         currentPane.setDisable(false);
+    }
+    public boolean isReadingSucceed(){
+        return readingSucceed;
     }
 }

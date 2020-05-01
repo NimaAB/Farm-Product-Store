@@ -16,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
+import validations.customExceptions.InvalidFileNameException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,11 +33,11 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Components,String> categoryCol;
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
-    private String file = "DataFraApp/Database/components.bin";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TableViewCollection.loadComponents(file);
+        TableViewCollection.loadComponents();
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
         TableViewCollection.filterTableView(tableview,txtFilter);
@@ -78,15 +80,20 @@ public class AdminController implements Initializable {
     }
 
     @FXML void open(){
-        try {
+        boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
+                        " i tabellen med dataen som ligger i filen som du skal laste opp?");
+        if(doOpen){
+            try {
             String path = Save.pathDialog("DataFraApp");
-            TableViewCollection.loadComponents(path);
-            file = path;
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
+            TableViewCollection.setComponents(null);
             open.openFile();
-        } catch (Exception e){
-            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
+        } catch (InvalidFileNameException e){
+            Alerts.warning(e.getMessage());
+        }
+        }else{
+            Alerts.success("Filen ble ikke lasta opp, for å beholde dataene i tabellen.");
         }
 
     }

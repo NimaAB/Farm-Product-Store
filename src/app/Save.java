@@ -4,6 +4,7 @@ import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
+import validations.customExceptions.InvalidFileNameException;
 
 import javax.swing.*;
 
@@ -22,13 +23,13 @@ public class Save<T> {
         this.saveCSV = saveCSV;
     }
 
-    public static String pathDialog(String filePath) throws Exception {
+    public static String pathDialog(String filePath) throws InvalidFileNameException {
         String melding = "filen din blir lagert i denne plaseringen: "+filePath +
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 = pathStr + ".csv";
         if (pathStr.isEmpty()){
-            throw new Exception();
+            throw new InvalidFileNameException("Fil navn er ikke gitt!");
         }
         return filePath+ "\\" + pathStr1;
     }

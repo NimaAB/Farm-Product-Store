@@ -1,6 +1,8 @@
 
 package dataModels.dataCollection;
 
+import app.Open;
+import app.Save;
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
@@ -23,40 +25,16 @@ public class TableViewCollection {
     private static boolean reloadComponents = true;
     private static boolean modified = false;
     private static String filterChoice = "Navn";
-    private static String loadedFile;
+    private static final String loadedFile = "DataFraApp/Database/components.bin";
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
-    public static void loadComponents(String filepath) {
-        String fileExtension = filepath.substring(filepath.lastIndexOf("."));
+    public static void loadComponents() {
         ArrayList<Components> componentsList;
-        boolean loaded;
-        try {
-            loadedFile = filepath;
-            if (fileExtension.equals(".bin")) {
-                OpenBin<Components> read = new OpenBin<>(filepath);
-                componentsList = read.call();
-                loaded = false;
-            } else{
-                OpenCSV<Components> read = new OpenCSV<>(filepath);
-                componentsList = read.call();
-                loaded = true;
-            }
-
-            if (reloadComponents) {
-                for (Components c : componentsList) {
-                    CheckBox checkBox = new CheckBox();
-                    c.setCheckBox(checkBox);
-                    components.add(c);
-                    reloadComponents = false;
-                }
-            }
-
-        } catch (InvalidFileException ignored){
-            loaded = false;
-        }
-
-        if (loaded){
-            components.clear();
+        OpenBin<Components> read = new OpenBin<>(loadedFile);
+        componentsList = read.call();
+        if (reloadComponents) {
+            setComponents(componentsList);
+            reloadComponents = false;
         }
     }
 
@@ -74,17 +52,9 @@ public class TableViewCollection {
 
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
     public static void saveData(){
-        ArrayList<Components> data = new ArrayList<>(components);
-        String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
-
-        if(fileExtension.equals(".bin")){
-            SaveBin<Components> write = new SaveBin<>(data, loadedFile);
-            write.call();
-        } else {
-            SaveCSV<Components> write = new SaveCSV<>(data, loadedFile);
-            write.call();
-        }
-
+        ArrayList<Components> data =new ArrayList<>(getComponents());
+        SaveBin<Components> write = new SaveBin<>(data, loadedFile);
+        write.call();
         modified = false;
     }
 
@@ -147,6 +117,17 @@ public class TableViewCollection {
     }
 
     /** Getter og Setter methods */
+    public static void setComponents(ArrayList<Components> items){
+        if(items ==null){
+            components.clear();
+        }else{
+            for(Components c: items){
+                CheckBox checkBox = new CheckBox();
+                c.setCheckBox(checkBox);
+                components.add(c);
+            }
+        }
+    }
     public static ObservableList<Components> getComponents() { return components; }
     public static ObservableList<String> getCategories() { return categories; }
     public static void setModified(boolean modified) { TableViewCollection.modified = modified; }

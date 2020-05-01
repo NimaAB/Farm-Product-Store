@@ -100,5 +100,6 @@ public class Components implements Serializable {
         this.componentCategory = new SimpleStringProperty(componentCategory);
         this.componentSpecs = new SimpleStringProperty(componentSpecs);
         this.componentPrice = new SimpleDoubleProperty(componentPrice);
+
     }
 }
