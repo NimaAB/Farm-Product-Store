@@ -6,11 +6,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<<<<<<< HEAD
-<BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" stylesheets="@../../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
-=======
+
 <BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
->>>>>>> e0eaabe4a1f907e8cb25cafb0c2278463c09b9dd
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <menus>

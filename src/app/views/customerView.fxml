@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="customerPane" stylesheets="@style.css" prefHeight="700.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CustomerController">
+<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CustomerController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
             <menus>
@@ -74,28 +74,42 @@
                     </columns>
                 </TableView>
                 <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
-                <ComboBox styleClass="filterOptions" fx:id="categoryComboBox" layoutX="636.0" layoutY="7.0" onAction="#changeTable" prefWidth="150.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
+                <ComboBox fx:id="categoryComboBox" layoutX="636.0" layoutY="7.0" onAction="#changeTable" prefWidth="150.0" styleClass="filterOptions" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
             </children>
         </AnchorPane>
     </center>
     <left>
         <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" BorderPane.alignment="CENTER">
             <children>
-                <Button layoutX="100.0" layoutY="467.0" mnemonicParsing="false" onAction="#addItemToCart" prefHeight="25.0" prefWidth="200.0" text="Legg Komponent" />
-                <Button layoutX="100.0" layoutY="500.0" mnemonicParsing="false" onAction="#clearList" prefHeight="25.0" prefWidth="200.0" text="Ny Konfigurasjon" />
-                <Button layoutX="101.0" layoutY="533.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="25.0" prefWidth="200.0" text="Slett" />
+                <Button layoutX="88.0" layoutY="469.0" mnemonicParsing="false" onAction="#addItemToCart" prefHeight="30.0" prefWidth="208.0" text="Legg Komponent">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+                <Button layoutX="87.0" layoutY="509.0" mnemonicParsing="false" onAction="#clearList" prefHeight="30.0" prefWidth="209.0" text="Ny Konfigurasjon">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+                <Button layoutX="88.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="30.0" prefWidth="208.0" style="-fx-background-color: #f42828;" text="Slett">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
                 <ListView fx:id="shoppingCart" layoutX="68.0" layoutY="85.0" prefHeight="319.0" prefWidth="269.0" />
                 <Label alignment="CENTER" layoutX="110.0" layoutY="44.0" prefHeight="30.0" prefWidth="186.0" text="PC-Konfigurasjon" textAlignment="JUSTIFY">
                     <font>
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <Label layoutX="68.0" layoutY="414.0" prefHeight="31.0" prefWidth="93.0" text="Total pris:" textAlignment="CENTER">
+                <Label layoutX="64.0" layoutY="421.0" prefHeight="31.0" prefWidth="73.0" text="Total pris:" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-                <Label fx:id="totalPriceLbl" layoutX="169.0" layoutY="414.0" prefHeight="31.0" prefWidth="165.0" textAlignment="CENTER">
+                <Label fx:id="totalPriceLbl" layoutX="150.0" layoutY="421.0" prefHeight="31.0" prefWidth="105.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLbl1" layoutX="267.0" layoutY="421.0" prefHeight="31.0" prefWidth="44.0" text=",-kr" textAlignment="CENTER">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
