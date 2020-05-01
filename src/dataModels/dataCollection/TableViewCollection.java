@@ -1,6 +1,7 @@
 
 package dataModels.dataCollection;
 
+import app.Open;
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;

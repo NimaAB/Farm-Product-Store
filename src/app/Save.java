@@ -27,10 +27,11 @@ public class Save<T> {
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 = pathStr + ".csv";
-        if (pathStr.isEmpty()){
+        if (!pathStr.isEmpty()){
+            return filePath+"\\"+ pathStr1;
+        }else{
             throw new Exception();
         }
-        return filePath+ "\\" + pathStr1;
     }
 
     public void saveFile(){

@@ -85,10 +85,9 @@ public class AdminController implements Initializable {
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
             open.openFile();
-        } catch (Exception e){
+        }catch (Exception e){
             Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
         }
-
     }
 
     @FXML void save(){
@@ -169,8 +168,8 @@ public class AdminController implements Initializable {
     }
 
     @FXML void logOut(){
+        TableViewCollection.saveData();
         Stage stage = (Stage) adminPane.getScene().getWindow();
         Load.window("views/loginView.fxml","Login",stage);
-        TableViewCollection.saveData();
     }
 }
