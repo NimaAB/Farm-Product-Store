@@ -9,8 +9,9 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileException;
+import validations.ioExceptions.InvalidFileException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * En generisk klasse som bruker metodene fra OpenCSV.
@@ -38,31 +39,32 @@ public class Open<T> {
         thread.setDaemon(true);
         thread.start();
     }
-
+    @SuppressWarnings("unchecked")
     private void readingDone(WorkerStateEvent e) {
+        currentPane.setDisable(false);
         try {
             ArrayList<T> itemsFromFile = openCSV.call();
             if(itemsFromFile.isEmpty()){
                 Alerts.warning("filen er tom! Prøv en annen fil.");
             }else {
-                Object obj = itemsFromFile.get(0);
-                if (obj instanceof ConfigurationItems && currentPane.getId().equals("customerPane")) {
+                boolean isComponent= itemsFromFile.get(0) instanceof Components;
+                if (!isComponent && !User.isAdmin()) {
                     ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
                     ListViewCollection.showTotalPrice(lbl);
                     ListViewCollection.setModified(false);
-                } else if (obj instanceof Components && currentPane.getId().equals("adminPane")) {
-                    for (Components el : (ArrayList<Components>) itemsFromFile) {
-                        TableViewCollection.addComponent(el);
+                } else if(isComponent && User.isAdmin()){
+                    if(!TableViewCollection.getComponents().isEmpty()){
+                        TableViewCollection.setComponents(null);
                     }
-                } else {
-                    Alerts.warning("filen kan ikke lastes opp! Prøv en annen fil.");
+                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile);
+                }else {
+                    Alerts.warning("Feil Type: Programmet støtter ikke din data.");
                 }
             }
         } catch (InvalidFileException exception){
             Alerts.warning(exception.getMessage());
             exception.printStackTrace();
         }
-        currentPane.setDisable(false);
     }
 
     private void readingFailed(WorkerStateEvent event){

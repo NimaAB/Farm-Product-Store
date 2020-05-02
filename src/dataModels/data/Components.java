@@ -5,6 +5,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.control.CheckBox;
 import validations.Validator;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -53,7 +54,7 @@ public class Components implements Serializable {
         this.componentSpecs.set(Validator.getComponentSpecs());
     }
 
-    public void setComponentCategory(String componentCategory) {
+    public void setComponentCategory(String componentCategory)  {
         Validator.validate_componentCategory(componentCategory);
         this.componentCategory.set(Validator.getComponentCategory());
     }
@@ -100,5 +101,6 @@ public class Components implements Serializable {
         this.componentCategory = new SimpleStringProperty(componentCategory);
         this.componentSpecs = new SimpleStringProperty(componentSpecs);
         this.componentPrice = new SimpleDoubleProperty(componentPrice);
+
     }
 }
