@@ -2,9 +2,12 @@ package validations;
 
 import dataModels.data.Components;
 import dataModels.dataCollection.TableViewCollection;
-import validations.customExceptions.InvalidItemDataException;
+import validations.customExceptions.InvalidDataException;
 import validations.customExceptions.InvalidNumberException;
+import validations.customExceptions.InvalidTextInputException;
+
 import java.io.Serializable;
+import java.util.regex.Pattern;
 
 /** Denne klasse brukes til å validere input verdier på feltene
  *  når admin oppretter nye komponenter og når verdier blir redigert
@@ -24,32 +27,40 @@ public class Validator implements Serializable {
         return toValidate;
     }
 
-    public static void validate_componentName(String componentName){
-        if(componentName.isEmpty()){ throw new IllegalArgumentException("Komponent navn kan ikke være tomt"); }
-        Validator.componentName = replaceComma(componentName);
+    public static void validate_componentName(String componentName) {
+
+        if(componentName.isEmpty()){
+            throw new IllegalArgumentException("Komponent navn kan ikke være tomt");
+        }
+        String newComponentName = Character.toString(componentName.charAt(0)).toUpperCase()+componentName.substring(1);
+        Validator.componentName = replaceComma(newComponentName);
     }
 
-    public static void validate_componentCategory(String componentCategory){
-        if(componentCategory.isEmpty() || componentCategory.equals("All")){
-            throw new IllegalArgumentException("Komponent kategori kan ikke være tomt"); }
+    public static void validate_componentCategory(String componentCategory) {
+        boolean isCorrect = Pattern.matches("[A-ZÆØÅ][a-zæøå]* [A-ZÆØÅ][a-zæøå]*",componentCategory) ||
+                Pattern.matches("[A-ZÆØÅ][a-zæøå]*",componentCategory);
+        if(!isCorrect){
+            throw new IllegalArgumentException("Komponent kategori må være på riktig format og ikke være tomt"); }
         Validator.componentCategory = componentCategory;
     }
 
-    public static void validate_componentSpecs(String componentSpecs){
+    public static void validate_componentSpecs(String componentSpecs) {
         if(componentSpecs.isEmpty()){ throw new IllegalArgumentException("Spesifikasjoner kan ikke være tomt"); }
-        Validator.componentSpecs = replaceComma(componentSpecs);
+        String newComponentSpecs = Character.toString(componentSpecs.charAt(0)).toUpperCase()
+                +componentSpecs.substring(1);
+        Validator.componentSpecs = replaceComma(newComponentSpecs);
     }
 
     public static void validate_componentNumber(String txtComponentNumber){
         try {
             componentNumber = Integer.parseInt(txtComponentNumber);
-            if(componentNumber < 0){ throw new InvalidItemDataException("Nummeret må være større enn null"); }
+            if(componentNumber < 0){ throw new InvalidDataException("Nummeret må være større enn null"); }
             for(Components c : TableViewCollection.getComponents()){
                 if(c.getComponentNr() == componentNumber){
                     throw new InvalidNumberException("Komponent nummeret \"" + componentNumber + "\" er tatt");
                 }
             }
-        } catch (InvalidItemDataException | InvalidNumberException e) {
+        } catch (InvalidDataException | InvalidNumberException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent nummer format"); }
@@ -60,14 +71,14 @@ public class Validator implements Serializable {
             if(txtComponentPrice.contains(",")){
                 String strPrice = txtComponentPrice.replace(',','.');
                 double componentPrice = Double.parseDouble(strPrice);
-                if(componentPrice <= 0) { throw new InvalidItemDataException("Prisen må være større enn 0."); }
+                if(componentPrice <= 0) { throw new InvalidDataException("Prisen må være større enn 0."); }
                 Validator.componentPrice = componentPrice;
             } else {
                 double componentPrice = Double.parseDouble(txtComponentPrice);
-                if(componentPrice <= 0) { throw new InvalidItemDataException("Prisen må være større enn 0."); }
+                if(componentPrice <= 0) { throw new InvalidDataException("Prisen må være større enn 0."); }
                 Validator.componentPrice = componentPrice;
             }
-        } catch (InvalidItemDataException e) {
+        } catch (InvalidDataException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent pris Format");

@@ -9,8 +9,9 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileException;
+import validations.ioExceptions.InvalidFileException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * En generisk klasse som bruker metodene fra OpenCSV.
@@ -22,7 +23,7 @@ public class Open<T> {
     private final BorderPane currentPane;
     private final OpenCSV <T> openCSV;
     private final Label lbl;
-    //private boolean readingSucceed;
+
     public Open(BorderPane pane, OpenCSV<T> openCSV,Label lbl) {
         this.currentPane = pane;
         this.openCSV = openCSV;
@@ -37,7 +38,7 @@ public class Open<T> {
         thread.setDaemon(true);
         thread.start();
     }
-
+    @SuppressWarnings("unchecked")
     private void readingDone(WorkerStateEvent e) {
         currentPane.setDisable(false);
         try {
@@ -51,6 +52,9 @@ public class Open<T> {
                     ListViewCollection.showTotalPrice(lbl);
                     ListViewCollection.setModified(false);
                 } else if(isComponent && User.isAdmin()){
+                    if(!TableViewCollection.getComponents().isEmpty()){
+                        TableViewCollection.setComponents(null);
+                    }
                     TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile);
                 }else {
                     Alerts.warning("Feil Type: Programmet støtter ikke din data.");
@@ -68,7 +72,4 @@ public class Open<T> {
         e.printStackTrace();
         currentPane.setDisable(false);
     }
-   /* public boolean isReadingSucceed(){
-        return readingSucceed;
-    }*/
 }

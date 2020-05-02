@@ -4,7 +4,7 @@ import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
 import javafx.scene.control.CheckBox;
 import validations.Alerts;
-import validations.customExceptions.InvalidItemDataException;
+import validations.customExceptions.InvalidDataException;
 
 /**
  * Klassens metode parseItem() tar imot en text fil som string etter at denne skannet
@@ -12,7 +12,7 @@ import validations.customExceptions.InvalidItemDataException;
  * avhengig av lengden på linjen
  * */
 public class ParseItems {
-    public static Object parseItem(String str) throws InvalidItemDataException {
+    public static Object parseItem(String str) throws InvalidDataException {
         String[] itemsArray = str.split(",");
 
         if(itemsArray.length ==3){
@@ -36,7 +36,7 @@ public class ParseItems {
             CheckBox b = new CheckBox();
             return new Components(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
         }
-        throw new InvalidItemDataException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
+        throw new InvalidDataException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
                 "attributter enn det programmet forventer");
     }
 }

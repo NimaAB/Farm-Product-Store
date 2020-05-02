@@ -16,7 +16,7 @@ public class OpenBin<T> extends ReaderAbstract<T> {
         this.filePath = filePath;
     }
 
-
+    @SuppressWarnings("unchecked")
     @Override
     protected ArrayList<T> read(String filepath){
         ArrayList<T> objects = new ArrayList<>();

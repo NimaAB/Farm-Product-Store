@@ -16,7 +16,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
-import validations.customExceptions.InvalidFileNameException;
+import validations.ioExceptions.InvalidFileNameException;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -37,7 +37,8 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        TableViewCollection.loadComponents();
+        String file = "DataFraApp/Database/components.bin";
+        TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
         TableViewCollection.filterTableView(tableview,txtFilter);
@@ -87,7 +88,6 @@ public class AdminController implements Initializable {
             String path = Save.pathDialog("DataFraApp");
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
-            //TableViewCollection.setComponents(null);
             open.openFile();
         } catch (InvalidFileNameException e){
             Alerts.warning(e.getMessage());
@@ -176,8 +176,17 @@ public class AdminController implements Initializable {
     }
 
     @FXML void logOut(){
-        Stage stage = (Stage) adminPane.getScene().getWindow();
-        Load.window("views/loginView.fxml","Login",stage);
-        TableViewCollection.saveData();
+        if(TableViewCollection.isModified()){
+            boolean response = Alerts.confirm("Vil du lagre alle endringer?");
+            if(response){
+                TableViewCollection.saveData();
+                Alerts.success("Alle endringer er lagret");
+            } else {
+                Alerts.success("Endringer er ikke lagret");
+            }
+            Stage stage = (Stage) adminPane.getScene().getWindow();
+            Load.window("views/loginView.fxml","Login",stage);
+        }
+
     }
 }

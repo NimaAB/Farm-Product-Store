@@ -4,7 +4,7 @@ import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileNameException;
+import validations.ioExceptions.InvalidFileNameException;
 
 import javax.swing.*;
 
@@ -28,8 +28,9 @@ public class Save<T> {
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
         String pathStr1 = pathStr + ".csv";
-        if (pathStr.isEmpty()){
-            throw new InvalidFileNameException("Fil navn er ikke gitt!");
+        if (pathStr.isEmpty() || pathStr.contains(".")||pathStr.contains(",")||
+                pathStr.contains(";")||pathStr.contains("!") || pathStr.contains("?")){
+            throw new InvalidFileNameException("Fil navn kan ikke være tom eller inneholde \".,;!?\"");
         }
         return filePath+ "\\" + pathStr1;
     }

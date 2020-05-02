@@ -1,8 +1,9 @@
 package filehandling.csv;
 
 import dataModels.dataFormats.ParseItems;
-import validations.customExceptions.InvalidFileException;
-import validations.customExceptions.InvalidItemDataException;
+import validations.Alerts;
+import validations.ioExceptions.InvalidFileException;
+import validations.customExceptions.InvalidDataException;
 import filehandling.ReaderAbstract;
 import java.io.*;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
     }
 
     @SuppressWarnings("unchecked")
-    protected ArrayList<T> read(String filePath) throws InvalidItemDataException,InvalidFileException{
+    protected ArrayList<T> read(String filePath) throws InvalidDataException, InvalidFileException{
         ArrayList<T> items = new ArrayList<>();
         File path = new File(filePath);
         if(!path.exists()){
@@ -40,7 +41,7 @@ public class OpenCSV<T> extends ReaderAbstract<T> {
     }
 
     @Override
-    public ArrayList<T> call() throws InvalidItemDataException,InvalidFileException{
+    public ArrayList<T> call() throws InvalidDataException,InvalidFileException{
         try { Thread.sleep(3000); }
         catch (InterruptedException ignored){}
         return read(filePath);

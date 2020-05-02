@@ -17,7 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
-import validations.customExceptions.InvalidFileNameException;
+import validations.ioExceptions.InvalidFileNameException;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -34,7 +34,8 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        TableViewCollection.loadComponents();
+        String file = "DataFraApp/Database/components.bin";
+        TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV,txtFilter);
         ListViewCollection.fillCategoryComboBox(categoryComboBox);
@@ -96,7 +97,7 @@ public class CustomerController implements Initializable {
         if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
             if(response){
-                ListViewCollection.saveConfig();
+                save(event);
                 Alerts.success("Konfigurasjonen er lagret");
             }
             ListViewCollection.clearList();

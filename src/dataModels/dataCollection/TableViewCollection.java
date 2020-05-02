@@ -1,19 +1,16 @@
 
 package dataModels.dataCollection;
 
-import app.Open;
-import app.Save;
+import app.controllers.AdminController;
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
-import filehandling.csv.OpenCSV;
-import filehandling.csv.SaveCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import validations.customExceptions.InvalidFileException;
+
 import java.util.ArrayList;
 
 /**
@@ -25,17 +22,19 @@ public class TableViewCollection {
     private static boolean reloadComponents = true;
     private static boolean modified = false;
     private static String filterChoice = "Navn";
-    private static final String loadedFile = "DataFraApp/Database/components.bin";
+    private static String loadedFile;
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
-    public static void loadComponents() {
+    public static void loadComponents(String filePath) {
         ArrayList<Components> componentsList;
-        OpenBin<Components> read = new OpenBin<>(loadedFile);
+        OpenBin<Components> read = new OpenBin<>(filePath);
+        loadedFile = filePath;
         componentsList = read.call();
         if (reloadComponents) {
             setComponents(componentsList);
             reloadComponents = false;
         }
+
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
@@ -118,7 +117,7 @@ public class TableViewCollection {
 
     /** Getter og Setter methods */
     public static void setComponents(ArrayList<Components> items){
-        if(items ==null){
+        if(items==null){
             components.clear();
         }else{
             for(Components c: items){
@@ -126,6 +125,7 @@ public class TableViewCollection {
                 c.setCheckBox(checkBox);
                 components.add(c);
             }
+            modified = true;
         }
     }
     public static ObservableList<Components> getComponents() { return components; }

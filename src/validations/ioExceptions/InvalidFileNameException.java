@@ -1,4 +1,4 @@
-package validations.customExceptions;
+package validations.ioExceptions;
 
 import java.io.IOException;
 
