@@ -35,7 +35,7 @@ public class LoginController {
         String password = txtPassword.getText();
         boolean usernameMatches= username.equals(admin.getUserName());
         boolean passwordMatches= password.equals(admin.getPassword());
-
+        admin.setAdmin(true);
         return isAdmin.isSelected() && passwordMatches && usernameMatches;
     }
     private boolean isCustom(){
@@ -43,7 +43,7 @@ public class LoginController {
         String password= txtPassword.getText();
         boolean usernameMatches= username.equals(customer.getUserName());
         boolean passwordMatches= password.equals(customer.getPassword());
-
+        admin.setAdmin(false);
         return usernameMatches && passwordMatches && !isAdmin.isSelected();
     }
 }

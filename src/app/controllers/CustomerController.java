@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
+import validations.customExceptions.InvalidFileNameException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -32,7 +34,6 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        //// String file = "DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents();
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV,txtFilter);
@@ -49,8 +50,8 @@ public class CustomerController implements Initializable {
             open.openFile();
             ListViewCollection.setOpenedFile(path);
             ListViewCollection.setOpen(true);
-        } catch (Exception e){
-            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
+        } catch (InvalidFileNameException e){
+            Alerts.warning(e.getMessage());
         }
     }
 

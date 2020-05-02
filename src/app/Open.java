@@ -22,7 +22,7 @@ public class Open<T> {
     private final BorderPane currentPane;
     private final OpenCSV <T> openCSV;
     private final Label lbl;
-    private boolean readingSucceed;
+    //private boolean readingSucceed;
     public Open(BorderPane pane, OpenCSV<T> openCSV,Label lbl) {
         this.currentPane = pane;
         this.openCSV = openCSV;
@@ -45,15 +45,15 @@ public class Open<T> {
             if(itemsFromFile.isEmpty()){
                 Alerts.warning("filen er tom! Prøv en annen fil.");
             }else {
-                Object obj = itemsFromFile.get(0);
-                if (obj instanceof ConfigurationItems && currentPane.getId().equals("customerPane")) {
+                boolean isComponent= itemsFromFile.get(0) instanceof Components;
+                if (!isComponent && !User.isAdmin()) {
                     ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
                     ListViewCollection.showTotalPrice(lbl);
                     ListViewCollection.setModified(false);
-                } else if (obj instanceof Components && currentPane.getId().equals("adminPane")) {
+                } else if(isComponent && User.isAdmin()){
                     TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile);
-                } else {
-                    Alerts.warning("filen kan ikke lastes opp! Prøv en annen fil.");
+                }else {
+                    Alerts.warning("Feil Type: Programmet støtter ikke din data.");
                 }
             }
         } catch (InvalidFileException exception){
@@ -68,7 +68,7 @@ public class Open<T> {
         e.printStackTrace();
         currentPane.setDisable(false);
     }
-    public boolean isReadingSucceed(){
+   /* public boolean isReadingSucceed(){
         return readingSucceed;
-    }
+    }*/
 }

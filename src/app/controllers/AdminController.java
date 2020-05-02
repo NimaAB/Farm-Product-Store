@@ -87,7 +87,7 @@ public class AdminController implements Initializable {
             String path = Save.pathDialog("DataFraApp");
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
-            TableViewCollection.setComponents(null);
+            //TableViewCollection.setComponents(null);
             open.openFile();
         } catch (InvalidFileNameException e){
             Alerts.warning(e.getMessage());
