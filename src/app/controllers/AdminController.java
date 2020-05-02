@@ -16,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
+import validations.ioExceptions.InvalidFileNameException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -31,10 +33,11 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Components,String> categoryCol;
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
-    private String file = "DataFraApp/Database/components.bin";
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        String file = "DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
@@ -78,15 +81,19 @@ public class AdminController implements Initializable {
     }
 
     @FXML void open(){
-        try {
+        boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
+                        " i tabellen med dataen som ligger i filen som du skal laste opp?");
+        if(doOpen){
+            try {
             String path = Save.pathDialog("DataFraApp");
-            TableViewCollection.loadComponents(path);
-            file = path;
             OpenCSV<Components> openCSV = new OpenCSV<>(path);
             Open<Components> open = new Open<>(adminPane,openCSV,null);
             open.openFile();
-        } catch (Exception e){
-            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
+        } catch (InvalidFileNameException e){
+            Alerts.warning(e.getMessage());
+        }
+        }else{
+            Alerts.success("Filen ble ikke lasta opp, for å beholde dataene i tabellen.");
         }
 
     }
@@ -169,8 +176,17 @@ public class AdminController implements Initializable {
     }
 
     @FXML void logOut(){
-        Stage stage = (Stage) adminPane.getScene().getWindow();
-        Load.window("views/loginView.fxml","Login",stage);
-        TableViewCollection.saveData();
+        if(TableViewCollection.isModified()){
+            boolean response = Alerts.confirm("Vil du lagre alle endringer?");
+            if(response){
+                TableViewCollection.saveData();
+                Alerts.success("Alle endringer er lagret");
+            } else {
+                Alerts.success("Endringer er ikke lagret");
+            }
+            Stage stage = (Stage) adminPane.getScene().getWindow();
+            Load.window("views/loginView.fxml","Login",stage);
+        }
+
     }
 }

@@ -1,6 +1,7 @@
 package app;
 
 public class User {
+    private static boolean isAdmin;
     private String userName;
     private String password;
 
@@ -11,4 +12,13 @@ public class User {
 
     public String getUserName() { return userName; }
     public String getPassword() { return password;}
+
+    public void setAdmin(boolean admin) {
+        isAdmin = admin;
+    }
+
+    public static boolean isAdmin(){
+        return isAdmin;
+    }
+
 }

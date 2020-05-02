@@ -17,6 +17,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
+import validations.ioExceptions.InvalidFileNameException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -49,8 +51,8 @@ public class CustomerController implements Initializable {
             open.openFile();
             ListViewCollection.setOpenedFile(path);
             ListViewCollection.setOpen(true);
-        } catch (Exception e){
-            Alerts.warning("Filen lastes ikke opp grunn: "+e.getCause());
+        } catch (InvalidFileNameException e){
+            Alerts.warning(e.getMessage());
         }
     }
 
@@ -95,7 +97,7 @@ public class CustomerController implements Initializable {
         if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
             if(response){
-                ListViewCollection.saveConfig();
+                save(event);
                 Alerts.success("Konfigurasjonen er lagret");
             }
             ListViewCollection.clearList();
