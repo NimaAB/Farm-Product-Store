@@ -2,6 +2,14 @@
 ## Vår20
 ## Semesteroppgave
 
+## logg inn side:
+      -For å logge deg som Adminstrator:
+          Brukernavn: Admin
+          Passord: 1234
+      -For å logge deg som Kunde: 
+          Brukernavn: Custom
+          Passord: 1234
+
 Koden er svar på: 
   ### Alternativ 1: Datamaskin
       "Dette konfigurasjonssystemet skal sette opp komponenter for en datamaskin. Man kan tenke seg at
@@ -18,4 +26,4 @@ Koden er svar på:
       Hver konkrete komponent skal ha en pris og sluttbrukeren skal få listet opp totalprisen på
       datamaskinen som er konfigurert."
       -Oppgave teksten.
-      
+         
