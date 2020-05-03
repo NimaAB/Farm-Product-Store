@@ -33,7 +33,7 @@ public class Save<T> {
                 pathStr.contains(";")||pathStr.contains("!") || pathStr.contains("?")){
             throw new InvalidFileNameException("Fil navn kan ikke være tom eller inneholde \".,;!?\"");
         }
-        return pathStr1;
+        return filePath+"\\"+pathStr1;
     }
 
     public void saveFile(){

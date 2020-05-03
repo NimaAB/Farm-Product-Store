@@ -1,11 +1,5 @@
-
 package dataModels.dataCollection;
 
-<<<<<<< HEAD
-import app.Open;
-=======
-import app.controllers.AdminController;
->>>>>>> 4ad3fe5a23246558325bde93a3f35f3a82ab14b4
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
@@ -14,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
+import validations.Alerts;
 
 import java.util.ArrayList;
 
@@ -38,7 +33,6 @@ public class TableViewCollection {
             setComponents(componentsList);
             reloadComponents = false;
         }
-
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
@@ -49,6 +43,12 @@ public class TableViewCollection {
 
     /** Legger en ny komponent i tabellen */
     public static void addComponent(Components component){
+        for(Components c : getComponents()){
+            if(component.getComponentNr()==c.getComponentNr()){
+                components.remove(c);
+                break;
+            }
+        }
         components.add(component);
         modified = true;
     }
