@@ -70,7 +70,6 @@ public class Open<T> {
     private void readingFailed(WorkerStateEvent event){
         Throwable e = event.getSource().getException();
         Alerts.warning("Thread Failed: " + e.getMessage());
-        e.printStackTrace();
         currentPane.setDisable(false);
     }
 }

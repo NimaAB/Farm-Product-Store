@@ -55,11 +55,6 @@ public class Validator implements Serializable {
         try {
             componentNumber = Integer.parseInt(txtComponentNumber);
             if(componentNumber < 0){ throw new InvalidDataException("Nummeret må være større enn null"); }
-            for(Components c : TableViewCollection.getComponents()){
-                if(c.getComponentNr() == componentNumber){
-                    throw new InvalidNumberException("Komponent nummeret \"" + componentNumber + "\" er tatt");
-                }
-            }
         } catch (InvalidDataException | InvalidNumberException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
