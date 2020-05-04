@@ -135,11 +135,7 @@ public class ListViewCollection {
 
     /** Sletter ConfigItems fra listview */
     public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
-        for(ConfigurationItems item : items){
-                selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
-                configItems.remove(item);
-        }
-        System.out.println(configItems.toString());
+        configItems.removeAll(items);
         showTotalPrice(totalPriceLbl);
         modified = true;
     }
