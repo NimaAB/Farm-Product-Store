@@ -144,7 +144,6 @@ public class ListViewCollection {
 
     /** Getter og Setter methods */
     public static ObservableList<ConfigurationItems> getConfigItems() { return configItems; }
-    public static String getOpenedFile() { return openedFile; }
     public static boolean isModified() { return modified; }
     public static boolean isOpen() { return open; }
     public static void setModified(boolean modified) { ListViewCollection.modified = modified; }
