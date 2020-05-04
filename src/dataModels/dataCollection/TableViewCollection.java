@@ -141,10 +141,10 @@ public class TableViewCollection {
     public static ObservableList<Components> getComponents() { return components; }
     public static ObservableList<String> getCategories() { return categories; }
 
-    public static void setReloadComponents(boolean reloadComponents){
-        TableViewCollection.reloadComponents = reloadComponents;
+    public static void setReloadComponents(boolean reloadComponents1){
+        reloadComponents = reloadComponents1;
     }
 
-    public static void setModified(boolean modified) { TableViewCollection.modified = modified; }
+    public static void setModified(boolean isModified) { modified = isModified; }
     public static boolean isModified() { return modified; }
 }
