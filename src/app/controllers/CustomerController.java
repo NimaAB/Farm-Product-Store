@@ -17,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
+import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileNameException;
 
 import java.net.URL;
@@ -65,7 +66,7 @@ public class CustomerController implements Initializable {
             }else{
                 Alerts.warning("En PC-Konfigurasjon kan bare være i en csv fil!");
             }
-        } catch (InvalidFileNameException e){
+        } catch (InvalidFileNameException| InvalidExtensionException e){
             Alerts.warning(e.getMessage());
         }catch (NullPointerException ignored){}
     }
@@ -96,6 +97,8 @@ public class CustomerController implements Initializable {
                 }
             }catch (InvalidFileNameException e){
                 Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+            }catch (InvalidExtensionException e){
+                Alerts.warning(e.getMessage());
             }catch (NullPointerException ignored){}
         }else{
             Alerts.warning("Det er ingen data for å lagre til fil.");

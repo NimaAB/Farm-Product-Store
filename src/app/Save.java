@@ -3,9 +3,9 @@ package app;
 import filehandling.bin.SaveBin;
 import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
+import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileNameException;
 import javax.swing.*;
 
@@ -32,20 +32,21 @@ public class Save<T> {
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
 
-        if (pathStr.isEmpty()||pathStr.contains(",")||
-                pathStr.contains(";")||pathStr.contains("!") || pathStr.contains("?")){
-            throw new InvalidFileNameException("Fil navn kan ikke være tom eller inneholde \".,;!?\"");
+        if (pathStr.isEmpty()){
+            throw new InvalidFileNameException("Fil navn kan ikke være tom.");
         }else{
             return filePath+"\\"+ pathStr;
         }
     }
+
     public static String extension(String path){
-       try {
+        boolean containsBin = path.contains(".bin");
+        boolean containsCsv = path.contains(".csv");
+        if(containsBin ^ containsCsv){
             return path.substring(path.lastIndexOf("."));
-       } catch (StringIndexOutOfBoundsException ignored) {
-            Alerts.warning("Skriv fil typen - \"filename.csv\"");
-       }
-        return null;
+        }else{
+            throw new InvalidExtensionException("Skriv fil typen - \"filename.csv\"");
+        }
     }
 
     public void saveFile(){

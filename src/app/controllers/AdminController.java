@@ -17,6 +17,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
+import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileNameException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -104,9 +105,9 @@ public class AdminController implements Initializable {
                     Alerts.warning("Programmet åpner bare csv fil");
                 }
                 TableViewCollection.setLoadedFile(path);
-        } catch (InvalidFileNameException ex){
-            Alerts.warning(ex.getMessage());
-        }catch (NullPointerException ignored){}
+        } catch (InvalidFileNameException | InvalidExtensionException e){
+            Alerts.warning(e.getMessage());
+        } catch (NullPointerException ignored){}
         }else{
             Alerts.success("Filen ble ikke lasta opp, for å beholde dataene i tabellen.");
         }
@@ -144,9 +145,12 @@ public class AdminController implements Initializable {
                         Alerts.warning("Programmet lagrer til bin og csv fil type");
                         break;
                 }
-            }catch (InvalidFileNameException ex){
-                Alerts.warning("Lagring gikk feil, Grunn: " + ex.getCause());
+            }catch (InvalidFileNameException e){
+                Alerts.warning("Lagring gikk feil, Grunn: " + e.getMessage());
+            }catch (InvalidExtensionException e){
+                Alerts.warning(e.getMessage());
             }catch (NullPointerException ignored){}
+
         }else{
             Alerts.warning("Det er ingen data for å lagre til fil.");
         }
