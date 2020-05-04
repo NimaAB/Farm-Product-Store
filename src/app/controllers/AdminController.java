@@ -99,15 +99,18 @@ public class AdminController implements Initializable {
 
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
-        try {
-            String path = Save.pathDialog("DataFraApp");
-            SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
-            Save<Components> saveObj = new Save<>(adminPane, saveCSV);
-            saveObj.saveFile();
-        } catch (Exception e){
-            Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+        if(!components.isEmpty()){
+            try {
+                String path = Save.pathDialog("DataFraApp");
+                SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
+                Save<Components> saveObj = new Save<>(adminPane, saveCSV);
+                saveObj.saveFile();
+            } catch (Exception e){
+                Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+            }
+        }else{
+            Alerts.warning("Det er ingen data for å lagre til fil.");
         }
-
     }
 
     @FXML void nameEdited(TableColumn.CellEditEvent<Components, String> event){

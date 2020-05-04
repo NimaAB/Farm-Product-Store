@@ -59,13 +59,17 @@ public class CustomerController implements Initializable {
     @FXML
     void save(ActionEvent event){
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
-        try{
-            String path = Save.pathDialog("DataFraApp");
-            SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
-            Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
-            saveObj.saveFile();
-        }catch (Exception e){
-            Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+        if(!configToSave.isEmpty()){
+            try{
+                String path = Save.pathDialog("DataFraApp");
+                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
+                Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
+                saveObj.saveFile();
+            }catch (Exception e){
+                Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
+            }
+        }else{
+            Alerts.warning("Det er ingen data for å lagre til fil.");
         }
     }
 
