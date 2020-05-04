@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
+import validations.Alerts;
 
 import java.util.ArrayList;
 
@@ -120,14 +121,20 @@ public class TableViewCollection {
 
     /** Getter og Setter methods */
     public static void setComponents(ArrayList<Components> items,String fileExtention){
-        if(items==null){
+        if(items == null){
             components.clear();
-        }else{
-            for(Components c: items){
+        } else {
+            for(Components i: items){
+                for(Components c : components){
+                    while(i.getComponentNr() == c.getComponentNr()){
+                        i.setComponentNr(Integer.toString(i.getComponentNr() + 1));
+                    }
+                }
                 CheckBox checkBox = new CheckBox();
-                c.setCheckBox(checkBox);
-                components.add(c);
+                i.setCheckBox(checkBox);
+                components.add(i);
             }
+
             switch (fileExtention){
                 case ".bin": modified=false; break;
                 case ".csv": modified=true;break;
@@ -140,11 +147,7 @@ public class TableViewCollection {
     }
     public static ObservableList<Components> getComponents() { return components; }
     public static ObservableList<String> getCategories() { return categories; }
-
-    public static void setReloadComponents(boolean reloadComponents1){
-        reloadComponents = reloadComponents1;
-    }
-
+    public static void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
     public static void setModified(boolean isModified) { modified = isModified; }
     public static boolean isModified() { return modified; }
 }
