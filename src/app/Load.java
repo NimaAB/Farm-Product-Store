@@ -27,26 +27,20 @@ public class Load {
     public static void exit(Stage stage){
         if(TableViewCollection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
-
             if(response){
                 TableViewCollection.saveData();
                 Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret"); }
-
-            stage.close();
         }
-
         if(ListViewCollection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre konfigurasjonen?");
-
             if(response){
                 ListViewCollection.saveConfig();
                 Alerts.success("Konfigurasjonen er lagret");
             } else {
                 Alerts.success("Konfigurasjonen er ikke lagret"); }
-
-            stage.close();
         }
+        stage.close();
     }
 }

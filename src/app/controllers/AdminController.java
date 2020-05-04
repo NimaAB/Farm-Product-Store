@@ -230,6 +230,7 @@ public class AdminController implements Initializable {
                 Alerts.success("Endringer er ikke lagret");
                 TableViewCollection.setReloadComponents(true);
                 TableViewCollection.getComponents().clear();
+                TableViewCollection.setModified(false);
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("views/loginView.fxml","Login",stage);

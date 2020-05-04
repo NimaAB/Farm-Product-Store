@@ -64,7 +64,6 @@ public class TableViewCollection {
             SaveBin<Components> write = new SaveBin<>(data, loadedFile);
             write.call();
         }
-
         modified = false;
     }
 
