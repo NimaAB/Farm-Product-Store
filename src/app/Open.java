@@ -53,9 +53,9 @@ public class Open<T> {
                     ListViewCollection.setModified(false);
                 } else if(isComponent && User.isAdmin()){
                     if(!TableViewCollection.getComponents().isEmpty()){
-                        TableViewCollection.setComponents(null);
+                        TableViewCollection.setComponents(null,".bin");
                     }
-                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile);
+                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile,".csv");
                 }else {
                     Alerts.warning("Feil Type: Programmet støtter ikke din data.");
                 }
