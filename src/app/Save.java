@@ -5,15 +5,15 @@ import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
 import validations.Alerts;
 import validations.ioExceptions.InvalidFileNameException;
-
 import javax.swing.*;
 
 /**
  * En generisk klasse som bruker metodene fra SaveCSV.
- * og har en dialog metodet.
- * Klassen aktiver lagrings tråden også.
+ * og har en dialog metode.
+ * Klassen aktiverer lagrings tråden også.
  * metodene i denne klassen er brukt AdminController og CustomerController.
  * */
+
 public class Save<T> {
     private final BorderPane currentPane;
     private final SaveCSV<T> saveCSV;

@@ -11,11 +11,10 @@ import javafx.scene.layout.BorderPane;
 import validations.Alerts;
 import validations.ioExceptions.InvalidFileException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * En generisk klasse som bruker metodene fra OpenCSV.
- * Klassen aktiver lesings tråden.
+ * Klassen aktiverer lesings tråden.
  * metodene i denne klassen er brukt AdminController og CustomerController.
  * */
 

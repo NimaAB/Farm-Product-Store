@@ -17,7 +17,6 @@ import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
 import validations.ioExceptions.InvalidFileNameException;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
