@@ -32,7 +32,7 @@ public class Save<T> {
                 "\nGi filen din et navn: ";
         String pathStr = JOptionPane.showInputDialog(null,melding);
 
-        if (pathStr.isEmpty() || pathStr.contains(".")||pathStr.contains(",")||
+        if (pathStr.isEmpty()||pathStr.contains(",")||
                 pathStr.contains(";")||pathStr.contains("!") || pathStr.contains("?")){
             throw new InvalidFileNameException("Fil navn kan ikke være tom eller inneholde \".,;!?\"");
         }else{
