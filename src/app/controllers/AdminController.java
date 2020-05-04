@@ -228,6 +228,9 @@ public class AdminController implements Initializable {
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("views/loginView.fxml","Login",stage);
+        } else{
+            Stage stage = (Stage) adminPane.getScene().getWindow();
+            Load.window("views/loginView.fxml","Login",stage);
         }
     }
 }
