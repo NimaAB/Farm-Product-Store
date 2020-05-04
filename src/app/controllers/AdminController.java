@@ -93,8 +93,8 @@ public class AdminController implements Initializable {
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
             try {
-            String path = Save.pathDialog("DataFraApp");
-            String extention = Save.extension(path);
+                String path = Save.pathDialog("DataFraApp");
+                String extention = Save.extension(path);
                 if (extention.equals(".csv")) {
                     OpenCSV<Components> openCSV = new OpenCSV<>(path);
                     Open<Components> open = new Open<>(adminPane, openCSV, null);
@@ -103,6 +103,7 @@ public class AdminController implements Initializable {
                 } else {
                     Alerts.warning("Programmet åpner bare csv fil");
                 }
+                TableViewCollection.setLoadedFile(path);
         } catch (InvalidFileNameException ex){
             Alerts.warning(ex.getMessage());
         }catch (NullPointerException ignored){}
