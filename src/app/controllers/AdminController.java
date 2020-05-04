@@ -181,6 +181,8 @@ public class AdminController implements Initializable {
                 Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret");
+                TableViewCollection.setReloadComponents(true);
+                TableViewCollection.getComponents().clear();
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("views/loginView.fxml","Login",stage);
