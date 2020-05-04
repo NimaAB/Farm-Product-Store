@@ -3,13 +3,12 @@ package dataModels.dataCollection;
 import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
+import filehandling.csv.SaveCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import validations.Alerts;
-
 import java.util.ArrayList;
 
 /**
@@ -55,9 +54,17 @@ public class TableViewCollection {
 
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
     public static void saveData(){
-        ArrayList<Components> data =new ArrayList<>(getComponents());
-        SaveBin<Components> write = new SaveBin<>(data, loadedFile);
-        write.call();
+        String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
+        ArrayList<Components> data = new ArrayList<>(getComponents());
+
+        if(fileExtension.equals(".csv")){
+            SaveCSV<Components> write = new SaveCSV<>(data, loadedFile);
+            write.call();
+        } else {
+            SaveBin<Components> write = new SaveBin<>(data, loadedFile);
+            write.call();
+        }
+
         modified = false;
     }
 
@@ -149,5 +156,6 @@ public class TableViewCollection {
     public static ObservableList<String> getCategories() { return categories; }
     public static void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
     public static void setModified(boolean isModified) { modified = isModified; }
+    public static void setLoadedFile(String loadedFile1){ loadedFile = loadedFile1; }
     public static boolean isModified() { return modified; }
 }
