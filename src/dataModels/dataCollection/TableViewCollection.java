@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import validations.Alerts;
+
 
 import java.util.ArrayList;
 
@@ -30,7 +30,7 @@ public class TableViewCollection {
         loadedFile = filePath;
         componentsList = read.call();
         if (reloadComponents) {
-            setComponents(componentsList);
+            setComponents(componentsList,".bin");
             reloadComponents = false;
         }
     }
@@ -63,7 +63,7 @@ public class TableViewCollection {
 
     /** Viser alle komponenter i tabellen */
     public static void setTableView(TableView<Components> tableView){
-        tableView.setItems(components);
+        tableView.setItems(getComponents());
     }
 
     /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
@@ -120,7 +120,7 @@ public class TableViewCollection {
     }
 
     /** Getter og Setter methods */
-    public static void setComponents(ArrayList<Components> items){
+    public static void setComponents(ArrayList<Components> items,String fileExtention){
         if(items==null){
             components.clear();
         }else{
@@ -129,7 +129,14 @@ public class TableViewCollection {
                 c.setCheckBox(checkBox);
                 components.add(c);
             }
-            modified = true;
+            switch (fileExtention){
+                case ".bin": modified=false; break;
+                case ".csv": modified=true;break;
+                default:
+                    System.err.println("Wrong Exention");
+                    break;
+            }
+
         }
     }
     public static ObservableList<Components> getComponents() { return components; }
