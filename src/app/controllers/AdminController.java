@@ -94,7 +94,7 @@ public class AdminController implements Initializable {
         if(doOpen){
             try {
             String path = Save.pathDialog("DataFraApp");
-            String extention = Save.extetion(path);
+            String extention = Save.extension(path);
                 if (extention.equals(".csv")) {
                     OpenCSV<Components> openCSV = new OpenCSV<>(path);
                     Open<Components> open = new Open<>(adminPane, openCSV, null);
@@ -127,7 +127,7 @@ public class AdminController implements Initializable {
                 else{
                     path = Save.pathDialog("DataFraApp");
                 }
-                String extention = Save.extetion(path);
+                String extention = Save.extension(path);
                 switch (extention) {
                     case ".csv":
                         SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);

@@ -39,8 +39,13 @@ public class Save<T> {
             return filePath+"\\"+ pathStr;
         }
     }
-    public static String extetion(String path){
-        return path.substring(path.lastIndexOf("."));
+    public static String extension(String path){
+        try {
+            return path.substring(path.lastIndexOf("."));
+        } catch (StringIndexOutOfBoundsException ignored) {
+            Alerts.warning("Skriv fil typen - \"filename.csv\"");
+        }
+        return null;
     }
 
     public void saveFile(){

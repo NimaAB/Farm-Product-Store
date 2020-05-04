@@ -54,7 +54,7 @@ public class CustomerController implements Initializable {
     void open() {
         try {
             String path = Save.pathDialog("DataFraApp");
-            String extention = Save.extetion(path);
+            String extention = Save.extension(path);
             if(extention.equals(".csv")){
                 OpenCSV<Components> openCSV = new OpenCSV<>(path);
                 Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
@@ -86,7 +86,7 @@ public class CustomerController implements Initializable {
                 }else{
                     path = Save.pathDialog("DataFraApp");
                 }
-                String extention = Save.extetion(path);
+                String extention = Save.extension(path);
                 if(extention.equals(".csv")){
                     SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
                     Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV,null);
