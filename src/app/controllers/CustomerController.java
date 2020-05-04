@@ -49,6 +49,8 @@ public class CustomerController implements Initializable {
         TableViewCollection.filterTableView(costumerTV,txtFilter);
         ListViewCollection.fillCategoryComboBox(categoryComboBox);
         ListViewCollection.setListView(shoppingCart);
+        shoppingCart.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
     }
 
     @FXML
@@ -126,6 +128,7 @@ public class CustomerController implements Initializable {
     void deleteItem() {
         ObservableList<ConfigurationItems> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
         ListViewCollection.deleteItemList(selectedItems,totalPriceLbl);
+
     }
 
     @FXML

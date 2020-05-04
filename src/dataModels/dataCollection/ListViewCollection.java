@@ -13,6 +13,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import validations.Alerts;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * klassen samler date til ListView(PC-Configuration) og metodene gir muligehet for å behandle data.
@@ -135,9 +136,10 @@ public class ListViewCollection {
     /** Sletter ConfigItems fra listview */
     public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
         for(ConfigurationItems item : items){
-            selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
-            configItems.remove(item);
+                selectedItems.removeIf(c -> c.getComponentNr() == item.getNr());
+                configItems.remove(item);
         }
+        System.out.println(configItems.toString());
         showTotalPrice(totalPriceLbl);
         modified = true;
     }

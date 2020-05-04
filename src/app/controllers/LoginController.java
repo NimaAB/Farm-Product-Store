@@ -16,7 +16,7 @@ public class LoginController {
     @FXML TextField txtUsername, txtPassword;
     @FXML RadioButton isAdmin;
     private final User admin = new User("Admin","1234");
-    private final User customer = new User("Custom","1234");
+    private final User customer = new User("Customer","1234");
 
     @FXML
     void loggInn(ActionEvent event) {
