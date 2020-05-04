@@ -1,8 +1,6 @@
 1,Component S,Minne,Specs,900.0
 2,Component A,Prosessor,Specs,899.0
-3,Component D,Grafikkort,Specs,799.0
+2,Component D,Grafikkort,Specs,799.0
 4,Component K,Grafikkort,Specs,200.0
 5,Component W,Grafikkort,Specs,234.0
-6,Component W,Minne,Specs,200.0
-7,Component M,Utvidelseskort,Specs,900.0
-7,Component KI,Grafikkort,Speks,899.0
+5,Component W,Minne,Specs,200.0
