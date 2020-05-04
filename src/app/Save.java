@@ -40,11 +40,11 @@ public class Save<T> {
         }
     }
     public static String extension(String path){
-        try {
+       try {
             return path.substring(path.lastIndexOf("."));
-        } catch (StringIndexOutOfBoundsException ignored) {
+       } catch (StringIndexOutOfBoundsException ignored) {
             Alerts.warning("Skriv fil typen - \"filename.csv\"");
-        }
+       }
         return null;
     }
 
