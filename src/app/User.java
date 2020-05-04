@@ -2,8 +2,8 @@ package app;
 
 public class User {
     private static boolean isAdmin;
-    private String userName;
-    private String password;
+    private final String userName;
+    private final String password;
 
     public User(String userName, String password) {
         this.userName = userName;

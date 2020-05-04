@@ -1,11 +1,7 @@
 package validations;
 
-import dataModels.data.Components;
-import dataModels.dataCollection.TableViewCollection;
 import validations.customExceptions.InvalidDataException;
 import validations.customExceptions.InvalidNumberException;
-import validations.customExceptions.InvalidTextInputException;
-
 import java.io.Serializable;
 import java.util.regex.Pattern;
 
