@@ -31,6 +31,14 @@ public class CustomerController implements Initializable {
     @FXML private ListView <ConfigurationItems> shoppingCart;
     @FXML private Label totalPriceLbl;
 
+    private String openedFile;
+    private void setOpenedFile(String openedFile) {
+        this.openedFile = openedFile;
+    }
+    private String getOpenedFile(){
+        return openedFile;
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
@@ -46,28 +54,49 @@ public class CustomerController implements Initializable {
     void open() {
         try {
             String path = Save.pathDialog("DataFraApp");
-            OpenCSV<Components> openCSV = new OpenCSV<>(path);
-            Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
-            open.openFile();
-            ListViewCollection.setOpenedFile(path);
-            ListViewCollection.setOpen(true);
+            String extention = Save.extetion(path);
+            if(extention.equals(".csv")){
+                OpenCSV<Components> openCSV = new OpenCSV<>(path);
+                Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
+                open.openFile();
+                setOpenedFile(path);
+                ListViewCollection.setOpenedFile(path);
+                ListViewCollection.setOpen(true);
+            }else{
+                Alerts.warning("En PC-Konfigurasjon kan bare være i en csv fil!");
+            }
         } catch (InvalidFileNameException e){
             Alerts.warning(e.getMessage());
-        }
+        }catch (NullPointerException ignored){}
     }
 
     @FXML
     void save(ActionEvent event){
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         if(!configToSave.isEmpty()){
+            String path;
             try{
-                String path = Save.pathDialog("DataFraApp");
-                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
-                Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV);
-                saveObj.saveFile();
-            }catch (Exception e){
+                if(getOpenedFile()!=null){
+                   boolean newFile = Alerts.confirm("Vil du lagre endringene som en ny PC-konfiguration?");
+                    if(newFile){
+                        path = Save.pathDialog("DataFraApp");
+                    }else{
+                        path = getOpenedFile();
+                    }
+                }else{
+                    path = Save.pathDialog("DataFraApp");
+                }
+                String extention = Save.extetion(path);
+                if(extention.equals(".csv")){
+                    SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
+                    Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV,null);
+                    saveObj.saveFile();
+                }else{
+                    Alerts.warning("Programmet kan lagre PC-Konfigurasjon bare som csv fil!");
+                }
+            }catch (InvalidFileNameException e){
                 Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
-            }
+            }catch (NullPointerException ignored){}
         }else{
             Alerts.warning("Det er ingen data for å lagre til fil.");
         }

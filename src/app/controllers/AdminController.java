@@ -5,6 +5,7 @@ import app.Open;
 import app.Save;
 import dataModels.data.Components;
 import dataModels.dataCollection.TableViewCollection;
+import filehandling.bin.SaveBin;
 import filehandling.csv.OpenCSV;
 import filehandling.csv.SaveCSV;
 import javafx.fxml.FXML;
@@ -32,6 +33,14 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Components,String> categoryCol;
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
+    private String openedFile;
+
+    private void setOpenedFile(String openedFile) {
+        this.openedFile = openedFile;
+    }
+    private String getOpenedFile(){
+        return openedFile;
+    }
 
 
     @Override
@@ -85,12 +94,18 @@ public class AdminController implements Initializable {
         if(doOpen){
             try {
             String path = Save.pathDialog("DataFraApp");
-            OpenCSV<Components> openCSV = new OpenCSV<>(path);
-            Open<Components> open = new Open<>(adminPane,openCSV,null);
-            open.openFile();
-        } catch (InvalidFileNameException e){
-            Alerts.warning(e.getMessage());
-        }
+            String extention = Save.extetion(path);
+                if (extention.equals(".csv")) {
+                    OpenCSV<Components> openCSV = new OpenCSV<>(path);
+                    Open<Components> open = new Open<>(adminPane, openCSV, null);
+                    open.openFile();
+                    setOpenedFile(path);
+                } else {
+                    Alerts.warning("Programmet åpner bare csv fil");
+                }
+        } catch (InvalidFileNameException ex){
+            Alerts.warning(ex.getMessage());
+        }catch (NullPointerException ignored){}
         }else{
             Alerts.success("Filen ble ikke lasta opp, for å beholde dataene i tabellen.");
         }
@@ -99,14 +114,38 @@ public class AdminController implements Initializable {
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
         if(!components.isEmpty()){
+            String path;
             try {
-                String path = Save.pathDialog("DataFraApp");
-                SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
-                Save<Components> saveObj = new Save<>(adminPane, saveCSV);
-                saveObj.saveFile();
-            } catch (Exception e){
-                Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
-            }
+                if(getOpenedFile()!=null){
+                    boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
+                        if(newFile){
+                            path = Save.pathDialog("DataFraApp");
+                        }else{
+                            path = getOpenedFile();
+                        }
+                    }
+                else{
+                    path = Save.pathDialog("DataFraApp");
+                }
+                String extention = Save.extetion(path);
+                switch (extention) {
+                    case ".csv":
+                        SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
+                        Save<Components> saveObj = new Save<>(adminPane, saveCSV, null);
+                        saveObj.saveFile();
+                        break;
+                    case ".bin":
+                        SaveBin<Components> saveBin = new SaveBin<>(components, path);
+                        Save<Components> save = new Save<>(adminPane, null, saveBin);
+                        save.saveFile();
+                        break;
+                    default:
+                        Alerts.warning("Programmet lagrer til bin og csv fil type");
+                        break;
+                }
+            }catch (InvalidFileNameException ex){
+                Alerts.warning("Lagring gikk feil, Grunn: " + ex.getCause());
+            }catch (NullPointerException ignored){}
         }else{
             Alerts.warning("Det er ingen data for å lagre til fil.");
         }

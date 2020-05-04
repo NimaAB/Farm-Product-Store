@@ -139,7 +139,7 @@ public class TableViewCollection {
                 case ".bin": modified=false; break;
                 case ".csv": modified=true;break;
                 default:
-                    System.err.println("Wrong Exention");
+                    System.err.println("Wrong Extention");
                     break;
             }
 
