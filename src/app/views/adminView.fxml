@@ -10,15 +10,11 @@
 <BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdminController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
-         <menus>
-            <Menu mnemonicParsing="false" text="File">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv" />
-                  <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv" />
-                  <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut" />
-               </items>
-            </Menu>
-         </menus>
+         <Menu mnemonicParsing="false" text="File">
+            <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv"/>
+            <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv"/>
+            <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut"/>
+         </Menu>
       </MenuBar>
    </top>
    <center>

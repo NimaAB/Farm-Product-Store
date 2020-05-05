@@ -55,7 +55,7 @@ public class Open<T> {
                     if(!TableViewCollection.getComponents().isEmpty()){
                         TableViewCollection.getComponents().clear();
                     }
-                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile,".csv");
+                    TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile,true);
                 }else {
                     Alerts.warning("Feil Type: Programmet støtter ikke din data.");
                 }

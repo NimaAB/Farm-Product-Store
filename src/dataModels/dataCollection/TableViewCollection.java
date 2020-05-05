@@ -29,7 +29,7 @@ public class TableViewCollection {
         loadedFile = filePath;
         componentsList = read.call();
         if (reloadComponents) {
-            setComponents(componentsList,".bin");
+            setComponents(componentsList,false);
             reloadComponents = false;
         }
     }
@@ -126,31 +126,20 @@ public class TableViewCollection {
     }
 
     /** Getter og Setter methods */
-    public static void setComponents(ArrayList<Components> items,String fileExtention){
-        if(items == null){
-            components.clear();
-        } else {
-            for(Components i: items){
-                for(Components c : components){
-                    while(i.getComponentNr() == c.getComponentNr()){
-                        i.setComponentNr(Integer.toString(i.getComponentNr() + 1));
-                    }
+    public static void setComponents(ArrayList<Components> items,boolean modify){
+        for(Components i: items){
+            for(Components c : components){
+                while(i.getComponentNr() == c.getComponentNr()){
+                    i.setComponentNr(Integer.toString(i.getComponentNr() + 1));
                 }
-                CheckBox checkBox = new CheckBox();
-                i.setCheckBox(checkBox);
-                components.add(i);
             }
-
-            switch (fileExtention){
-                case ".bin": modified=false; break;
-                case ".csv": modified=true;break;
-                default:
-                    System.err.println("Wrong Extention");
-                    break;
-            }
-
+            CheckBox checkBox = new CheckBox();
+            i.setCheckBox(checkBox);
+            components.add(i);
         }
+        modified = modify;
     }
+
     public static ObservableList<Components> getComponents() { return components; }
     public static ObservableList<String> getCategories() { return categories; }
     public static void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
