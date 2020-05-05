@@ -1,4 +1,4 @@
-package app;
+package gui;
 
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;

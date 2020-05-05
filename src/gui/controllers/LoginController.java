@@ -1,8 +1,8 @@
-package app.controllers;
+package gui.controllers;
 
-import app.Load;
+import gui.Load;
 
-import app.User;
+import gui.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

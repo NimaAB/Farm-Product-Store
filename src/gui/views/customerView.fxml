@@ -15,18 +15,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.CustomerController">
+<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.CustomerController">
     <top>
         <MenuBar BorderPane.alignment="CENTER">
-            <menus>
                 <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv" />
-                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv" />
-                        <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut" />
-                    </items>
+                    <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv" />
+                    <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv" />
+                    <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut" />
                 </Menu>
-            </menus>
         </MenuBar>
     </top>
     <center>

@@ -1,4 +1,4 @@
-package app;
+package gui;
 
 public class User {
     private static boolean isAdmin;

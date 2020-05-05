@@ -1,4 +1,4 @@
-package app;
+package gui;
 
 import filehandling.bin.SaveBin;
 import filehandling.csv.SaveCSV;

@@ -1,4 +1,4 @@
-package app;
+package gui;
 
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;

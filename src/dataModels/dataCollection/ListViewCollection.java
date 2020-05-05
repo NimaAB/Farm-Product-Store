@@ -1,6 +1,6 @@
 package dataModels.dataCollection;
 
-import app.Save;
+import gui.Save;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
 import filehandling.csv.SaveCSV;
@@ -13,7 +13,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
 import validations.Alerts;
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * klassen samler date til ListView(PC-Configuration) og metodene gir muligehet for å behandle data.
