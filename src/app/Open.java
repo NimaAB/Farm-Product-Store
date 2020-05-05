@@ -53,7 +53,7 @@ public class Open<T> {
                     ListViewCollection.setModified(false);
                 } else if(isComponent && User.isAdmin()){
                     if(!TableViewCollection.getComponents().isEmpty()){
-                        TableViewCollection.setComponents(null,".bin");
+                        TableViewCollection.getComponents().clear();
                     }
                     TableViewCollection.setComponents((ArrayList<Components>) itemsFromFile,".csv");
                 }else {
