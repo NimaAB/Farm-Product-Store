@@ -11,7 +11,7 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv"/>
+            <MenuItem mnemonicParsing="false" onAction="#open" text="Open"/>
             <MenuItem mnemonicParsing="false" onAction="#save" text="Save"/>
             <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut"/>
          </Menu>

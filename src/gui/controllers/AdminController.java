@@ -1,5 +1,6 @@
 package gui.controllers;
 
+import filehandling.bin.OpenBin;
 import gui.Load;
 import gui.Open;
 import gui.Save;
@@ -96,13 +97,21 @@ public class AdminController implements Initializable {
             try {
                 String path = Save.pathDialog("DataFraApp");
                 String extention = Save.extension(path);
-                if (extention.equals(".csv")) {
-                    OpenCSV<Components> openCSV = new OpenCSV<>(path);
-                    Open<Components> open = new Open<>(adminPane, openCSV, null);
-                    open.openFile();
-                    setOpenedFile(path);
-                } else {
-                    Alerts.warning("Programmet åpner bare csv fil");
+                switch (extention){
+                    case ".csv":
+                        OpenCSV<Components> openCSV = new OpenCSV<>(path);
+                        Open<Components> open = new Open<>(adminPane, openCSV, null);
+                        open.openFile();
+                        setOpenedFile(path);
+                        break;
+                    case ".bin":
+                        OpenBin<Components> openBin = new OpenBin<>(path);
+                        openBin.call();
+                        setOpenedFile(path);
+                        break;
+                    default:
+                        Alerts.warning("Programmet åpner ikke" + extention+" !");
+                        break;
                 }
                 TableViewCollection.setLoadedFile(path);
         } catch (InvalidFileNameException | InvalidExtensionException e){
