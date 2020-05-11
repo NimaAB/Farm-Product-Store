@@ -33,8 +33,7 @@ public class Validator implements Serializable {
     }
 
     public static void validate_componentCategory(String componentCategory) {
-        boolean isCorrect = Pattern.matches("^[A-ZÆØÅ]?.+$",componentCategory) ||
-                Pattern.matches("[A-ZÆØÅ]?.+$",componentCategory);
+        boolean isCorrect = Pattern.matches("^[A-ZÆØÅ]?.+$",componentCategory) && !componentCategory.contains(",");
         if(!isCorrect){
             throw new IllegalArgumentException("Komponent kategori må være på riktig format og ikke være tomt"); }
         Validator.componentCategory = componentCategory;
