@@ -139,7 +139,7 @@ public class ListViewCollection {
         }
         configItems.removeAll(items);
         showTotalPrice(totalPriceLbl);
-        modified = true;
+        modified = !configItems.isEmpty();
     }
 
     /** Getter og Setter methods */
