@@ -7,7 +7,7 @@
           Brukernavn: Admin
           Passord: 1234
       -For å logge deg som Kunde: 
-          Brukernavn: Custom
+          Brukernavn: Customer
           Passord: 1234
 
 Koden er svar på: 
