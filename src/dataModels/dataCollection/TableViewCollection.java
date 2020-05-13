@@ -9,6 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
+import validations.ioExceptions.InvalidFileException;
+
 import java.util.ArrayList;
 
 /**
@@ -23,15 +25,18 @@ public class TableViewCollection {
     private static String loadedFile;
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
-    public static void loadComponents(String filePath) {
+    public static void loadComponents(String filePath){
         ArrayList<Components> componentsList;
         OpenBin<Components> read = new OpenBin<>(filePath);
         loadedFile = filePath;
-        componentsList = read.call();
-        if (reloadComponents) {
-            setComponents(componentsList,false);
-            reloadComponents = false;
+        try{
+            componentsList = read.call();
+            if (reloadComponents) {
+                setComponents(componentsList,false);
+                reloadComponents = false;
+            }
         }
+        catch (InvalidFileException ignored){}
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */

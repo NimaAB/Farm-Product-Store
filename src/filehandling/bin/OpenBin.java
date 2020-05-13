@@ -2,6 +2,8 @@ package filehandling.bin;
 
 
 import filehandling.ReaderAbstract;
+import validations.ioExceptions.InvalidFileException;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -18,26 +20,32 @@ public class OpenBin<T> extends ReaderAbstract<T> {
 
     @SuppressWarnings("unchecked")
     @Override
-    protected ArrayList<T> read(String filepath){
+    protected ArrayList<T> read(String filepath) throws InvalidFileException{
         ArrayList<T> objects = new ArrayList<>();
-        try {
-            File file = new File(filepath);
-            FileInputStream fis = new FileInputStream(file);
-            ObjectInputStream OBJ_inStream = new ObjectInputStream(fis);
+        File file = new File(filepath);
+        if(!file.exists()){
+            throw new InvalidFileException("\""+file.toString()+"\""+" eksisterer ikke!");
+        }else {
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                ObjectInputStream OBJ_inStream = new ObjectInputStream(fis);
 
-            T object;
+                T object;
 
-            while((object = (T) OBJ_inStream.readObject()) != null){
-                objects.add(object); }
+                while ((object = (T) OBJ_inStream.readObject()) != null) {
+                    objects.add(object);
+                }
+            } catch (EOFException ignored) {
+            } catch (IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
 
-        } catch (EOFException ignored) {
-        } catch (ClassNotFoundException | IOException e) { e.printStackTrace(); }
-
-        return objects;
+            return objects;
+        }
     }
 
     @Override
-    public ArrayList<T> call(){
+    public ArrayList<T> call() throws InvalidFileException {
         try{ Thread.sleep(2000); }
         catch (InterruptedException ignored){}
         return read(filePath);

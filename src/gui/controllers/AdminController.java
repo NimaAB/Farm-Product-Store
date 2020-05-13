@@ -19,9 +19,11 @@ import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
 import validations.ioExceptions.InvalidExtensionException;
+import validations.ioExceptions.InvalidFileException;
 import validations.ioExceptions.InvalidFileNameException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
@@ -105,9 +107,17 @@ public class AdminController implements Initializable {
                         setOpenedFile(path);
                         break;
                     case ".bin":
-                        OpenBin<Components> openBin = new OpenBin<>(path);
-                        openBin.call();
-                        setOpenedFile(path);
+                        try{
+                            OpenBin<Components> openBin = new OpenBin<>(path);
+                            ArrayList<Components> list = openBin.call();
+                            if(!list.isEmpty()){
+                                TableViewCollection.getComponents().clear();
+                                TableViewCollection.setComponents(list,true);
+                                setOpenedFile(path);
+                            }
+                        }catch (InvalidFileException e){
+                            Alerts.warning(e.getMessage());
+                        }
                         break;
                     default:
                         Alerts.warning("Programmet åpner ikke" + extention+" !");
