@@ -7,7 +7,7 @@
 <?import javafx.scene.text.*?>
 
 
-<BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.231" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AdminController">
+<BorderPane fx:id="adminPane" prefHeight="700.0" snapToPixel="false" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.controllers.AdminController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
