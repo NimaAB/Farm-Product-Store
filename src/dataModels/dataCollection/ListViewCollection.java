@@ -117,6 +117,7 @@ public class ListViewCollection {
                 }
             }
         }
+        modified = false;
     }
 
     /** Viser total prisen til alle ConfigItems */
@@ -129,7 +130,7 @@ public class ListViewCollection {
     public static void clearList(){
         selectedItems.clear();
         configItems.clear();
-        modified = false;
+        modified = true;
     }
 
     /** Sletter ConfigItems fra listview */
