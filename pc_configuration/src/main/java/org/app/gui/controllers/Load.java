@@ -1,4 +1,4 @@
-package org.app.gui;
+package org.app.gui.controllers;
 
 import org.app.dataModels.dataCollection.ListViewCollection;
 import org.app.dataModels.dataCollection.TableViewCollection;

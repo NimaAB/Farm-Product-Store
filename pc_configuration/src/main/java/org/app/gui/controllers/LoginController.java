@@ -1,6 +1,4 @@
-package org.app;
-
-import org.app.gui.Load;
+package org.app.gui.controllers;
 
 import org.app.gui.User;
 import javafx.event.ActionEvent;

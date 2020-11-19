@@ -1,6 +1,5 @@
-package org.app;
+package org.app.gui.controllers;
 
-import org.app.gui.Load;
 import org.app.gui.Open;
 import org.app.gui.Save;
 import org.app.dataModels.data.Components;
