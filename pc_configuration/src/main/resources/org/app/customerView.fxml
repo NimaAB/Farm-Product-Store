@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="customerPane" prefHeight="700.0" prefWidth="1200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/8.0.221" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.CustomerController">
+    <top>
+        <MenuBar BorderPane.alignment="CENTER">
+                <Menu mnemonicParsing="false" text="File">
+                    <MenuItem mnemonicParsing="false" onAction="#open" text="Open csv" />
+                    <MenuItem mnemonicParsing="false" onAction="#save" text="Save as csv" />
+                    <MenuItem mnemonicParsing="false" onAction="#logOut" text="Logg ut" />
+                </Menu>
+        </MenuBar>
+    </top>
+    <center>
+        <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <TableView fx:id="costumerTV" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
+                    <columns>
+
+                        <TableColumn editable="false" maxWidth="92.0" minWidth="40.0" prefWidth="77.0" resizable="false" text="Velg">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="checkBox" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="150.0" minWidth="48.0" prefWidth="98.0" resizable="false" text="KomponentNr">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentNr" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="162.0" text="Komponent Navn">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentName" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="121.0" text="Kategory">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentCategory" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="300.0" minWidth="50.0" prefWidth="224.0" text="Spesifikasjoner">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentSpecs" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                        <TableColumn maxWidth="213.0" minWidth="50.0" prefWidth="107.0" resizable="false" text="Pris">
+                            <cellValueFactory>
+                                <PropertyValueFactory property="componentPrice" />
+                            </cellValueFactory>
+                        </TableColumn>
+
+                    </columns>
+                </TableView>
+                <TextField fx:id="txtFilter" layoutY="7.0" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="7.0" />
+                <ComboBox fx:id="categoryComboBox" layoutX="636.0" layoutY="7.0" onAction="#changeTable" prefWidth="150.0" styleClass="filterOptions" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="7.0" />
+            </children>
+        </AnchorPane>
+    </center>
+    <left>
+        <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="700.0" prefWidth="400.0" BorderPane.alignment="CENTER">
+            <children>
+                <Button layoutX="88.0" layoutY="469.0" mnemonicParsing="false" onAction="#addItemToCart" prefHeight="30.0" prefWidth="208.0" text="Legg Komponent">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+                <Button layoutX="87.0" layoutY="509.0" mnemonicParsing="false" onAction="#clearList" prefHeight="30.0" prefWidth="209.0" text="Ny Konfigurasjon">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+                <Button layoutX="88.0" layoutY="551.0" mnemonicParsing="false" onAction="#deleteItem" prefHeight="30.0" prefWidth="208.0" style="-fx-background-color: #f42828;" text="Slett">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font></Button>
+                <ListView fx:id="shoppingCart" layoutX="68.0" layoutY="85.0" prefHeight="319.0" prefWidth="269.0" />
+                <Label alignment="CENTER" layoutX="110.0" layoutY="44.0" prefHeight="30.0" prefWidth="186.0" text="PC-Konfigurasjon" textAlignment="JUSTIFY">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                </Label>
+                <Label layoutX="64.0" layoutY="421.0" prefHeight="31.0" prefWidth="73.0" text="Total pris:" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+                <Label fx:id="totalPriceLbl" layoutX="150.0" layoutY="421.0" prefHeight="31.0" prefWidth="105.0" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="totalPriceLbl1" layoutX="267.0" layoutY="421.0" prefHeight="31.0" prefWidth="44.0" text=",-kr" textAlignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            </children>
+        </AnchorPane>
+    </left>
+</BorderPane>

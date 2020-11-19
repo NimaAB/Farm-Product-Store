@@ -2,6 +2,6 @@ module pc_configuration {
     requires javafx.controls;
     requires javafx.fxml;
 
-    opens views to javafx.fxml;
-    exports gui;
+    opens org.app to javafx.fxml;
+    exports org.app;
 }
