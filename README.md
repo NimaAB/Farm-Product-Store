@@ -10,5 +10,5 @@ This branch contains the same project axcept from some differences:
   git pull origin maven_config
 ```
 
-## Worning: 
+## Warning: 
 The program doesn't run, because of some issues in `module-info` file,  I think.
