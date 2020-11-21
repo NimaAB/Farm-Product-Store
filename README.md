@@ -4,11 +4,11 @@ This branch contains the same project axcept from some differences:
 * And the program is no build om maven.
 
 ## In order to get this branch on your local-storage, do the following commands:
+
 ```bash
   git clone https://github.com/NimaAB/FinalProject-DATA1600.git
-  git remote add origin https://github.com/NimaAB/FinalProject-DATA1600.git
-  git pull origin maven_config
+  cd FinalProject-DATA1600
 ```
-
+## maven_config branch is now the defulte branch !!
 ## Warning: 
-The program doesn't run, because of some issues in `module-info` file,  I think.
+Progam running well. but we have some issues with JOption librery.
