@@ -4,9 +4,13 @@ import filehandling.bin.SaveBin;
 import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Window;
+import org.app.controllers.DialogWindowC;
 import validations.Alerts;
 import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileNameException;
+
+import java.io.IOException;
 //import javax.swing.*;
 
 /**
@@ -30,7 +34,17 @@ public class Save<T> {
     public static String pathDialog(String filePath) throws InvalidFileNameException {
         String melding = "filen din blir lagert i denne plaseringen: "+filePath +
                 "\nGi filen din et navn: ";
-        String pathStr = "";//JOptionPane.showInputDialog(null,melding);
+        String pathStr = "";
+        try {
+            WindowLoader wl = new WindowLoader("dialogBox");
+            wl.loadNewWindow();
+            DialogWindowC dw = new DialogWindowC();
+            dw.setInfo(melding);
+            pathStr = dw.getPath();
+
+        }catch (IOException e){
+            e.getStackTrace();
+        }
 
         if (pathStr.isEmpty()){
             throw new InvalidFileNameException("Fil navn kan ikke være tom.");
