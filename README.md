@@ -1,14 +1,21 @@
 # PC_configuration
-This branch contains the same project axcept from some differences:
-* The java SDK is updated to SDK14.0.2
-* And the program is no build om maven.
+This repository contains a PC configuration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
 
-## In order to get this branch on your local-storage, do the following commands:
-
-```bash
-  git clone https://github.com/NimaAB/FinalProject-DATA1600.git
-  cd FinalProject-DATA1600
-```
-## maven_config branch is now the defulte branch !!
-## Warning: 
-Progam running well. but we have some issues with JOption librery.
+The app has to users: 
+where both users can Save data as binary and comma-seperated-values *csv*.
+But each user it is own role: 
+#### 1. Administration user: 
+The Admin user is able to add, delete and edit productes in the system.
+And loges in with: 
+ ```
+    username: Admin
+    Password: 1234
+ ```
+ #### 2. Customer user:
+ The Customer is able to choose products from a table, and configure a PC. At the end, the Costumer can save the PC cofiguration list to a file.
+ And load it again to the program.
+ The Custumer logs in with:
+ ```
+    username: Customer
+    password: 1234
+ ```
