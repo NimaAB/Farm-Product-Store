@@ -1,11 +1,11 @@
 package io.fileThreads;
 
-import io.Validation;
+
 import io.open.OpenAbstract;
 import io.open.OpenBinBehavior;
 import io.open.OpenCsvBehavior;
 import javafx.concurrent.Task;
-import validations.ioExceptions.FileDontExistsException;
+
 import validations.ioExceptions.InvalidExtensionException;
 
 import java.io.File;
@@ -17,9 +17,7 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
         this.path = path;
     }
 
-    private OpenAbstract openBehaviorFactory() throws FileDontExistsException, InvalidExtensionException{
-        Validation validpath = new Validation(this.path);
-        validpath.pathValidation();
+    private OpenAbstract openBehaviorFactory() {
         String extension = this.path.substring(path.lastIndexOf("."));
         switch (extension){
             case ".csv":
@@ -32,7 +30,7 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
     }
 
     @Override
-    public ArrayList<T> call() throws FileDontExistsException, InvalidExtensionException {
+    public ArrayList<T> call() {
         try { Thread.sleep(2000); }
         catch (InterruptedException ignored){}
 

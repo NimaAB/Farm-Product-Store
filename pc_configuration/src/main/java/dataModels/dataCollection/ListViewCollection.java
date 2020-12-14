@@ -1,5 +1,7 @@
 package dataModels.dataCollection;
 
+import io.FileClient;
+import org.app.PathDialogBox;
 import org.app.Save;
 import dataModels.data.Components;
 import dataModels.data.ConfigurationItems;
@@ -90,19 +92,15 @@ public class ListViewCollection {
     public static void saveConfig() {
         if(isModified()){
             ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
+            FileClient<ConfigurationItems> file;
             if(openedFile == null){
-                try {
-                    openedFile = Save.pathDialog("DataFraApp");
-                    SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
-                    saveCSV.call();
-                } catch (Exception e){
-                    Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
-                }
+                openedFile = new PathDialogBox().getPathToSave();
+                file = new FileClient<>(toSave,openedFile);
             } else {
-                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave, openedFile);
-                saveCSV.call();
+                file = new FileClient<>(toSave,openedFile);
                 modified = false;
             }
+            file.save();
         }
     }
 

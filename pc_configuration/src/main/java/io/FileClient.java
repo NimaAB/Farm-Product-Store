@@ -21,12 +21,12 @@ public class FileClient<T> {
         this.path = path;
     }
 
-    public void save() throws FileDontExistsException, InvalidExtensionException{
-        SaveThread<T> saveThread = new SaveThread<>(listToWrite,path);
+    public void save() {
+        SaveThread<T> saveThread = new SaveThread<>(this.listToWrite,this.path);
         saveThread.call();
     }
 
-    public <T> ArrayList<T> open() throws FileDontExistsException, InvalidExtensionException {
+    public <T> ArrayList<T> open() {
         OpenThread<T> openThread = new OpenThread<>(this.path);
         return openThread.call();
     }

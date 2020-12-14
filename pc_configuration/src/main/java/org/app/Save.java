@@ -28,16 +28,7 @@ public class Save<T> {
         this.saveBin = saveBin;
     }
 
-    public static String pathDialog(String filePath) throws InvalidFileNameException {
-        String melding = "filen din blir lagert i denne plaseringen: "+filePath +
-                "\nGi filen din et navn: ";
-        String pathStr = PathDialogBox.getPath(melding);
-        if (pathStr.isEmpty()){
-            throw new InvalidFileNameException("Fil navn kan ikke være tom.");
-        }else{
-            return filePath+"\\"+ pathStr;
-        }
-    }
+
 
     public static String extension(String path){
         boolean containsBin = path.contains(".bin");

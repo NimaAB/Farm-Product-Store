@@ -20,7 +20,6 @@ import validations.Alerts;
 import validations.NumberConversion;
 import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileException;
-import validations.ioExceptions.InvalidFileNameException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -96,7 +95,7 @@ public class AdminController implements Initializable {
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
             try {
-                String path = Save.pathDialog("DataFraApp");
+                String path ="";// Save.pathDialog("DataFraApp");
                 String extention = Save.extension(path);
                 switch (extention){
                     case ".csv":
@@ -123,7 +122,7 @@ public class AdminController implements Initializable {
                         break;
                 }
                 TableViewCollection.setLoadedFile(path);
-        } catch (InvalidFileNameException | InvalidExtensionException e){
+        } catch (InvalidExtensionException e){
             Alerts.warning(e.getMessage());
         } catch (NullPointerException ignored){}
         }else{
@@ -139,13 +138,13 @@ public class AdminController implements Initializable {
                 if(getOpenedFile()!=null){
                     boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
                         if(newFile){
-                            path = Save.pathDialog("DataFraApp");
+                            path = "";//Save.pathDialog("DataFraApp");
                         }else{
                             path = getOpenedFile();
                         }
                     }
                 else{
-                    path = Save.pathDialog("DataFraApp");
+                    path = "";//Save.pathDialog("DataFraApp");
                 }
                 String extention = Save.extension(path);
                 switch (extention) {
@@ -163,8 +162,6 @@ public class AdminController implements Initializable {
                         Alerts.warning("Programmet lagrer til bin og csv fil type");
                         break;
                 }
-            }catch (InvalidFileNameException e){
-                Alerts.warning("Lagring gikk feil, Grunn: " + e.getMessage());
             }catch (InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
             }catch (NullPointerException ignored){}

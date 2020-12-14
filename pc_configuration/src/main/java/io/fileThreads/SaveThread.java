@@ -1,6 +1,5 @@
 package io.fileThreads;
 
-import io.Validation;
 import io.save.*;
 
 import javafx.concurrent.Task;
@@ -17,9 +16,7 @@ public class SaveThread<T> extends Task<Void> {
         this.ltw = listToWrite;
     }
 
-    private SaveAbstract saveBehaviorFactory() throws FileDontExistsException, InvalidExtensionException {
-        Validation validpath = new Validation(this.path);
-        validpath.pathValidation();
+    private SaveAbstract saveBehaviorFactory() {
         String extension = this.path.substring(path.lastIndexOf("."));
         switch (extension){
             case ".csv":
@@ -32,7 +29,7 @@ public class SaveThread<T> extends Task<Void> {
     }
 
     @Override
-    public Void call() throws FileDontExistsException, InvalidExtensionException {
+    public Void call(){
         try { Thread.sleep(2000); }
         catch (InterruptedException ignored){}
         saveBehaviorFactory().write(this.path,this.ltw);
