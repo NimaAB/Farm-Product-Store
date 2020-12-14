@@ -1,7 +1,5 @@
 package io.open;
 
-import validations.ioExceptions.InvalidFileException;
-
 import java.io.File;
 import java.util.ArrayList;
 
