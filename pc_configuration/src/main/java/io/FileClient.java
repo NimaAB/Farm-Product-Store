@@ -1,14 +1,11 @@
 package io;
 
 import io.fileThreads.OpenThread;
-import io.open.OpenAbstract;
-import io.save.SaveAbstract;
+import io.fileThreads.SaveThread;
+
 import validations.ioExceptions.FileDontExistsException;
 import validations.ioExceptions.InvalidExtensionException;
-import validations.ioExceptions.InvalidFileException;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 public class FileClient<T> {
@@ -24,8 +21,9 @@ public class FileClient<T> {
         this.path = path;
     }
 
-    public void save(){
-
+    public void save() throws FileDontExistsException, InvalidExtensionException{
+        SaveThread<T> saveThread = new SaveThread<>(listToWrite,path);
+        saveThread.call();
     }
 
     public <T> ArrayList<T> open() throws FileDontExistsException, InvalidExtensionException {
