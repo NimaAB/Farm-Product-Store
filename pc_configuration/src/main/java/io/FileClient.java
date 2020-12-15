@@ -3,8 +3,6 @@ package io;
 import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;
 
-import validations.ioExceptions.FileDontExistsException;
-import validations.ioExceptions.InvalidExtensionException;
 
 import java.util.ArrayList;
 

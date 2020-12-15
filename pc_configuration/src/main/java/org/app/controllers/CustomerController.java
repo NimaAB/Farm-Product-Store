@@ -15,6 +15,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
+import validations.ioExceptions.FileDontExistsException;
+import validations.ioExceptions.InvalidExtensionException;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -61,6 +63,14 @@ public class CustomerController implements Initializable {
     @FXML
     void open() {
         String path = pathDialogBox.getPathToOpen();
+        try{
+            pathDialogBox.nullPathHandling(path);
+            pathDialogBox.extensionCheck(path);
+            pathDialogBox.fileNotFound(path);
+        }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
+            Alerts.warning(e.getMessage());
+            return;
+        }
         FileClient<ConfigurationItems> file = new FileClient<>(path);
         file.open();
         setOpenedFile(path);
@@ -73,7 +83,7 @@ public class CustomerController implements Initializable {
             return pathDialogBox.getPathToSave();
         }
 
-        boolean newFile = Alerts.confirm("Do you want to save the configuration as a new configuration?");
+        boolean newFile = Alerts.confirm("Do you want to save this configuration as a new configuration?");
         if (newFile) {
             return pathDialogBox.getPathToSave();
         } else {
@@ -86,6 +96,14 @@ public class CustomerController implements Initializable {
         ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         if (!configToSave.isEmpty()) {
             String path = getPath();
+            try{
+                pathDialogBox.nullPathHandling(path);
+                pathDialogBox.extensionCheck(path);
+                pathDialogBox.fileNotFound(path);
+            }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
+                Alerts.warning(e.getMessage());
+                return;
+            }
             FileClient<ConfigurationItems> file = new FileClient<>(configToSave, path);
             file.save();
             return;

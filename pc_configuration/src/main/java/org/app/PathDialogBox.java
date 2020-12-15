@@ -17,44 +17,32 @@ public class PathDialogBox {
         pathDialog.setHeaderText("Where do you want to save your file?");
         pathDialog.setContentText("path: ");
         Optional<String> path = pathDialog.showAndWait();
-        if(path.isPresent()){
-            try{
-                pathValidation(path.get());
-                return path.get();
-            }catch (InvalidExtensionException e){
-                Alerts.warning(e.getMessage());
-            }
-        }
-        return null;
+        return path.orElse(null);
     }
 
-    private void pathValidation(String path) throws InvalidExtensionException{
+    public String getPathToOpen(){
+        pathDialog.setTitle("Open");
+        pathDialog.setHeaderText("What is the path of the file, you want open?");
+        pathDialog.setContentText("path: ");
+        Optional<String> path = pathDialog.showAndWait();
+        return path.orElse(null);
+    }
+
+    public void extensionCheck(String path) throws InvalidExtensionException{
         if(!path.contains(".")){
             throw new InvalidExtensionException("The given path doesn't include any extension!");
         }
     }
-    private void fileNotFound(String path) throws  FileDontExistsException{
+
+    public void fileNotFound(String path) throws  FileDontExistsException{
         if(!new File(path).exists()){
             throw  new FileDontExistsException("File  with path: \" + path+ \" not found!");
         }
     }
 
-    public String getPathToOpen(){
-
-        pathDialog.setTitle("Open");
-        pathDialog.setHeaderText("What is the path of the file, you want open?");
-        pathDialog.setContentText("path: ");
-        Optional<String> path = pathDialog.showAndWait();
-
-        if(path.isPresent()){
-            try{
-                pathValidation(path.get());
-                fileNotFound(path.get());
-                return path.get();
-            }catch (FileDontExistsException | InvalidExtensionException e){
-                Alerts.warning(e.getMessage());
-            }
+    public void nullPathHandling(String path) throws NullPointerException{
+        if(path.isBlank()|| path.isEmpty()) {
+            throw new NullPointerException("No path given!");
         }
-        return null;
     }
 }

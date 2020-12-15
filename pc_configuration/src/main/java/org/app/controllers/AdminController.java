@@ -20,6 +20,7 @@ import validations.Alerts;
 import validations.NumberConversion;
 import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileException;
+import validations.ioExceptions.InvalidFileNameException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -95,7 +96,7 @@ public class AdminController implements Initializable {
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
             try {
-                String path ="";// Save.pathDialog("DataFraApp");
+                String path = "";//Save.pathDialog("DataFraApp");
                 String extention = Save.extension(path);
                 switch (extention){
                     case ".csv":
@@ -162,7 +163,7 @@ public class AdminController implements Initializable {
                         Alerts.warning("Programmet lagrer til bin og csv fil type");
                         break;
                 }
-            }catch (InvalidExtensionException e){
+            } catch (InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
             }catch (NullPointerException ignored){}
 
