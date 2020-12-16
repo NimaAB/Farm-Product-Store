@@ -17,13 +17,13 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
         this.path = path;
     }
 
-    private OpenAbstract openBehaviorFactory() {
+    private OpenAbstract<T> openBehaviorFactory() {
         String extension = this.path.substring(path.lastIndexOf("."));
         switch (extension){
             case ".csv":
-                return new OpenCsvBehavior();
+                return new OpenCsvBehavior<>();
             case ".bin":
-                return new OpenBinBehavior();
+                return new OpenBinBehavior<>();
             default:
                 throw new InvalidExtensionException("This file type is not supported!\nrequired types: .csv & .bin");
         }

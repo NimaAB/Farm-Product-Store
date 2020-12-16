@@ -1,10 +1,10 @@
 package org.app.controllers;
 
+import dataModels.data.ConfigurationItem;
 import io.FileClient;
 import org.app.Load;
 import org.app.PathDialogBox;
 import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import javafx.collections.ObservableList;
@@ -32,7 +32,7 @@ public class CustomerController implements Initializable {
     @FXML
     private ComboBox<String> categoryComboBox;
     @FXML
-    private ListView<ConfigurationItems> shoppingCart;
+    private ListView<ConfigurationItem> shoppingCart;
     @FXML
     private Label totalPriceLbl;
 
@@ -71,7 +71,7 @@ public class CustomerController implements Initializable {
             Alerts.warning(e.getMessage());
             return;
         }
-        FileClient<ConfigurationItems> file = new FileClient<>(path);
+        FileClient<ConfigurationItem> file = new FileClient<>(path);
         file.open();
         setOpenedFile(path);
         ListViewCollection.setOpenedFile(path);
@@ -93,7 +93,7 @@ public class CustomerController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
+        ArrayList<ConfigurationItem> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         if (!configToSave.isEmpty()) {
             String path = getPath();
             try{
@@ -104,7 +104,7 @@ public class CustomerController implements Initializable {
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<ConfigurationItems> file = new FileClient<>(configToSave, path);
+            FileClient<ConfigurationItem> file = new FileClient<>(configToSave, path);
             file.save();
             return;
         }
@@ -131,7 +131,7 @@ public class CustomerController implements Initializable {
 
     @FXML
     void deleteItem() {
-        ObservableList<ConfigurationItems> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
+        ObservableList<ConfigurationItem> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
         ListViewCollection.deleteItemList(selectedItems, totalPriceLbl);
 
     }

@@ -1,6 +1,6 @@
 package dataModels.dataFormats;
 
-import dataModels.data.ConfigurationItems;
+import dataModels.data.ConfigurationItem;
 
 import java.util.ArrayList;
 
@@ -12,12 +12,12 @@ import java.util.ArrayList;
  */
 
 public class ItemsFormat {
-    public static String configFormat(ConfigurationItems item){
+    public static String configFormat(ConfigurationItem item){
         return item.toString(",");
     }
     public static <T> String itemsFormat(T item){
-        if(item instanceof ConfigurationItems){
-            return configFormat((ConfigurationItems) item);
+        if(item instanceof ConfigurationItem){
+            return configFormat((ConfigurationItem) item);
         }
         return item.toString();
     }

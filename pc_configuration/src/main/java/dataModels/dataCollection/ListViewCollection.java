@@ -1,11 +1,9 @@
 package dataModels.dataCollection;
 
+import dataModels.data.ConfigurationItem;
 import io.FileClient;
 import org.app.PathDialogBox;
-import org.app.Save;
 import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
-import filehandling.csv.SaveCSV;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -23,7 +21,7 @@ import java.util.ArrayList;
 public class ListViewCollection {
     private static final ObservableList<Components> components = TableViewCollection.getComponents();
     private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
-    private static final ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
+    private static final ObservableList<ConfigurationItem> configItems = FXCollections.observableArrayList();
     private static boolean modified = false;
     private static boolean open = false;
     private static String openedFile;
@@ -57,7 +55,7 @@ public class ListViewCollection {
     }
 
     /** Viser valgte ConfigItems i listview */
-    public static void setListView(ListView<ConfigurationItems> shoppingCart){ shoppingCart.setItems(configItems); }
+    public static void setListView(ListView<ConfigurationItem> shoppingCart){ shoppingCart.setItems(configItems); }
 
     /** Legger ConfigItems i listview */
     public static void addToShoppingCart(){
@@ -72,7 +70,7 @@ public class ListViewCollection {
                         int nr = c.getComponentNr();
                         String navn = c.getComponentName();
                         double pris = c.getComponentPrice();
-                        configItems.add(new ConfigurationItems(nr, navn, pris));
+                        configItems.add(new ConfigurationItem(nr, navn, pris));
                     }
                 } else {
                     selectedItems.add(c);
@@ -81,7 +79,7 @@ public class ListViewCollection {
                     int nr = c.getComponentNr();
                     String navn = c.getComponentName();
                     double pris = c.getComponentPrice();
-                    configItems.add(new ConfigurationItems(nr, navn, pris));
+                    configItems.add(new ConfigurationItem(nr, navn, pris));
                 }
                 modified = true;
             }
@@ -91,8 +89,8 @@ public class ListViewCollection {
     /** Lagrer konfigurasjoner ved logg ut og når programmen slutter */
     public static void saveConfig() {
         if(isModified()){
-            ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
-            FileClient<ConfigurationItems> file;
+            ArrayList<ConfigurationItem> toSave = new ArrayList<>(configItems);
+            FileClient<ConfigurationItem> file;
             if(openedFile == null){
                 openedFile = new PathDialogBox().getPathToSave();
                 file = new FileClient<>(toSave,openedFile);
@@ -105,10 +103,10 @@ public class ListViewCollection {
     }
 
     /** Sjekker om configItems er tom eller ikke */
-    public static void loadingConfig(ArrayList<ConfigurationItems> items){
+    public static void loadingConfig(ArrayList<ConfigurationItem> items){
         clearList();
         configItems.addAll(items);
-        for(ConfigurationItems item: items){
+        for(ConfigurationItem item: items){
             for(Components c:components){
                 if(c.getComponentNr() == item.getNr()){
                     selectedItems.add(c);
@@ -120,7 +118,7 @@ public class ListViewCollection {
 
     /** Viser total prisen til alle ConfigItems */
     public static void showTotalPrice(Label totalPriceLbl){
-        double totalPrice = ConfigurationItems.totalPrice(configItems);
+        double totalPrice = ConfigurationItem.totalPrice(configItems);
         totalPriceLbl.setText(Double.toString(totalPrice));
     }
 
@@ -132,8 +130,8 @@ public class ListViewCollection {
     }
 
     /** Sletter ConfigItems fra listview */
-    public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
-        for(ConfigurationItems f : items){
+    public static void  deleteItemList (ObservableList<ConfigurationItem> items, Label totalPriceLbl){
+        for(ConfigurationItem f : items){
             selectedItems.removeIf(c -> c.getComponentNr() == f.getNr());
         }
         configItems.removeAll(items);
@@ -142,7 +140,7 @@ public class ListViewCollection {
     }
 
     /** Getter og Setter methods */
-    public static ObservableList<ConfigurationItems> getConfigItems() { return configItems; }
+    public static ObservableList<ConfigurationItem> getConfigItems() { return configItems; }
     public static boolean isModified() { return modified; }
     public static boolean isOpen() { return open; }
     public static void setModified(boolean modified) { ListViewCollection.modified = modified; }

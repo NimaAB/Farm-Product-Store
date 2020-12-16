@@ -1,8 +1,8 @@
 package dataModels.data;
 
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
+
+
+
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -11,21 +11,21 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /**
- * En model av Typen ConfigurationItems
+ * En model av Typen ConfigurationItem
  * */
-public class ConfigurationItems implements Serializable {
-    private int nr;
+public class ConfigurationItem implements Serializable {
+    private Integer nr;
     private String name;
-    private double price;
+    private Double price;
     private static final long serialVersionUID = 1;
 
-    public ConfigurationItems(int nr, String name, double price){
+    public ConfigurationItem(int nr, String name, double price){
         this.nr=nr;
         this.name=name;
         this.price=price;
     }
 
-    private void setNr(int nr){
+    private void setNr(Integer nr){
         this.nr=nr;
     }
     public int getNr(){
@@ -39,7 +39,7 @@ public class ConfigurationItems implements Serializable {
         return name;
     }
 
-    private void setPrice(double price) {
+    private void setPrice(Double price) {
         this.price = price;
     }
     private double getPrice() {
@@ -54,9 +54,9 @@ public class ConfigurationItems implements Serializable {
         return String.format("%s"+delimiter+"%s"+delimiter+"%s",getNr(),getName(),getPrice());
     }
 
-    public static double totalPrice(ObservableList<ConfigurationItems> configurationItemsList){
+    public static double totalPrice(ObservableList<ConfigurationItem> configurationItemList){
         double totalPris = 0;
-        for(ConfigurationItems item: configurationItemsList){
+        for(ConfigurationItem item: configurationItemList){
             totalPris += item.getPrice();
         }
         return totalPris;

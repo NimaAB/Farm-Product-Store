@@ -7,9 +7,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class SaveCsvBehavior extends SaveAbstract{
+public class SaveCsvBehavior<T> extends SaveAbstract<T>{
     @Override
-    public <T> void write(String path, ArrayList<T> list) {
+    public void write(String path, ArrayList<T> list) {
         try {
             FileWriter fileWriter = new FileWriter(path);
             BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);

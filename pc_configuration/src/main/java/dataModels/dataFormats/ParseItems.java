@@ -1,7 +1,7 @@
 package dataModels.dataFormats;
 
 import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
+import dataModels.data.ConfigurationItem;
 import javafx.scene.control.CheckBox;
 import validations.Alerts;
 import validations.customExceptions.InvalidDataException;
@@ -22,7 +22,7 @@ public class ParseItems {
             try{
                int nr = Integer.parseInt(nrStr);
                double price= Double.parseDouble(priceStr);
-               return new ConfigurationItems(nr,name,price);
+               return new ConfigurationItem(nr,name,price);
             } catch (NumberFormatException e){
                 Alerts.warning(e.getMessage());
             }

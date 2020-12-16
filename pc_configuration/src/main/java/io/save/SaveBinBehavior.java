@@ -5,10 +5,10 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
-public class SaveBinBehavior extends SaveAbstract{
+public class SaveBinBehavior<T> extends SaveAbstract<T>{
 
     @Override
-    public <T> void write(String path, ArrayList<T> list) {
+    public void write(String path, ArrayList<T> list) {
         try {
             FileOutputStream fileOutputStream = new FileOutputStream(path);
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);

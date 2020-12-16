@@ -5,10 +5,10 @@ import validations.ioExceptions.InvalidFileException;
 import java.io.*;
 import java.util.ArrayList;
 
-public class OpenBinBehavior extends OpenAbstract {
+public class OpenBinBehavior<T> extends OpenAbstract<T> {
 
     @Override
-    public <T> ArrayList<T> read(File file) {
+    public ArrayList<T> read(File file) {
         ArrayList<T> objects = new ArrayList<>();
         try {
             FileInputStream fis = new FileInputStream(file);

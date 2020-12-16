@@ -4,6 +4,7 @@ import dataModels.data.Components;
 import filehandling.bin.OpenBin;
 import filehandling.bin.SaveBin;
 import filehandling.csv.SaveCSV;
+import io.FileClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -11,6 +12,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import validations.ioExceptions.InvalidFileException;
 
+import java.io.File;
 import java.util.ArrayList;
 
 /**
@@ -27,16 +29,13 @@ public class TableViewCollection {
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filePath){
         ArrayList<Components> componentsList;
-        OpenBin<Components> read = new OpenBin<>(filePath);
+        FileClient<Components> file = new FileClient<>(filePath);
         loadedFile = filePath;
-        try{
-            componentsList = read.call();
-            if (reloadComponents) {
-                setComponents(componentsList,false);
-                reloadComponents = false;
-            }
+        componentsList = file.open();
+        if (reloadComponents) {
+            setComponents(componentsList,false);
+            reloadComponents = false;
         }
-        catch (InvalidFileException ignored){}
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
@@ -59,16 +58,9 @@ public class TableViewCollection {
 
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
     public static void saveData(){
-        String fileExtension = loadedFile.substring(loadedFile.lastIndexOf("."));
         ArrayList<Components> data = new ArrayList<>(getComponents());
-
-        if(fileExtension.equals(".csv")){
-            SaveCSV<Components> write = new SaveCSV<>(data, loadedFile);
-            write.call();
-        } else {
-            SaveBin<Components> write = new SaveBin<>(data, loadedFile);
-            write.call();
-        }
+        FileClient<Components> file = new FileClient<>(data,loadedFile);
+        file.save();
         modified = false;
     }
 

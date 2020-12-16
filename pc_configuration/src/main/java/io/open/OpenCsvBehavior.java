@@ -6,9 +6,9 @@ import validations.ioExceptions.InvalidFileException;
 import java.io.*;
 import java.util.ArrayList;
 
-public class OpenCsvBehavior extends OpenAbstract{
+public class OpenCsvBehavior<T> extends OpenAbstract<T>{
     @Override
-    public <T> ArrayList<T> read(File file) {
+    public ArrayList<T> read(File file) {
         ArrayList<T> items = new ArrayList<>();
         try {
             FileReader fileReader = new FileReader(file.getPath());

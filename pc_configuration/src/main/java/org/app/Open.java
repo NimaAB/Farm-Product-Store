@@ -1,10 +1,11 @@
 package org.app;
 
 import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
+import dataModels.data.ConfigurationItem;
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import filehandling.csv.OpenCSV;
+import io.FileClient;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
@@ -19,16 +20,11 @@ import java.util.ArrayList;
  * */
 
 public class Open<T> {
-    private final BorderPane currentPane;
-    private final OpenCSV <T> openCSV;
-    private final Label lbl;
+   /* private final BorderPane currentPane;
+    private Label lbl;
+    private FileClient<T> openCSV;
 
 
-    public Open(BorderPane pane, OpenCSV<T> openCSV,Label lbl) {
-        this.currentPane = pane;
-        this.openCSV = openCSV;
-        this.lbl = lbl;
-    }
 
     public void openFile() {
         openCSV.setOnSucceeded(this::readingDone);
@@ -37,9 +33,9 @@ public class Open<T> {
         currentPane.setDisable(true);
         thread.setDaemon(true);
         thread.start();
-    }
-    @SuppressWarnings("unchecked")
-    private void readingDone(WorkerStateEvent e) {
+    }*/
+
+    /*private void readingDone(WorkerStateEvent e) {
         currentPane.setDisable(false);
         try {
             ArrayList<T> itemsFromFile = openCSV.call();
@@ -48,7 +44,7 @@ public class Open<T> {
             }else {
                 boolean isComponent= itemsFromFile.get(0) instanceof Components;
                 if (!isComponent && !User.isAdmin()) {
-                    ListViewCollection.loadingConfig((ArrayList<ConfigurationItems>) itemsFromFile);
+                    ListViewCollection.loadingConfig((ArrayList<ConfigurationItem>) itemsFromFile);
                     ListViewCollection.showTotalPrice(lbl);
                     ListViewCollection.setModified(false);
                 } else if(isComponent && User.isAdmin()){
@@ -70,5 +66,5 @@ public class Open<T> {
         Throwable e = event.getSource().getException();
         Alerts.warning("Thread Failed: " + e.getMessage());
         currentPane.setDisable(false);
-    }
+    }*/
 }

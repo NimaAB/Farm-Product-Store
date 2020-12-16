@@ -1,7 +1,9 @@
 package org.app.controllers;
 
 import filehandling.bin.OpenBin;
+import io.FileClient;
 import org.app.Load;
+import org.app.PathDialogBox;
 import org.app.Save;
 import org.app.Open;
 import dataModels.data.Components;
@@ -18,6 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
+import validations.ioExceptions.FileDontExistsException;
 import validations.ioExceptions.InvalidExtensionException;
 import validations.ioExceptions.InvalidFileException;
 import validations.ioExceptions.InvalidFileNameException;
@@ -37,7 +40,7 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Components,Double> prisCol;
     @FXML private TableColumn<Components,Integer> nrCol;
     private String openedFile;
-
+    private PathDialogBox pathDialogBox = new PathDialogBox();
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
     }
@@ -95,80 +98,59 @@ public class AdminController implements Initializable {
         boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
-            try {
-                String path = "";//Save.pathDialog("DataFraApp");
-                String extention = Save.extension(path);
-                switch (extention){
-                    case ".csv":
-                        OpenCSV<Components> openCSV = new OpenCSV<>(path);
-                        Open<Components> open = new Open<>(adminPane, openCSV, null);
-                        open.openFile();
-                        setOpenedFile(path);
-                        break;
-                    case ".bin":
-                        try{
-                            OpenBin<Components> openBin = new OpenBin<>(path);
-                            ArrayList<Components> list = openBin.call();
-                            if(!list.isEmpty()){
-                                TableViewCollection.getComponents().clear();
-                                TableViewCollection.setComponents(list,true);
-                                setOpenedFile(path);
-                            }
-                        }catch (InvalidFileException e){
-                            Alerts.warning(e.getMessage());
-                        }
-                        break;
-                    default:
-                        Alerts.warning("Programmet åpner ikke" + extention+" !");
-                        break;
-                }
-                TableViewCollection.setLoadedFile(path);
-        } catch (InvalidExtensionException e){
-            Alerts.warning(e.getMessage());
-        } catch (NullPointerException ignored){}
+            String path = pathDialogBox.getPathToOpen();
+            try{
+                pathDialogBox.nullPathHandling(path);
+                pathDialogBox.extensionCheck(path);
+                pathDialogBox.fileNotFound(path);
+            }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
+                Alerts.warning(e.getMessage());
+                return;
+            }
+            FileClient<Components> file = new FileClient<>(path);
+            ArrayList<Components> list = file.open();
+            if(!list.isEmpty()){
+                TableViewCollection.getComponents().clear();
+                TableViewCollection.setComponents(list,true);
+                setOpenedFile(path);
+            }
+            TableViewCollection.setLoadedFile(path);
+
         }else{
-            Alerts.success("Filen ble ikke lasta opp, for å beholde dataene i tabellen.");
+            Alerts.success("Your data isn't changed.");
+        }
+    }
+
+    private String getPath(){
+        if(getOpenedFile()==null){
+            return pathDialogBox.getPathToSave();
+        }
+
+        boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
+        if(newFile){
+            return pathDialogBox.getPathToSave();
+        }else{
+            return getOpenedFile();
         }
     }
 
     @FXML void save(){
         ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
         if(!components.isEmpty()){
-            String path;
-            try {
-                if(getOpenedFile()!=null){
-                    boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
-                        if(newFile){
-                            path = "";//Save.pathDialog("DataFraApp");
-                        }else{
-                            path = getOpenedFile();
-                        }
-                    }
-                else{
-                    path = "";//Save.pathDialog("DataFraApp");
-                }
-                String extention = Save.extension(path);
-                switch (extention) {
-                    case ".csv":
-                        SaveCSV<Components> saveCSV = new SaveCSV<>(components, path);
-                        Save<Components> saveObj = new Save<>(adminPane, saveCSV, null);
-                        saveObj.saveFile();
-                        break;
-                    case ".bin":
-                        SaveBin<Components> saveBin = new SaveBin<>(components, path);
-                        Save<Components> save = new Save<>(adminPane, null, saveBin);
-                        save.saveFile();
-                        break;
-                    default:
-                        Alerts.warning("Programmet lagrer til bin og csv fil type");
-                        break;
-                }
-            } catch (InvalidExtensionException e){
+            String path = getPath();
+            try{
+                pathDialogBox.nullPathHandling(path);
+                pathDialogBox.extensionCheck(path);
+                pathDialogBox.fileNotFound(path);
+            }catch (FileDontExistsException | NullPointerException | InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
-            }catch (NullPointerException ignored){}
-
-        }else{
-            Alerts.warning("Det er ingen data for å lagre til fil.");
+                return;
+            }
+            FileClient<Components> file = new FileClient<>(components,path);
+            file.save();
+        }
+        else{
+            Alerts.warning("There is nothing to save!");
         }
     }
 

@@ -18,7 +18,7 @@ import validations.ioExceptions.InvalidFileNameException;
  * */
 
 public class Save<T> {
-    private final BorderPane currentPane;
+   /* private final BorderPane currentPane;
     private final SaveCSV<T> saveCSV;
     private final SaveBin<T> saveBin;
 
@@ -70,5 +70,5 @@ public class Save<T> {
         Throwable e = event.getSource().getException();
         Alerts.warning("Thread Failed: "+e.getMessage());
         currentPane.setDisable(false);
-    }
+    }*/
 }

@@ -28,5 +28,4 @@ public class FileClient<T> {
         OpenThread<T> openThread = new OpenThread<>(this.path);
         return openThread.call();
     }
-
 }
