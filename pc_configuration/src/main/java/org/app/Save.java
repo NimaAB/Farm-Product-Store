@@ -1,7 +1,5 @@
 package org.app;
 
-import filehandling.bin.SaveBin;
-import filehandling.csv.SaveCSV;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.shape.Path;

@@ -4,7 +4,6 @@ import dataModels.data.Components;
 import dataModels.data.ConfigurationItem;
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
-import filehandling.csv.OpenCSV;
 import io.FileClient;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;

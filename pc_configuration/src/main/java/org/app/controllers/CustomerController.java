@@ -72,7 +72,10 @@ public class CustomerController implements Initializable {
             return;
         }
         FileClient<ConfigurationItem> file = new FileClient<>(path);
-        file.open();
+        ArrayList<ConfigurationItem> list = file.open();
+        ListViewCollection.loadingConfig(list);
+        ListViewCollection.showTotalPrice(totalPriceLbl);
+        ListViewCollection.setModified(false);
         setOpenedFile(path);
         ListViewCollection.setOpenedFile(path);
         ListViewCollection.setOpen(true);

@@ -46,10 +46,11 @@ public class ConfigurationItem implements Serializable {
         return price;
     }
 
-    @Override
+
     public String toString() {
         return String.format("%s\t%s\t%s",getNr(),getName(),getPrice());
     }
+
     public String toString(String delimiter){
         return String.format("%s"+delimiter+"%s"+delimiter+"%s",getNr(),getName(),getPrice());
     }

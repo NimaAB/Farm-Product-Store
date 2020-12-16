@@ -1,9 +1,7 @@
 package dataModels.dataCollection;
 
 import dataModels.data.Components;
-import filehandling.bin.OpenBin;
-import filehandling.bin.SaveBin;
-import filehandling.csv.SaveCSV;
+
 import io.FileClient;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
