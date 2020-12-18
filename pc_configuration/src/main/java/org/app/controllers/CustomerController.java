@@ -1,10 +1,10 @@
 package org.app.controllers;
 
-import dataModels.data.ConfigurationItem;
+import dataModels.data.ConfigItem;
 import io.FileClient;
 import org.app.Load;
 import org.app.PathDialogBox;
-import dataModels.data.Components;
+import dataModels.data.Component;
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import javafx.collections.ObservableList;
@@ -26,13 +26,13 @@ public class CustomerController implements Initializable {
     @FXML
     BorderPane customerPane;
     @FXML
-    TableView<Components> costumerTV;
+    TableView<Component> costumerTV;
     @FXML
     TextField txtFilter;
     @FXML
     private ComboBox<String> categoryComboBox;
     @FXML
-    private ListView<ConfigurationItem> shoppingCart;
+    private ListView<ConfigItem> shoppingCart;
     @FXML
     private Label totalPriceLbl;
 
@@ -71,8 +71,8 @@ public class CustomerController implements Initializable {
             Alerts.warning(e.getMessage());
             return;
         }
-        FileClient<ConfigurationItem> file = new FileClient<>(path);
-        ArrayList<ConfigurationItem> list = file.open();
+        FileClient<ConfigItem> file = new FileClient<>(path);
+        ArrayList<ConfigItem> list = file.open();
         ListViewCollection.loadingConfig(list);
         ListViewCollection.showTotalPrice(totalPriceLbl);
         ListViewCollection.setModified(false);
@@ -96,18 +96,17 @@ public class CustomerController implements Initializable {
 
     @FXML
     void save(ActionEvent event) {
-        ArrayList<ConfigurationItem> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
+        ArrayList<Component> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
         if (!configToSave.isEmpty()) {
             String path = getPath();
             try{
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
-                pathDialogBox.fileNotFound(path);
-            }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
+            }catch (NullPointerException | InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<ConfigurationItem> file = new FileClient<>(configToSave, path);
+            FileClient<Component> file = new FileClient<>(configToSave, path);
             file.save();
             return;
         }
@@ -134,7 +133,7 @@ public class CustomerController implements Initializable {
 
     @FXML
     void deleteItem() {
-        ObservableList<ConfigurationItem> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
+        ObservableList<ConfigItem> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
         ListViewCollection.deleteItemList(selectedItems, totalPriceLbl);
 
     }

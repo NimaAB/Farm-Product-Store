@@ -36,7 +36,7 @@ public class PathDialogBox {
 
     public void fileNotFound(String path) throws  FileDontExistsException{
         if(!new File(path).exists()){
-            throw  new FileDontExistsException("File  with path: \" + path+ \" not found!");
+            throw  new FileDontExistsException("File  with path: " + path + " not found!");
         }
     }
 

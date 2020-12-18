@@ -1,17 +1,5 @@
 package org.app;
 
-import dataModels.data.Components;
-import dataModels.data.ConfigurationItem;
-import dataModels.dataCollection.ListViewCollection;
-import dataModels.dataCollection.TableViewCollection;
-import io.FileClient;
-import javafx.concurrent.WorkerStateEvent;
-import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import validations.Alerts;
-import validations.ioExceptions.InvalidFileException;
-import java.util.ArrayList;
-
 /**
  * En generisk klasse som bruker metodene fra OpenCSV.
  * Klassen aktiverer lesings tråden.

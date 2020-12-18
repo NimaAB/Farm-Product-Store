@@ -1,9 +1,7 @@
 package dataModels.dataFormats;
 
-import dataModels.data.Components;
-import dataModels.data.ConfigurationItem;
+import dataModels.data.Component;
 import javafx.scene.control.CheckBox;
-import validations.Alerts;
 import validations.customExceptions.InvalidDataException;
 
 /**
@@ -15,7 +13,7 @@ public class ParseItems {
     public static Object parseItem(String str) throws InvalidDataException {
         String[] itemsArray = str.split(",");
 
-        if(itemsArray.length ==3){
+        /*if(itemsArray.length ==3){
             String nrStr = itemsArray[0];
             String name = itemsArray[1];
             String priceStr = itemsArray[2].replace(",",".");
@@ -27,16 +25,17 @@ public class ParseItems {
                 Alerts.warning(e.getMessage());
             }
         }
-        else if(itemsArray.length==5){
-            String componentNumber = itemsArray[0];
-            String componentName = itemsArray[1];
-            String componentCategory = itemsArray[2];
-            String componentSpecs = itemsArray[3];
-            String componentPrice = itemsArray[4];
-            CheckBox b = new CheckBox();
-            return new Components(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
+        else*/
+        if(itemsArray.length!=5){
+            throw new InvalidDataException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
+                    "attributter enn det programmet forventer");
         }
-        throw new InvalidDataException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
-                "attributter enn det programmet forventer");
+        String componentNumber = itemsArray[0];
+        String componentName = itemsArray[1];
+        String componentCategory = itemsArray[2];
+        String componentSpecs = itemsArray[3];
+        String componentPrice = itemsArray[4];
+        CheckBox b = new CheckBox();
+        return new Component(componentNumber,componentName,componentCategory,componentSpecs,componentPrice,b);
     }
 }

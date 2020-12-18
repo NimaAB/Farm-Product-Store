@@ -3,7 +3,7 @@ package org.app.controllers;
 import io.FileClient;
 import org.app.Load;
 import org.app.PathDialogBox;
-import dataModels.data.Components;
+import dataModels.data.Component;
 import dataModels.dataCollection.TableViewCollection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -25,10 +25,10 @@ public class AdminController implements Initializable {
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> categoriesCombobox;
     @FXML private ComboBox<String> filterComboBox;
-    @FXML private TableView<Components> tableview;
-    @FXML private TableColumn<Components,String> categoryCol;
-    @FXML private TableColumn<Components,Double> prisCol;
-    @FXML private TableColumn<Components,Integer> nrCol;
+    @FXML private TableView<Component> tableview;
+    @FXML private TableColumn<Component,String> categoryCol;
+    @FXML private TableColumn<Component,Double> prisCol;
+    @FXML private TableColumn<Component,Integer> nrCol;
     private String openedFile;
     private PathDialogBox pathDialogBox = new PathDialogBox();
     private void setOpenedFile(String openedFile) {
@@ -62,7 +62,7 @@ public class AdminController implements Initializable {
             String price = this.price.getText();
             CheckBox b = new CheckBox();
 
-            Components component = new Components(nr,name,category,specs,price,b);
+            Component component = new Component(nr,name,category,specs,price,b);
             TableViewCollection.addComponent(component);
             reset();
 
@@ -97,8 +97,8 @@ public class AdminController implements Initializable {
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<Components> file = new FileClient<>(path);
-            ArrayList<Components> list = file.open();
+            FileClient<Component> file = new FileClient<>(path);
+            ArrayList<Component> list = file.open();
             if(!list.isEmpty()){
                 TableViewCollection.getComponents().clear();
                 TableViewCollection.setComponents(list,true);
@@ -125,18 +125,17 @@ public class AdminController implements Initializable {
     }
 
     @FXML void save(){
-        ArrayList<Components> components = new ArrayList<>(TableViewCollection.getComponents());
+        ArrayList<Component> components = new ArrayList<>(TableViewCollection.getComponents());
         if(!components.isEmpty()){
             String path = getPath();
             try{
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
-                pathDialogBox.fileNotFound(path);
-            }catch (FileDontExistsException | NullPointerException | InvalidExtensionException e){
+            }catch (NullPointerException | InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<Components> file = new FileClient<>(components,path);
+            FileClient<Component> file = new FileClient<>(components,path);
             file.save();
         }
         else{
@@ -144,7 +143,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void nameEdited(TableColumn.CellEditEvent<Components, String> event){
+    @FXML void nameEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentName(event.getNewValue());
             TableViewCollection.setModified(true);
@@ -155,7 +154,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void specsEdited(TableColumn.CellEditEvent<Components, String> event){
+    @FXML void specsEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentSpecs(event.getNewValue());
             TableViewCollection.setModified(true);
@@ -166,7 +165,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void categoryEdited(TableColumn.CellEditEvent<Components, String> event){
+    @FXML void categoryEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentCategory(event.getNewValue());
             TableViewCollection.setModified(true);
@@ -177,7 +176,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void nrEdited(TableColumn.CellEditEvent<Components, Integer> event){
+    @FXML void nrEdited(TableColumn.CellEditEvent<Component, Integer> event){
         try {
             event.getRowValue().setComponentNr(Integer.toString(event.getNewValue()));
             TableViewCollection.setModified(true);
@@ -190,7 +189,7 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void priceEdited(TableColumn.CellEditEvent<Components, Double> event){
+    @FXML void priceEdited(TableColumn.CellEditEvent<Component, Double> event){
         try {
             event.getRowValue().setComponentPrice(Double.toString(event.getNewValue()));
             TableViewCollection.setModified(true);

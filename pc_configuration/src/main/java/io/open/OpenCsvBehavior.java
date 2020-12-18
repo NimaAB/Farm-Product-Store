@@ -1,7 +1,7 @@
 package io.open;
 
 import dataModels.dataFormats.ParseItems;
-import validations.ioExceptions.InvalidFileException;
+
 
 import java.io.*;
 import java.util.ArrayList;
