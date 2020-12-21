@@ -16,6 +16,14 @@ public class LoginController {
     @FXML RadioButton isAdmin;
     private final User admin = new User("Admin","1234");
     private final User customer = new User("Customer","1234");
+    private static String curUser;
+
+    public static String getCurUser() {
+        return curUser;
+    }
+    private void setCurUser(String user){
+        curUser = user;
+    }
 
     @FXML
     void loggInn(ActionEvent event) {
@@ -23,8 +31,10 @@ public class LoginController {
 
         if(isAdmin()){
             Load.window("adminView.fxml","Admin",stage);
+            setCurUser("Admin");
         } else if(isCustom()) {
             Load.window("customerView.fxml","Customer",stage);
+            setCurUser("Customer");
         }else{
             Alerts.warning("Feil Bruker navn eller passord!");
         }

@@ -1,14 +1,13 @@
 package org.app.controllers;
 
+import dataModels.data.ConfigItem;
+import io.FileInfo;
+import io.IOClient;
 import org.app.Load;
-import org.app.Save;
-import org.app.Open;
-import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
+import org.app.PathDialogBox;
+import dataModels.data.Component;
 import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
-import filehandling.csv.OpenCSV;
-import filehandling.csv.SaveCSV;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,36 +16,45 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
+import validations.ioExceptions.FileDontExistsException;
 import validations.ioExceptions.InvalidExtensionException;
-import validations.ioExceptions.InvalidFileNameException;
 
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class CustomerController implements Initializable {
-    @FXML BorderPane customerPane;
-    @FXML TableView<Components> costumerTV;
-    @FXML TextField txtFilter;
-    @FXML private ComboBox<String> categoryComboBox;
-    @FXML private ListView <ConfigurationItems> shoppingCart;
-    @FXML private Label totalPriceLbl;
+    @FXML
+    BorderPane customerPane;
+    @FXML
+    TableView<Component> costumerTV;
+    @FXML
+    TextField txtFilter;
+    @FXML
+    private ComboBox<String> categoryComboBox;
+    @FXML
+    private ListView<ConfigItem> shoppingCart;
+    @FXML
+    public  Label totalPriceLbl;
 
+    private PathDialogBox pathDialogBox = new PathDialogBox();
     private String openedFile;
+
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
     }
-    private String getOpenedFile(){
+
+    private String getOpenedFile() {
         return openedFile;
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        String file = "DataFraApp\\Database\\components.bin";
+        String file = "pc_configuration/DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
-        TableViewCollection.filterTableView(costumerTV,txtFilter);
+        TableViewCollection.filterTableView(costumerTV, txtFilter);
         ListViewCollection.fillCategoryComboBox(categoryComboBox);
         ListViewCollection.setListView(shoppingCart);
         shoppingCart.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -55,62 +63,61 @@ public class CustomerController implements Initializable {
 
     @FXML
     void open() {
-        try {
-            String path = Save.pathDialog("DataFraApp");
-            String extention = Save.extension(path);
-            if(extention.equals(".csv")){
-                OpenCSV<Components> openCSV = new OpenCSV<>(path);
-                Open<Components> open = new Open<>(customerPane,openCSV,totalPriceLbl);
-                open.openFile();
-                setOpenedFile(path);
-                ListViewCollection.setOpenedFile(path);
-                ListViewCollection.setOpen(true);
-            }else{
-                Alerts.warning("En PC-Konfigurasjon kan bare være i en csv fil!");
-            }
-        } catch (InvalidFileNameException| InvalidExtensionException e){
+        String path = pathDialogBox.getPathToOpen();
+        try{
+            pathDialogBox.nullPathHandling(path);
+            pathDialogBox.extensionCheck(path);
+            pathDialogBox.fileNotFound(path);
+        }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
             Alerts.warning(e.getMessage());
-        }catch (NullPointerException ignored){}
+            return;
+        }
+        FileInfo file = new FileInfo(path);
+        IOClient<ConfigItem> io = new IOClient<>(file,totalPriceLbl);
+        io.runOpenThread();
+        ListViewCollection.setModified(false);
+        setOpenedFile(path);
+        ListViewCollection.setOpenedFile(path);
+        ListViewCollection.setOpen(true);
+    }
+
+    private String getPath() {
+        if (getOpenedFile() == null) {
+            return pathDialogBox.getPathToSave();
+        }
+
+        boolean newFile = Alerts.confirm("Do you want to save this configuration as a new configuration?");
+        if (newFile) {
+            return pathDialogBox.getPathToSave();
+        } else {
+            return getOpenedFile();
+        }
     }
 
     @FXML
-    void save(ActionEvent event){
-        ArrayList<ConfigurationItems> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
-        if(!configToSave.isEmpty()){
-            String path;
+    void save(ActionEvent event) {
+        ArrayList<Component> configToSave = new ArrayList<>(ListViewCollection.getConfigItems());
+        if (!configToSave.isEmpty()) {
+            String path = getPath();
             try{
-                if(getOpenedFile()!=null){
-                   boolean newFile = Alerts.confirm("Vil du lagre endringene som en ny PC-konfiguration?");
-                    if(newFile){
-                        path = Save.pathDialog("DataFraApp");
-                    }else{
-                        path = getOpenedFile();
-                    }
-                }else{
-                    path = Save.pathDialog("DataFraApp");
-                }
-                String extention = Save.extension(path);
-                if(extention.equals(".csv")){
-                    SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(configToSave, path);
-                    Save<ConfigurationItems> saveObj = new Save<>(customerPane, saveCSV,null);
-                    saveObj.saveFile();
-                }else{
-                    Alerts.warning("Programmet kan lagre PC-Konfigurasjon bare som csv fil!");
-                }
-            }catch (InvalidFileNameException e){
-                Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
-            }catch (InvalidExtensionException e){
+                pathDialogBox.nullPathHandling(path);
+                pathDialogBox.extensionCheck(path);
+            }catch (NullPointerException | InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
-            }catch (NullPointerException ignored){}
-        }else{
-            Alerts.warning("Det er ingen data for å lagre til fil.");
+                return;
+            }
+            FileInfo file = new FileInfo(path);
+            IOClient<Component> io = new IOClient<>(file, configToSave);
+            io.runSaveThread();
+            return;
         }
+        Alerts.warning("Nothing do save!");
     }
 
     @FXML
     void changeTable() {
         String choosenCatogry = categoryComboBox.getValue();
-        ListViewCollection.selectedTable(choosenCatogry,costumerTV);
+        ListViewCollection.selectedTable(choosenCatogry, costumerTV);
     }
 
     @FXML
@@ -119,32 +126,33 @@ public class CustomerController implements Initializable {
         ListViewCollection.showTotalPrice(totalPriceLbl);
     }
 
-    @FXML void clearList() {
+    @FXML
+    void clearList() {
         ListViewCollection.clearList();
         ListViewCollection.showTotalPrice(totalPriceLbl);
     }
 
     @FXML
     void deleteItem() {
-        ObservableList<ConfigurationItems> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
-        ListViewCollection.deleteItemList(selectedItems,totalPriceLbl);
+        ObservableList<ConfigItem> selectedItems = shoppingCart.getSelectionModel().getSelectedItems();
+        ListViewCollection.deleteItemList(selectedItems, totalPriceLbl);
 
     }
 
     @FXML
-    void logOut(ActionEvent event){
-        if(ListViewCollection.isModified() && ListViewCollection.isOpen()){
+    void logOut(ActionEvent event) {
+        if (ListViewCollection.isModified() && ListViewCollection.isOpen()) {
             boolean response = Alerts.confirm("Vil du lagre endringer på konfigurasjonen før du logger ut?");
-            if(response){
+            if (response) {
                 save(event);
                 Alerts.success("Konfigurasjonen er lagret");
             }
             ListViewCollection.clearList();
             Stage stage = (Stage) customerPane.getScene().getWindow();
-            Load.window("org/app/loginView.fxml","Login",stage);
-        } else if(ListViewCollection.isModified()) {
+            Load.window("org/app/loginView.fxml", "Login", stage);
+        } else if (ListViewCollection.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre konfigurasjonen før du logger ut?");
-            if(response){
+            if (response) {
                 save(event);
                 Alerts.success("Konfigurasjonen er lagret");
             }

@@ -1,9 +1,10 @@
 package dataModels.dataCollection;
 
-import org.app.Save;
-import dataModels.data.Components;
-import dataModels.data.ConfigurationItems;
-import filehandling.csv.SaveCSV;
+import dataModels.data.ConfigItem;
+import io.FileInfo;
+import io.IOClient;
+import org.app.PathDialogBox;
+import dataModels.data.Component;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.SortedList;
@@ -11,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
+import org.app.controllers.CustomerController;
 import validations.Alerts;
 import java.util.ArrayList;
 
@@ -19,9 +21,9 @@ import java.util.ArrayList;
  * */
 
 public class ListViewCollection {
-    private static final ObservableList<Components> components = TableViewCollection.getComponents();
-    private static final ObservableList<Components> selectedItems = FXCollections.observableArrayList();
-    private static final ObservableList<ConfigurationItems> configItems = FXCollections.observableArrayList();
+    private static final ObservableList<Component> COMPONENTS = TableViewCollection.getComponents();
+    private static final ObservableList<Component> selectedItems = FXCollections.observableArrayList();
+    private static final ObservableList<ConfigItem> configItems = FXCollections.observableArrayList();
     private static boolean modified = false;
     private static boolean open = false;
     private static String openedFile;
@@ -30,7 +32,7 @@ public class ListViewCollection {
     public static void fillCategoryComboBox(ComboBox<String> comboBox ){
         ObservableList<String> categories = FXCollections.observableArrayList();
         categories.add("All");
-        for(Components item : components){
+        for(Component item : COMPONENTS){
             if(!categories.contains(item.getComponentCategory())){
                 categories.add(item.getComponentCategory());
             }
@@ -40,46 +42,38 @@ public class ListViewCollection {
     }
 
     /** Viser komponenter i tabellen basert på kategori som er valgt i dropdown */
-    public static void selectedTable (String categoryName, TableView<Components> tableView ){
-        ObservableList<Components> selectedCatogries = FXCollections.observableArrayList();
-        for (Components obj : components){
+    public static void selectedTable (String categoryName, TableView<Component> tableView ){
+        ObservableList<Component> selectedCatogries = FXCollections.observableArrayList();
+        for (Component obj : COMPONENTS){
             if (obj.getComponentCategory().equals(categoryName)){
                 selectedCatogries.add(obj);
             }
         }
         if(categoryName.equals("All")){
-            selectedCatogries = components;
+            selectedCatogries = COMPONENTS;
         }
-        SortedList<Components> sortedList = new SortedList<>(selectedCatogries);
+        SortedList<Component> sortedList = new SortedList<>(selectedCatogries);
         tableView.setItems(sortedList);
     }
 
     /** Viser valgte ConfigItems i listview */
-    public static void setListView(ListView<ConfigurationItems> shoppingCart){ shoppingCart.setItems(configItems); }
+    public static void setListView(ListView<ConfigItem> shoppingCart){ shoppingCart.setItems(configItems); }
 
     /** Legger ConfigItems i listview */
     public static void addToShoppingCart(){
-        for(Components c : components) {
+        for(Component c : COMPONENTS) {
             if (c.getCheckBox().isSelected()) {
                 if (selectedItems.contains(c)) {
                     boolean response = Alerts.confirm("\"" + c.getComponentName() + "\" finnes allerede i kurven.\nVil du legge en til?");
                     if (response) {
                         selectedItems.add(c);
                         c.getCheckBox().setSelected(false);
-
-                        int nr = c.getComponentNr();
-                        String navn = c.getComponentName();
-                        double pris = c.getComponentPrice();
-                        configItems.add(new ConfigurationItems(nr, navn, pris));
+                        configItems.add(new ConfigItem(c));
                     }
                 } else {
                     selectedItems.add(c);
                     c.getCheckBox().setSelected(false);
-
-                    int nr = c.getComponentNr();
-                    String navn = c.getComponentName();
-                    double pris = c.getComponentPrice();
-                    configItems.add(new ConfigurationItems(nr, navn, pris));
+                    configItems.add(new ConfigItem(c));
                 }
                 modified = true;
             }
@@ -89,41 +83,41 @@ public class ListViewCollection {
     /** Lagrer konfigurasjoner ved logg ut og når programmen slutter */
     public static void saveConfig() {
         if(isModified()){
-            ArrayList<ConfigurationItems> toSave = new ArrayList<>(configItems);
+            ArrayList<Component> toSave = new ArrayList<>(configItems);
+            IOClient<Component> file;
             if(openedFile == null){
-                try {
-                    openedFile = Save.pathDialog("DataFraApp");
-                    SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave,openedFile);
-                    saveCSV.call();
-                } catch (Exception e){
-                    Alerts.warning("Lagring gikk feil, Grunn: " + e.getCause());
-                }
+                openedFile = new PathDialogBox().getPathToSave();
+                file = new IOClient<>(new FileInfo(openedFile),toSave);
             } else {
-                SaveCSV<ConfigurationItems> saveCSV = new SaveCSV<>(toSave, openedFile);
-                saveCSV.call();
+                file = new IOClient<>(new FileInfo(openedFile),toSave);
                 modified = false;
             }
+            file.runSaveThread();
         }
     }
 
-    /** Sjekker om configItems er tom eller ikke */
-    public static void loadingConfig(ArrayList<ConfigurationItems> items){
+    /** Sjekker om configItems er tom eller ikke
+     * @param items*/
+    public static void loadingConfig(ArrayList<ConfigItem> items, Label lbl){
         clearList();
         configItems.addAll(items);
-        for(ConfigurationItems item: items){
-            for(Components c:components){
-                if(c.getComponentNr() == item.getNr()){
+        for(Component item: items){
+            for(Component c: COMPONENTS){
+                if(c.getComponentNr() == item.getComponentNr()){
                     selectedItems.add(c);
                 }
             }
         }
+        showTotalPrice(lbl);
         modified = false;
+
     }
 
+
     /** Viser total prisen til alle ConfigItems */
-    public static void showTotalPrice(Label totalPriceLbl){
-        double totalPrice = ConfigurationItems.totalPrice(configItems);
-        totalPriceLbl.setText(Double.toString(totalPrice));
+    public static void showTotalPrice(Label lbl){
+        double totalPrice = ConfigItem.totalPrice(configItems);
+        lbl.setText(Double.toString(totalPrice));
     }
 
     /** Resetter listview for en ny konfigurasjon */
@@ -134,9 +128,9 @@ public class ListViewCollection {
     }
 
     /** Sletter ConfigItems fra listview */
-    public static void  deleteItemList (ObservableList<ConfigurationItems> items, Label totalPriceLbl){
-        for(ConfigurationItems f : items){
-            selectedItems.removeIf(c -> c.getComponentNr() == f.getNr());
+    public static void  deleteItemList (ObservableList<ConfigItem> items, Label totalPriceLbl){
+        for(Component el : items){
+            selectedItems.removeIf(c -> c.getComponentNr() == el.getComponentNr());
         }
         configItems.removeAll(items);
         showTotalPrice(totalPriceLbl);
@@ -144,7 +138,7 @@ public class ListViewCollection {
     }
 
     /** Getter og Setter methods */
-    public static ObservableList<ConfigurationItems> getConfigItems() { return configItems; }
+    public static ObservableList<ConfigItem> getConfigItems() { return configItems; }
     public static boolean isModified() { return modified; }
     public static boolean isOpen() { return open; }
     public static void setModified(boolean modified) { ListViewCollection.modified = modified; }

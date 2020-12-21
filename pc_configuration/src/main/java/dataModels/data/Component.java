@@ -3,6 +3,7 @@ package dataModels.data;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.ObservableList;
 import javafx.scene.control.CheckBox;
 import validations.Validator;
 
@@ -15,7 +16,7 @@ import java.io.Serializable;
  * En model av Typen Component som er Serialisert.
  * */
 
-public class Components implements Serializable {
+public class Component implements Serializable {
     private static final long serialVersionUID = 1;
     private transient SimpleIntegerProperty componentNr;
     private transient SimpleStringProperty componentName;
@@ -24,7 +25,7 @@ public class Components implements Serializable {
     private transient SimpleDoubleProperty componentPrice;
     private transient CheckBox checkBox;
 
-    public Components(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox checkBox){
+    public Component(String componentNr, String componentName, String componentCategory, String componentSpecs, String componentPrice, CheckBox checkBox){
         Validator.validate_componentNumber(componentNr);
         Validator.validate_componentName(componentName);
         Validator.validate_componentCategory(componentCategory);
@@ -38,6 +39,7 @@ public class Components implements Serializable {
         this.componentPrice = new SimpleDoubleProperty(Validator.getComponentPrice());
         this.checkBox = checkBox;
     }
+
 
     public void setComponentNr(String componentNr) {
         Validator.validate_componentNumber(componentNr);
