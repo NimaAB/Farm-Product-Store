@@ -1,5 +1,6 @@
 package io.fileThreads;
 
+import io.FileInfo;
 import io.save.*;
 
 import javafx.concurrent.Task;
@@ -8,15 +9,16 @@ import validations.ioExceptions.InvalidExtensionException;
 import java.util.ArrayList;
 
 public class SaveThread<T> extends Task<Void> {
-    private String path;
-    private ArrayList<T> ltw;
-    public SaveThread(ArrayList<T> listToWrite, String path){
-        this.path = path;
-        this.ltw = listToWrite;
+    private FileInfo file;
+    ArrayList<T> listToWrite;
+    public SaveThread(FileInfo file, ArrayList<T> list){
+        this.file = file;
+        this.listToWrite = list;
     }
 
+
     private SaveAbstract<T> saveBehaviorFactory() {
-        String extension = this.path.substring(path.lastIndexOf("."));
+        String extension = this.file.getExtentsion();
         switch (extension){
             case ".csv":
                 return new SaveCsvBehavior<>();
@@ -31,7 +33,7 @@ public class SaveThread<T> extends Task<Void> {
     public Void call(){
         try { Thread.sleep(2000); }
         catch (InterruptedException ignored){}
-        saveBehaviorFactory().write(this.path,this.ltw);
+        saveBehaviorFactory().write(this.file.getPath(), this.listToWrite);
         return null;
     }
 }

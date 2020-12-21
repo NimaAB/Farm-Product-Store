@@ -1,7 +1,8 @@
 package dataModels.dataCollection;
 
 import dataModels.data.ConfigItem;
-import io.FileClient;
+import io.FileInfo;
+import io.IOClient;
 import org.app.PathDialogBox;
 import dataModels.data.Component;
 import javafx.collections.FXCollections;
@@ -11,6 +12,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TableView;
+import org.app.controllers.CustomerController;
 import validations.Alerts;
 import java.util.ArrayList;
 
@@ -82,20 +84,21 @@ public class ListViewCollection {
     public static void saveConfig() {
         if(isModified()){
             ArrayList<Component> toSave = new ArrayList<>(configItems);
-            FileClient<Component> file;
+            IOClient<Component> file;
             if(openedFile == null){
                 openedFile = new PathDialogBox().getPathToSave();
-                file = new FileClient<>(toSave,openedFile);
+                file = new IOClient<>(new FileInfo(openedFile),toSave);
             } else {
-                file = new FileClient<>(toSave,openedFile);
+                file = new IOClient<>(new FileInfo(openedFile),toSave);
                 modified = false;
             }
-            file.save();
+            file.runSaveThread();
         }
     }
 
-    /** Sjekker om configItems er tom eller ikke */
-    public static void loadingConfig(ArrayList<ConfigItem> items){
+    /** Sjekker om configItems er tom eller ikke
+     * @param items*/
+    public static void loadingConfig(ArrayList<ConfigItem> items, Label lbl){
         clearList();
         configItems.addAll(items);
         for(Component item: items){
@@ -105,13 +108,16 @@ public class ListViewCollection {
                 }
             }
         }
+        showTotalPrice(lbl);
         modified = false;
+
     }
 
+
     /** Viser total prisen til alle ConfigItems */
-    public static void showTotalPrice(Label totalPriceLbl){
+    public static void showTotalPrice(Label lbl){
         double totalPrice = ConfigItem.totalPrice(configItems);
-        totalPriceLbl.setText(Double.toString(totalPrice));
+        lbl.setText(Double.toString(totalPrice));
     }
 
     /** Resetter listview for en ny konfigurasjon */

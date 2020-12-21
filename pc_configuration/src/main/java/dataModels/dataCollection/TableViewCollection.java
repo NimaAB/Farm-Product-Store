@@ -2,7 +2,11 @@ package dataModels.dataCollection;
 
 import dataModels.data.Component;
 
-import io.FileClient;
+
+import io.FileInfo;
+import io.fileThreads.OpenThread;
+
+import io.fileThreads.SaveThread;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -24,10 +28,9 @@ public class TableViewCollection {
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
     public static void loadComponents(String filePath){
-        ArrayList<Component> componentList;
-        FileClient<Component> file = new FileClient<>(filePath);
+        OpenThread<Component> openTh = new OpenThread<>(new FileInfo(filePath));
+        ArrayList<Component> componentList = openTh.call();
         loadedFile = filePath;
-        componentList = file.open();
         if (reloadComponents) {
             setComponents(componentList,false);
             reloadComponents = false;
@@ -55,8 +58,8 @@ public class TableViewCollection {
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
     public static void saveData(){
         ArrayList<Component> data = new ArrayList<>(getComponents());
-        FileClient<Component> file = new FileClient<>(data,loadedFile);
-        file.save();
+        SaveThread<Component> saveTh = new SaveThread<>(new FileInfo(loadedFile),data);
+        saveTh.call();
         modified = false;
     }
 

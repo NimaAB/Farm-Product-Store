@@ -1,6 +1,9 @@
 package org.app.controllers;
 
-import io.FileClient;
+
+import dataModels.data.ConfigItem;
+import io.FileInfo;
+import io.IOClient;
 import org.app.Load;
 import org.app.PathDialogBox;
 import dataModels.data.Component;
@@ -41,7 +44,7 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String file = "DataFraApp\\Database\\components.bin";
+        String file = "pc_configuration/DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
@@ -84,7 +87,8 @@ public class AdminController implements Initializable {
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
     }
 
-    @FXML void open(){
+    @FXML
+    void open(){
         boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
@@ -97,15 +101,11 @@ public class AdminController implements Initializable {
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<Component> file = new FileClient<>(path);
-            ArrayList<Component> list = file.open();
-            if(!list.isEmpty()){
-                TableViewCollection.getComponents().clear();
-                TableViewCollection.setComponents(list,true);
-                setOpenedFile(path);
-            }
+            FileInfo file = new FileInfo(path);
+            IOClient<Component> io = new IOClient<>(file);
+            io.runOpenThread();
+            setOpenedFile(path);
             TableViewCollection.setLoadedFile(path);
-
         }else{
             Alerts.success("Your data isn't changed.");
         }
@@ -135,8 +135,9 @@ public class AdminController implements Initializable {
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<Component> file = new FileClient<>(components,path);
-            file.save();
+            FileInfo file = new FileInfo(path);
+            IOClient<Component> io = new IOClient<>(file, components);
+            io.runSaveThread();
         }
         else{
             Alerts.warning("There is nothing to save!");

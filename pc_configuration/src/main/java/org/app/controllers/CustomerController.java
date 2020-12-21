@@ -1,7 +1,8 @@
 package org.app.controllers;
 
 import dataModels.data.ConfigItem;
-import io.FileClient;
+import io.FileInfo;
+import io.IOClient;
 import org.app.Load;
 import org.app.PathDialogBox;
 import dataModels.data.Component;
@@ -34,7 +35,7 @@ public class CustomerController implements Initializable {
     @FXML
     private ListView<ConfigItem> shoppingCart;
     @FXML
-    private Label totalPriceLbl;
+    public  Label totalPriceLbl;
 
     private PathDialogBox pathDialogBox = new PathDialogBox();
     private String openedFile;
@@ -50,7 +51,7 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        String file = "DataFraApp\\Database\\components.bin";
+        String file = "pc_configuration/DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV, txtFilter);
@@ -71,10 +72,9 @@ public class CustomerController implements Initializable {
             Alerts.warning(e.getMessage());
             return;
         }
-        FileClient<ConfigItem> file = new FileClient<>(path);
-        ArrayList<ConfigItem> list = file.open();
-        ListViewCollection.loadingConfig(list);
-        ListViewCollection.showTotalPrice(totalPriceLbl);
+        FileInfo file = new FileInfo(path);
+        IOClient<ConfigItem> io = new IOClient<>(file,totalPriceLbl);
+        io.runOpenThread();
         ListViewCollection.setModified(false);
         setOpenedFile(path);
         ListViewCollection.setOpenedFile(path);
@@ -106,8 +106,9 @@ public class CustomerController implements Initializable {
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileClient<Component> file = new FileClient<>(configToSave, path);
-            file.save();
+            FileInfo file = new FileInfo(path);
+            IOClient<Component> io = new IOClient<>(file, configToSave);
+            io.runSaveThread();
             return;
         }
         Alerts.warning("Nothing do save!");
