@@ -1,3 +1,19 @@
+# Farm-Product-Store
+
+## Todos:
+- [ ] adding product class in models.
+- [ ] changing to relevant validation methods.
+- [ ] changing io.
+- [ ] renaming methods and classes to relevant names.
+- [ ] searching/filter methods.
+- [ ] adding improvment and simplicity to the code. 
+ 
+
+
+
+
+
+################################################The-Old-Project############################################
 # PC_configuration
 This repository contains a PC configuration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
 
