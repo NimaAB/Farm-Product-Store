@@ -51,7 +51,7 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // inneholder komponenter som vises i tableView
-        String file = "pc_configuration/DataFraApp/Database/components.bin";
+        String file = "DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(costumerTV);
         TableViewCollection.filterTableView(costumerTV, txtFilter);

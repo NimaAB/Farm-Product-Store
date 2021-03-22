@@ -44,7 +44,7 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String file = "pc_configuration/DataFraApp/Database/components.bin";
+        String file = "DataFraApp/Database/components.bin";
         TableViewCollection.loadComponents(file);
         TableViewCollection.setTableView(tableview);
         TableViewCollection.fillFilterComboBox(filterComboBox);
