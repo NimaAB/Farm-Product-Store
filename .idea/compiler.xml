@@ -9,8 +9,5 @@
         <module name="pc_configuration" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="pc_configuration" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>
