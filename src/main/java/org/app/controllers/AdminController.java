@@ -1,7 +1,6 @@
 package org.app.controllers;
 
 
-import dataModels.data.ConfigItem;
 import io.FileInfo;
 import io.IOClient;
 import org.app.Load;

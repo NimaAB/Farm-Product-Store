@@ -31,7 +31,6 @@
             <font>
                <Font name="System Bold" size="12.0" />
             </font></Button>
-         <RadioButton fx:id="isAdmin" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="106.0" text="Adminstrator" />
       </AnchorPane>
    </center>
 </BorderPane>

@@ -1,6 +1,5 @@
 package org.app;
 
-import dataModels.dataCollection.ListViewCollection;
 import dataModels.dataCollection.TableViewCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -32,14 +31,6 @@ public class Load {
                 Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret"); }
-        }
-        if(ListViewCollection.isModified()){
-            boolean response = Alerts.confirm("Vil du lagre konfigurasjonen?");
-            if(response){
-                ListViewCollection.saveConfig();
-                Alerts.success("Konfigurasjonen er lagret");
-            } else {
-                Alerts.success("Konfigurasjonen er ikke lagret"); }
         }
         stage.close();
     }
