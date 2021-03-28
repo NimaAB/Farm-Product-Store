@@ -1,6 +1,6 @@
 package dataModels.dataCollection;
 
-import dataModels.data.Component;
+import dataModels.models.Component;
 
 
 import io.FileInfo;

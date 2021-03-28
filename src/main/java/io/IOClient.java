@@ -1,6 +1,6 @@
 package io;
 
-import dataModels.data.Component;
+import dataModels.models.Component;
 import dataModels.dataCollection.TableViewCollection;
 import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;

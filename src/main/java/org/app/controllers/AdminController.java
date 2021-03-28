@@ -5,7 +5,7 @@ import io.FileInfo;
 import io.IOClient;
 import org.app.Load;
 import org.app.PathDialogBox;
-import dataModels.data.Component;
+import dataModels.models.Component;
 import dataModels.dataCollection.TableViewCollection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
