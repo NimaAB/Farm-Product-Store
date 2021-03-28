@@ -29,6 +29,8 @@ public class Product implements Serializable {
         this.price = new SimpleDoubleProperty(price);
     }
 
+    public Product (){ }
+
     public int getProductID(){
         return this.productID.getValue();
     }
@@ -63,9 +65,25 @@ public class Product implements Serializable {
     public double getPrice() {
         return this.price.getValue();
     }
-    public void setPrice(String price){
-        //validation call will include parsing.
-        this.price.setValue(Double.parseDouble(price));
+    public void setPrice(double price){
+        //validation call
+        this.price.setValue(price);
+    }
+
+    public String toString(){
+        return "{" + "\n" +
+                "\t\"productID\" :" + "\"" + getProductID() + "\"," + "\n" +
+                "\t\"productName\" :" + "\"" + getProductName() + "\"," + "\n" +
+                "\t\"category\" :" + "\"" + getCategory() + "\"," + "\n" +
+                "\t\"specification\" :" + "\"" + getSpecification() + "\"," + "\n" +
+                "\t\"price\" :" + "\"" + getPrice() + "\"" + "\n" +
+                "}";
+    }
+
+    public String csvFormat(char delimiter){
+        String format = "%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s";
+        return String.format(format, getProductID(), getProductName(),
+                getCategory(), getSpecification(), getPrice());
     }
 
     private void writeObject(ObjectOutputStream ost) throws IOException {
@@ -82,7 +100,7 @@ public class Product implements Serializable {
         String name = ist.readUTF();
         String category = ist.readUTF();
         String specs = ist.readUTF();
-        String price = ist.readUTF();
+        double price = ist.readDouble();
 
         setProductID(productID);
         setProductName(name);
