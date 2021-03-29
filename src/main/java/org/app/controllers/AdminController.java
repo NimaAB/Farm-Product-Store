@@ -64,15 +64,19 @@ public class AdminController implements Initializable {
 
     @FXML void createComponents(){
         try {
-            //String nr = this.nr.getText();
+            Product product = new Product();
+
             String name = this.name.getText();
             String category = categoriesCombobox.getValue();
             String specs = specifications.getText();
             double price = stringToDouble.fromString(this.price.getText());
 
-            //CheckBox b = new CheckBox();
+            product.setProductID();
+            product.setProductName(name);
+            product.setCategory(category);
+            product.setSpecification(specs);
+            product.setPrice(price);
 
-            Product product = new Product(name,category,specs,price);
             collection.addComponent(product);
             reset();
 

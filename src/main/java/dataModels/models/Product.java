@@ -34,6 +34,10 @@ public class Product implements Serializable {
     public int getProductID(){
         return this.productID.getValue();
     }
+    public void setProductID(){
+        this.productID = new SimpleIntegerProperty(id + 1);
+        id = this.productID.getValue();
+    }
     public void setProductID(int id){
         this.productID.setValue(id);
     }
