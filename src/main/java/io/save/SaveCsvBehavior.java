@@ -1,6 +1,7 @@
 package io.save;
 
 import dataModels.dataFormats.ItemsFormat;
+import validations.ioExceptions.InvalidTypeException;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -16,7 +17,7 @@ public class SaveCsvBehavior<T> extends SaveAbstract<T>{
             String itemText = ItemsFormat.itemsText(list);
             bufferedWriter.write(itemText);
             bufferedWriter.close();
-        } catch (IOException e){
+        } catch (IOException | InvalidTypeException e){
             e.getStackTrace();
         }
     }
