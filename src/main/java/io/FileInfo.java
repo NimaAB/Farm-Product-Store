@@ -10,7 +10,7 @@ public class FileInfo {
         return this.path;
     }
 
-    public String getExtentsion(){
+    public String getExtension(){
         return path.substring(path.lastIndexOf("."));
     }
 }

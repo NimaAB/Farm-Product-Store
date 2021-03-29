@@ -9,7 +9,7 @@ module pc_configuration {
     exports io.save;
     exports org.app;
     exports org.app.controllers;
-    exports dataModels.data;
+    exports dataModels.models;
     exports dataModels.dataCollection;
     exports dataModels.dataFormats;
     exports validations;
