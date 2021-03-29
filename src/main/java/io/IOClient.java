@@ -1,12 +1,10 @@
 package io;
 
-import dataModels.models.Component;
 import dataModels.dataCollection.TableViewCollection;
 import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tab;
 import validations.Alerts;
 
 

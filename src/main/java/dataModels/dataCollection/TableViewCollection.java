@@ -1,7 +1,5 @@
 package dataModels.dataCollection;
 
-import dataModels.models.Component;
-
 
 import io.FileInfo;
 import io.fileThreads.OpenThread;
