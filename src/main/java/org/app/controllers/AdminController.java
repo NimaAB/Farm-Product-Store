@@ -1,6 +1,7 @@
 package org.app.controllers;
 
 
+import dataModels.models.Product;
 import io.FileInfo;
 import io.IOClient;
 import org.app.Load;
@@ -22,17 +23,21 @@ import java.util.ResourceBundle;
 public class AdminController implements Initializable {
 
     @FXML private BorderPane adminPane;
-    @FXML private TextField nr, name, price, txtFilter;
+    @FXML private TextField name, price, txtFilter;
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> categoriesCombobox;
     @FXML private ComboBox<String> filterComboBox;
-    @FXML private TableView<Component> tableview;
-    @FXML private TableColumn<Component,String> categoryCol;
-    @FXML private TableColumn<Component,Double> prisCol;
-    @FXML private TableColumn<Component,Integer> nrCol;
+    @FXML private TableView<Product> tableview;
+    @FXML private TableColumn<Product,String> categoryCol;
+    @FXML private TableColumn<Product,Double> priceCol;
+    @FXML private TableColumn<Product,Integer> idCol;
+
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
     private String openedFile;
     private PathDialogBox pathDialogBox = new PathDialogBox();
+
+    private NumberConversion.StringToDouble stringToDouble = new NumberConversion.StringToDouble();
+    private NumberConversion.StringtoInteger stringtoInteger = new NumberConversion.StringtoInteger();
 
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
@@ -53,21 +58,22 @@ public class AdminController implements Initializable {
         System.out.println(collection.isModified());
 
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
-        nrCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringtoInteger()));
-        prisCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
+        idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
     }
 
     @FXML void createComponents(){
         try {
-            String nr = this.nr.getText();
+            //String nr = this.nr.getText();
             String name = this.name.getText();
             String category = categoriesCombobox.getValue();
             String specs = specifications.getText();
-            String price = this.price.getText();
-            CheckBox b = new CheckBox();
+            double price = stringToDouble.fromString(this.price.getText());
 
-            Component component = new Component(nr,name,category,specs,price,b);
-            collection.addComponent(component);
+            //CheckBox b = new CheckBox();
+
+            Product product = new Product(name,category,specs,price);
+            collection.addComponent(product);
             reset();
 
             Alerts.success("Komponent Opprettet");
@@ -78,7 +84,7 @@ public class AdminController implements Initializable {
 
     private void reset(){
         // Resetter feltene
-        nr.setText("");
+        //nr.setText("");
         name.setText("");
         specifications.setText("");
         price.setText("");
@@ -103,7 +109,7 @@ public class AdminController implements Initializable {
                 return;
             }
             FileInfo file = new FileInfo(path);
-            IOClient<Component> io = new IOClient<>(file);
+            IOClient<Product> io = new IOClient<>(file);
             io.runOpenThread();
             setOpenedFile(path);
             collection.setLoadedFile(path);
@@ -126,7 +132,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML void save(){
-        ArrayList<Component> components = new ArrayList<>(collection.getComponents());
+        ArrayList<Product> components = new ArrayList<>(collection.getComponents());
         if(!components.isEmpty()){
             String path = getPath();
             try{
@@ -137,7 +143,7 @@ public class AdminController implements Initializable {
                 return;
             }
             FileInfo file = new FileInfo(path);
-            IOClient<Component> io = new IOClient<>(file, components);
+            IOClient<Product> io = new IOClient<>(file, components);
             io.runSaveThread();
         }
         else{
@@ -145,9 +151,9 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void nameEdited(TableColumn.CellEditEvent<Component, String> event){
+    @FXML void editName(TableColumn.CellEditEvent<Product, String> event){
         try {
-            event.getRowValue().setComponentName(event.getNewValue());
+            event.getRowValue().setProductName(event.getNewValue());
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
@@ -156,9 +162,9 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void specsEdited(TableColumn.CellEditEvent<Component, String> event){
+    @FXML void editSpecs(TableColumn.CellEditEvent<Product, String> event){
         try {
-            event.getRowValue().setComponentSpecs(event.getNewValue());
+            event.getRowValue().setSpecification(event.getNewValue());
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
@@ -167,9 +173,9 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void categoryEdited(TableColumn.CellEditEvent<Component, String> event){
+    @FXML void editCategory(TableColumn.CellEditEvent<Product, String> event){
         try {
-            event.getRowValue().setComponentCategory(event.getNewValue());
+            event.getRowValue().setCategory(event.getNewValue());
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
@@ -178,7 +184,8 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void nrEdited(TableColumn.CellEditEvent<Component, Integer> event){
+    /* //ID er auto-increment det blir litt feil å kunne endre det
+    @FXML void nrEdited(TableColumn.CellEditEvent<Product, Integer> event){
         try {
             event.getRowValue().setComponentNr(Integer.toString(event.getNewValue()));
             collection.setModified(true);
@@ -189,11 +196,11 @@ public class AdminController implements Initializable {
         } catch (NullPointerException ignored) {
             tableview.refresh();
         }
-    }
+    }*/
 
-    @FXML void priceEdited(TableColumn.CellEditEvent<Component, Double> event){
+    @FXML void editPrice(TableColumn.CellEditEvent<Product, Double> event){
         try {
-            event.getRowValue().setComponentPrice(Double.toString(event.getNewValue()));
+            event.getRowValue().setPrice(event.getNewValue());
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {

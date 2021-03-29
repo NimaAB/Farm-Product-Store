@@ -1,6 +1,7 @@
 package io;
 
 import dataModels.dataCollection.TableViewCollection;
+import dataModels.models.Product;
 import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;
 import javafx.concurrent.WorkerStateEvent;
@@ -62,9 +63,9 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         TableViewCollection collection = TableViewCollection.getINSTANCE();
-        ArrayList<Component> list = (ArrayList<Component>) openThread.call();
-        collection.getComponents().clear();
-        collection.setComponents(list);
+        //ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+        //collection.getComponents().clear();
+        //collection.setComponents(list);
 
     }
 
