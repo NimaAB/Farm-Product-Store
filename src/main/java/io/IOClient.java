@@ -6,6 +6,7 @@ import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import validations.Alerts;
 
 
@@ -62,9 +63,10 @@ public class IOClient<T> {
     }
 
     private void openDone(WorkerStateEvent e) {
+        TableViewCollection collection = TableViewCollection.getINSTANCE();
         ArrayList<Component> list = (ArrayList<Component>) openThread.call();
-        TableViewCollection.getComponents().clear();
-        TableViewCollection.setComponents(list, true);
+        collection.getComponents().clear();
+        collection.setComponents(list);
 
     }
 

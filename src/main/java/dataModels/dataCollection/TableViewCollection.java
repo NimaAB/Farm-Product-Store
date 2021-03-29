@@ -8,6 +8,7 @@ import io.fileThreads.OpenThread;
 
 import io.fileThreads.SaveThread;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -19,32 +20,50 @@ import java.util.ArrayList;
  * klassen samler data til TableView og metodene gir muligheten for å behandle data.
  * */
 public class TableViewCollection {
-    private static final ObservableList<Component> COMPONENTS = FXCollections.observableArrayList();
-    private static ObservableList<String> categories = FXCollections.observableArrayList();
-    private static boolean reloadComponents = true;
-    private static boolean modified = false;
-    private static String filterChoice = "Navn";
-    private static String loadedFile;
+
+    private final ObservableList<Component> COMPONENTS = FXCollections.observableArrayList();
+    private ObservableList<String> categories = FXCollections.observableArrayList();
+    private boolean reloadComponents = true;
+    private boolean modified = false;
+    private String filterChoice = "Navn";
+    private String loadedFile;
+    private static TableViewCollection INSTANCE;
+
+    /** Når et objekt av denne klasse blir opprettet, skal den alltid passe på om dataene i tableview er endret. */
+    private TableViewCollection(){
+        COMPONENTS.addListener(new ListChangeListener<Component>() {
+            @Override
+            public void onChanged(Change<? extends Component> change) {
+                modified = true;
+            }
+        });
+    }
+
+    /** Bruker en singel instans av denne klassen slik at dataene i tableview synkroniserer. */
+    public static TableViewCollection getINSTANCE() {
+        if(INSTANCE == null) INSTANCE = new TableViewCollection();
+        return INSTANCE;
+    }
 
     /** Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>*/
-    public static void loadComponents(String filePath){
+    public void loadComponents(String filePath){
         OpenThread<Component> openTh = new OpenThread<>(new FileInfo(filePath));
         ArrayList<Component> componentList = openTh.call();
         loadedFile = filePath;
         if (reloadComponents) {
-            setComponents(componentList,false);
+            setComponents(componentList);
             reloadComponents = false;
         }
+        modified = false;
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
-    public static void deleteSelectedComponents(){
+    public void deleteSelectedComponents(){
         COMPONENTS.removeIf(components -> components.getCheckBox().isSelected());
-        modified = true;
     }
 
     /** Legger en ny komponent i tabellen */
-    public static void addComponent(Component component){
+    public void addComponent(Component component){
         for(Component c : getComponents()){
             if(component.getComponentNr()==c.getComponentNr()){
                 COMPONENTS.remove(c);
@@ -52,11 +71,10 @@ public class TableViewCollection {
             }
         }
         COMPONENTS.add(component);
-        modified = true;
     }
 
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
-    public static void saveData(){
+    public void saveData(){
         ArrayList<Component> data = new ArrayList<>(getComponents());
         SaveThread<Component> saveTh = new SaveThread<>(new FileInfo(loadedFile),data);
         saveTh.call();
@@ -64,12 +82,12 @@ public class TableViewCollection {
     }
 
     /** Viser alle komponenter i tabellen */
-    public static void setTableView(TableView<Component> tableView){
+    public void setTableView(TableView<Component> tableView){
         tableView.setItems(getComponents());
     }
 
     /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
-    public static void fillCategoryComboBox(ComboBox<String> categoryOptions){
+    public void fillCategoryComboBox(ComboBox<String> categoryOptions){
         String[] definedCategories = {"Minne","Prosessor","Grafikkort","Harddisk","Hovedkort","Utvidelseskort"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
@@ -81,11 +99,11 @@ public class TableViewCollection {
         categoryOptions.setEditable(true);
         categoryOptions.setPromptText("Velg Kategori");
         categoryOptions.setItems(categories);
-        TableViewCollection.categories = categories;
+        this.categories = categories;
     }
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
-    public static void fillFilterComboBox(ComboBox<String> filterOptions){
+    public void fillFilterComboBox(ComboBox<String> filterOptions){
         String[] filterCats = {"Komponent Nr", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
         filterOptions.setItems(filterCategories);
@@ -94,7 +112,7 @@ public class TableViewCollection {
     }
 
     /** Filtrerer og søker gjennom tabellen */
-    public static void filterTableView(TableView<Component> tableView, TextField filterTextField){
+    public void filterTableView(TableView<Component> tableView, TextField filterTextField){
         FilteredList<Component> filteredList = new FilteredList<>(COMPONENTS, components -> true);
         filterTextField.textProperty().addListener((observable,oldValue,newValue)->{
             filteredList.setPredicate((components)->{
@@ -122,7 +140,7 @@ public class TableViewCollection {
     }
 
     /** Getter og Setter methods */
-    public static void setComponents(ArrayList<Component> items, boolean modify){
+    public void setComponents(ArrayList<Component> items){
         for(Component i: items){
             for(Component c : COMPONENTS){
                 while(i.getComponentNr() == c.getComponentNr()){
@@ -133,13 +151,12 @@ public class TableViewCollection {
             i.setCheckBox(checkBox);
             COMPONENTS.add(i);
         }
-        modified = modify;
     }
 
-    public static ObservableList<Component> getComponents() { return COMPONENTS; }
-    public static ObservableList<String> getCategories() { return categories; }
-    public static void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
-    public static void setModified(boolean isModified) { modified = isModified; }
-    public static void setLoadedFile(String loadedFile1){ loadedFile = loadedFile1; }
-    public static boolean isModified() { return modified; }
+    public ObservableList<Component> getComponents() { return COMPONENTS; }
+    public ObservableList<String> getCategories() { return categories; }
+    public void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
+    public void setModified(boolean isModified) { modified = isModified; }
+    public void setLoadedFile(String loadedFile1){ loadedFile = loadedFile1; }
+    public boolean isModified() { return modified; }
 }

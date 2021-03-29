@@ -24,10 +24,11 @@ public class Load {
 
     /** Spør brukeren om å lagre endringer før programmen slutter */
     public static void exit(Stage stage){
-        if(TableViewCollection.isModified()){
+        TableViewCollection collection = TableViewCollection.getINSTANCE();
+        if(collection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if(response){
-                TableViewCollection.saveData();
+                collection.saveData();
                 Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret"); }

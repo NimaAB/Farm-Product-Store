@@ -31,8 +31,10 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Component,String> categoryCol;
     @FXML private TableColumn<Component,Double> prisCol;
     @FXML private TableColumn<Component,Integer> nrCol;
+    private TableViewCollection collection = TableViewCollection.getINSTANCE();
     private String openedFile;
     private PathDialogBox pathDialogBox = new PathDialogBox();
+
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
     }
@@ -44,13 +46,14 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String file = "DataFraApp/Database/components.bin";
-        TableViewCollection.loadComponents(file);
-        TableViewCollection.setTableView(tableview);
-        TableViewCollection.fillFilterComboBox(filterComboBox);
-        TableViewCollection.filterTableView(tableview,txtFilter);
-        TableViewCollection.fillCategoryComboBox(categoriesCombobox);
+        collection.loadComponents(file);
+        collection.setTableView(tableview);
+        collection.fillFilterComboBox(filterComboBox);
+        collection.filterTableView(tableview,txtFilter);
+        collection.fillCategoryComboBox(categoriesCombobox);
+        System.out.println(collection.isModified());
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
         nrCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringtoInteger()));
         prisCol.setCellFactory(TextFieldTableCell.forTableColumn(new NumberConversion.StringToDouble()));
     }
@@ -65,7 +68,7 @@ public class AdminController implements Initializable {
             CheckBox b = new CheckBox();
 
             Component component = new Component(nr,name,category,specs,price,b);
-            TableViewCollection.addComponent(component);
+            collection.addComponent(component);
             reset();
 
             Alerts.success("Komponent Opprettet");
@@ -82,8 +85,8 @@ public class AdminController implements Initializable {
         price.setText("");
 
         // legger nye kategorier på dropdown om det finnes
-        TableViewCollection.fillCategoryComboBox(categoriesCombobox);
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(TableViewCollection.getCategories()));
+        collection.fillCategoryComboBox(categoriesCombobox);
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
     }
 
     @FXML
@@ -104,7 +107,7 @@ public class AdminController implements Initializable {
             IOClient<Component> io = new IOClient<>(file);
             io.runOpenThread();
             setOpenedFile(path);
-            TableViewCollection.setLoadedFile(path);
+            collection.setLoadedFile(path);
         }else{
             Alerts.success("Your data isn't changed.");
         }
@@ -124,7 +127,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML void save(){
-        ArrayList<Component> components = new ArrayList<>(TableViewCollection.getComponents());
+        ArrayList<Component> components = new ArrayList<>(collection.getComponents());
         if(!components.isEmpty()){
             String path = getPath();
             try{
@@ -146,7 +149,7 @@ public class AdminController implements Initializable {
     @FXML void nameEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentName(event.getNewValue());
-            TableViewCollection.setModified(true);
+            collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -157,7 +160,7 @@ public class AdminController implements Initializable {
     @FXML void specsEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentSpecs(event.getNewValue());
-            TableViewCollection.setModified(true);
+            collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -168,7 +171,7 @@ public class AdminController implements Initializable {
     @FXML void categoryEdited(TableColumn.CellEditEvent<Component, String> event){
         try {
             event.getRowValue().setComponentCategory(event.getNewValue());
-            TableViewCollection.setModified(true);
+            collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -179,7 +182,7 @@ public class AdminController implements Initializable {
     @FXML void nrEdited(TableColumn.CellEditEvent<Component, Integer> event){
         try {
             event.getRowValue().setComponentNr(Integer.toString(event.getNewValue()));
-            TableViewCollection.setModified(true);
+            collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -192,7 +195,7 @@ public class AdminController implements Initializable {
     @FXML void priceEdited(TableColumn.CellEditEvent<Component, Double> event){
         try {
             event.getRowValue().setComponentPrice(Double.toString(event.getNewValue()));
-            TableViewCollection.setModified(true);
+            collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -203,21 +206,21 @@ public class AdminController implements Initializable {
     }
 
     @FXML void delete(){
-        TableViewCollection.deleteSelectedComponents();
+        collection.deleteSelectedComponents();
         tableview.refresh();
     }
 
     @FXML void logOut(){
-        if(TableViewCollection.isModified()){
+        if(collection.isModified()){
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if(response){
-                TableViewCollection.saveData();
+                collection.saveData();
                 Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret");
-                TableViewCollection.setReloadComponents(true);
-                TableViewCollection.getComponents().clear();
-                TableViewCollection.setModified(false);
+                collection.setReloadComponents(true);
+                collection.getComponents().clear();
+                collection.setModified(false);
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("loginView.fxml","Login",stage);
