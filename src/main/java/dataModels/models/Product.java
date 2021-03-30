@@ -39,7 +39,7 @@ public class Product implements Serializable {
         id = this.productID.getValue();
     }
     public void setProductID(int id){
-        this.productID.setValue(id);
+        this.productID = new SimpleIntegerProperty(id);
     }
 
     public String getProductName() {
@@ -47,7 +47,7 @@ public class Product implements Serializable {
     }
     public void setProductName(String name){
         //validation call
-        this.productName.setValue(name);
+        this.productName = new SimpleStringProperty(name);
     }
 
     public String getCategory() {
@@ -55,7 +55,7 @@ public class Product implements Serializable {
     }
     public void setCategory(String category){
         //validation call
-        this.category.setValue(category);
+        this.category = new SimpleStringProperty(category);
     }
 
     public String getSpecification() {
@@ -63,7 +63,7 @@ public class Product implements Serializable {
     }
     public void setSpecification(String specs){
         //validation call
-        this.specification.setValue(specs);
+        this.specification = new SimpleStringProperty(specs);
     }
 
     public double getPrice() {
@@ -71,7 +71,7 @@ public class Product implements Serializable {
     }
     public void setPrice(double price){
         //validation call
-        this.price.setValue(price);
+        this.price = new SimpleDoubleProperty(price);
     }
 
     public String toString(){

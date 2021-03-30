@@ -1,6 +1,7 @@
 package io.open;
 
 import dataModels.dataFormats.ParseItems;
+import validations.ioExceptions.InvalidTypeException;
 
 
 import java.io.*;
@@ -17,7 +18,7 @@ public class OpenCsvBehavior<T> extends OpenAbstract<T>{
             while((line =reader.readLine()) != null){
                     items.add((T) ParseItems.parseItem(line));
             }
-        } catch (IOException e) {
+        } catch (IOException | InvalidTypeException e) {
             e.printStackTrace();
         }
         return items;
