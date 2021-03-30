@@ -94,7 +94,8 @@ public class TableViewCollection {
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
         for(Product p : PRODUCTS){
-            if(!categories.contains(p.getCategory())){
+            String category = p.getCategory().substring(0, 1).toUpperCase() + p.getCategory().substring(1);
+            if(!categories.contains(category)){
                 categories.add(p.getCategory());
             }
         }
