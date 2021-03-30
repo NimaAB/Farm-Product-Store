@@ -18,7 +18,7 @@ import java.util.ArrayList;
  * */
 public class TableViewCollection {
 
-    private final ObservableList<Product> COMPONENTS = FXCollections.observableArrayList();
+    private final ObservableList<Product> PRODUCTS = FXCollections.observableArrayList();
     private ObservableList<String> categories = FXCollections.observableArrayList();
     private boolean reloadComponents = true;
     private boolean modified = false;
@@ -28,7 +28,7 @@ public class TableViewCollection {
 
     /** Når et objekt av denne klasse blir opprettet, skal den alltid passe på om dataene i tableview er endret. */
     private TableViewCollection(){
-        COMPONENTS.addListener(new ListChangeListener<Product>() {
+        PRODUCTS.addListener(new ListChangeListener<Product>() {
             @Override
             public void onChanged(Change<? extends Product> change) {
                 modified = true;
@@ -55,19 +55,24 @@ public class TableViewCollection {
     }
 
     /** Sletter alle komponenter som er valgt fra tabellen */
-    public void deleteSelectedComponents(){
-        throw new UnsupportedOperationException("Not yet implemented");
+    public void deleteSelectedComponents(ObservableList<Product> selectedProducts){
+        if(selectedProducts.size() >= 1){
+            PRODUCTS.removeAll(selectedProducts);
+        }else{
+            return;
+        }
+        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /** Legger en ny komponent i tabellen */
     public void addComponent(Product product){
         for(Product p : getComponents()){
             if(product.getProductID() == p.getProductID()){
-                COMPONENTS.remove(p);
+                PRODUCTS.remove(p);
                 break;
             }
         }
-        COMPONENTS.add(product);
+        PRODUCTS.add(product);
     }
 
     /** Oppdaterer filen når bruker logger ut eller programmen slutter */
@@ -85,10 +90,10 @@ public class TableViewCollection {
 
     /** Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter */
     public void fillCategoryComboBox(ComboBox<String> categoryOptions){
-        String[] definedCategories = {"Minne","Prosessor","Grafikkort","Harddisk","Hovedkort","Utvidelseskort"};
+        String[] definedCategories = {"Korn", "Traktor", "Jødsel", "Arbeidsklær"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
-        for(Product p : COMPONENTS){
+        for(Product p : PRODUCTS){
             if(!categories.contains(p.getCategory())){
                 categories.add(p.getCategory());
             }
@@ -101,7 +106,7 @@ public class TableViewCollection {
 
     /** Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv. */
     public void fillFilterComboBox(ComboBox<String> filterOptions){
-        String[] filterCats = {"Komponent Nr", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
+        String[] filterCats = {"Produkt ID", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
         ObservableList<String> filterCategories = FXCollections.observableArrayList(filterCats);
         filterOptions.setItems(filterCategories);
         filterOptions.setValue("Navn");
@@ -110,7 +115,7 @@ public class TableViewCollection {
 
     /** Filtrerer og søker gjennom tabellen */
     public void filterTableView(TableView<Product> tableView, TextField filterTextField){
-        FilteredList<Product> filteredList = new FilteredList<>(COMPONENTS, product -> true);
+        FilteredList<Product> filteredList = new FilteredList<>(PRODUCTS, product -> true);
         filterTextField.textProperty().addListener((observable,oldValue,newValue)->{
             filteredList.setPredicate((product)->{
                 String nr = Integer.toString(product.getProductID());
@@ -121,7 +126,7 @@ public class TableViewCollection {
                 String filter = newValue.toLowerCase();
 
                 switch (filterChoice) {
-                    case "Komponent Nr": if(nr.equals(filter)){ return true; } break;
+                    case "Produkt ID": if(nr.equals(filter)){ return true; } break;
                     case "Navn": if(name.contains(filter)){ return true; } break;
                     case "Kategori": if(category.contains(filter)){ return true; } break;
                     case "Spesifikasjoner": if(specs.contains(filter)){ return true; } break;
@@ -139,16 +144,16 @@ public class TableViewCollection {
     /** Getter og Setter methods */
     public void setComponents(ArrayList<Product> items){
         for(Product i: items){
-            for(Product p : COMPONENTS){
+            for(Product p : PRODUCTS){
                 while(i.getProductID() == p.getProductID()){
                     i.setProductID(p.getProductID() + 1);
                 }
             }
-            COMPONENTS.add(i);
+            PRODUCTS.add(i);
         }
     }
 
-    public ObservableList<Product> getComponents() { return COMPONENTS; }
+    public ObservableList<Product> getComponents() { return PRODUCTS; }
     public ObservableList<String> getCategories() { return categories; }
     public void setReloadComponents(boolean reloadComponents1){ reloadComponents = reloadComponents1; }
     public void setModified(boolean isModified) { modified = isModified; }

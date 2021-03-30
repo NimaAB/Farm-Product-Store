@@ -4,6 +4,7 @@ package org.app.controllers;
 import dataModels.models.Product;
 import io.FileInfo;
 import io.IOClient;
+import javafx.collections.ObservableList;
 import org.app.Load;
 import org.app.PathDialogBox;
 import dataModels.dataCollection.TableViewCollection;
@@ -32,6 +33,7 @@ public class AdminController implements Initializable {
     @FXML private TableColumn<Product,Double> priceCol;
     @FXML private TableColumn<Product,Integer> idCol;
 
+    private TableSelectionModel<Product> tableSelectionModel;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
     private String openedFile;
     private PathDialogBox pathDialogBox = new PathDialogBox();
@@ -49,13 +51,16 @@ public class AdminController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        String file = "DataFraApp/Database/components.bin";
+        String file = "DataFraApp/Database/products.bin";
         collection.loadComponents(file);
         collection.setTableView(tableview);
         collection.fillFilterComboBox(filterComboBox);
         collection.filterTableView(tableview,txtFilter);
         collection.fillCategoryComboBox(categoriesCombobox);
-        System.out.println(collection.isModified());
+        //System.out.println(collection.isModified());
+
+        tableSelectionModel = tableview.getSelectionModel();
+        tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
 
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
         idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
@@ -188,20 +193,6 @@ public class AdminController implements Initializable {
         }
     }
 
-    /* //ID er auto-increment det blir litt feil å kunne endre det
-    @FXML void nrEdited(TableColumn.CellEditEvent<Product, Integer> event){
-        try {
-            event.getRowValue().setComponentNr(Integer.toString(event.getNewValue()));
-            collection.setModified(true);
-            tableview.refresh();
-        } catch (IllegalArgumentException e) {
-            Alerts.warning(e.getMessage());
-            tableview.refresh();
-        } catch (NullPointerException ignored) {
-            tableview.refresh();
-        }
-    }*/
-
     @FXML void editPrice(TableColumn.CellEditEvent<Product, Double> event){
         try {
             event.getRowValue().setPrice(event.getNewValue());
@@ -216,8 +207,14 @@ public class AdminController implements Initializable {
     }
 
     @FXML void delete(){
-        collection.deleteSelectedComponents();
-        tableview.refresh();
+        ObservableList<Product> selectedRows = tableSelectionModel.getSelectedItems();
+        boolean doRemove = Alerts.confirm("Er du sikker på at du vil slette varen/varene du har valgt?");
+        if(doRemove) {
+            collection.deleteSelectedComponents(selectedRows);
+            tableview.refresh();
+        }else{
+            tableSelectionModel.clearSelection();
+        }
     }
 
     @FXML void logOut(){
