@@ -23,15 +23,15 @@
             <TableView fx:id="tableview" editable="true" minWidth="-Infinity" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="40.0">
                <columns>
 
-                  <TableColumn editable="false" maxWidth="52.6666259765625" minWidth="40.0" prefWidth="52.6666259765625" resizable="false" text="velg">
+                 <!--<TableColumn editable="false" maxWidth="52.6666259765625" minWidth="40.0" prefWidth="52.6666259765625" resizable="false" text="velg">
                      <cellValueFactory>
                         <PropertyValueFactory property="checkBox" />
                      </cellValueFactory>
-                  </TableColumn>
-                  <!--onEditCommit="#nrEdited" not sure yet-->
+                  </TableColumn>-->
+
                   <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="93.33334350585938" resizable="false" text="KomponentNr">
                      <cellValueFactory>
-                        <PropertyValueFactory property="componentNr" />
+                        <PropertyValueFactory property="productID" />
                      </cellValueFactory>
                   </TableColumn>
 
