@@ -1,6 +1,6 @@
 package validations;
 
-import validations.customExceptions.InvalidDataException;
+import validations.customExceptions.InvalidTextInputException;
 import validations.customExceptions.InvalidNumberException;
 import java.io.Serializable;
 import java.util.regex.Pattern;
@@ -49,8 +49,8 @@ public class Validator implements Serializable {
     public static void validate_componentNumber(String txtComponentNumber){
         try {
             componentNumber = Integer.parseInt(txtComponentNumber);
-            if(componentNumber < 0){ throw new InvalidDataException("Nummeret må være større enn null"); }
-        } catch (InvalidDataException | InvalidNumberException e) {
+            if(componentNumber < 0){ throw new InvalidTextInputException("Nummeret må være større enn null"); }
+        } catch (InvalidTextInputException | InvalidNumberException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent nummer format"); }
@@ -61,14 +61,14 @@ public class Validator implements Serializable {
             if(txtComponentPrice.contains(",")){
                 String strPrice = txtComponentPrice.replace(',','.');
                 double componentPrice = Double.parseDouble(strPrice);
-                if(componentPrice <= 0) { throw new InvalidDataException("Prisen må være større enn 0."); }
+                if(componentPrice <= 0) { throw new InvalidTextInputException("Prisen må være større enn 0."); }
                 Validator.componentPrice = componentPrice;
             } else {
                 double componentPrice = Double.parseDouble(txtComponentPrice);
-                if(componentPrice <= 0) { throw new InvalidDataException("Prisen må være større enn 0."); }
+                if(componentPrice <= 0) { throw new InvalidTextInputException("Prisen må være større enn 0."); }
                 Validator.componentPrice = componentPrice;
             }
-        } catch (InvalidDataException e) {
+        } catch (InvalidTextInputException e) {
             throw new IllegalArgumentException(e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("Ugyldig komponent pris Format");

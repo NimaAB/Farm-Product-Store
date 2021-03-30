@@ -19,7 +19,7 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
     }
 
     private OpenAbstract<T> openBehaviorFactory() {
-        String extension = this.file.getExtentsion();
+        String extension = this.file.getExtension();
         switch (extension){
             case ".csv":
                 return new OpenCsvBehavior<>();

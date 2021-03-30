@@ -18,7 +18,7 @@ public class SaveThread<T> extends Task<Void> {
 
 
     private SaveAbstract<T> saveBehaviorFactory() {
-        String extension = this.file.getExtentsion();
+        String extension = this.file.getExtension();
         switch (extension){
             case ".csv":
                 return new SaveCsvBehavior<>();
