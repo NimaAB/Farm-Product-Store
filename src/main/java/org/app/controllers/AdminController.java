@@ -108,20 +108,20 @@ public class AdminController implements Initializable {
         boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
                         " i tabellen med dataen som ligger i filen som du skal laste opp?");
         if(doOpen){
-            String path = pathDialogBox.getPathToOpen();
+            String path = "DataFraApp/" + pathDialogBox.getPathToOpen();
             try{
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
                 pathDialogBox.fileNotFound(path);
+                FileInfo file = new FileInfo(path);
+                IOClient<Product> io = new IOClient<>(file);
+                io.runOpenThread();
+                setOpenedFile(path);
+                collection.setLoadedFile(path);
             }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
                 Alerts.warning(e.getMessage());
                 return;
             }
-            FileInfo file = new FileInfo(path);
-            IOClient<Product> io = new IOClient<>(file);
-            io.runOpenThread();
-            setOpenedFile(path);
-            collection.setLoadedFile(path);
         }else{
             Alerts.success("Your data isn't changed.");
         }
@@ -143,7 +143,7 @@ public class AdminController implements Initializable {
     @FXML void save(){
         ArrayList<Product> components = new ArrayList<>(collection.getComponents());
         if(!components.isEmpty()){
-            String path = getPath();
+            String path = "DataFraApp/" +  getPath();
             try{
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
