@@ -155,6 +155,7 @@ public class TableViewCollection {
             return row;
         });
     }
+
     // Hjelper metode for ComboBox verdiene:
     private void subcategoryChooser(String category){
         String[] kornTyper = {"Korn Type 1", "Korn Type 2"};

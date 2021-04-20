@@ -103,11 +103,6 @@ public class AdminController implements Initializable {
         name.setText("");
         specifications.setText("");
         price.setText("");
-
-        // legger nye kategorier på dropdown om det finnes
-        collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getSubcategories()));
     }
 
     @FXML
