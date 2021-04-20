@@ -128,7 +128,7 @@ Button:hover {
     -fx-text-fill: black;
 }
 .table-view .table-row-cell:selected {
-    -fx-background-color: whitesmoke;
+    -fx-background-color: #8c8b8b;
     -fx-text-fill: black;
 }
 .table-view .increment-button ,.table-view .decrement-button {
