@@ -17,18 +17,11 @@ public class IOClient<T> {
     private FileInfo fileInfo;
     private OpenThread<T> openThread;
     private SaveThread<T> saveThread;
-    private Label label;
 
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
         this.listToWrite = listToWrite;
         this.saveThread = new SaveThread<>(this.fileInfo, this.listToWrite);
-    }
-
-    public IOClient(FileInfo fileInfo, Label lbl) {
-        this.fileInfo = fileInfo;
-        this.label = lbl;
-        this.openThread = new OpenThread<>(this.fileInfo);
     }
 
     public IOClient(FileInfo fileInfo) {
@@ -63,9 +56,9 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         TableViewCollection collection = TableViewCollection.getINSTANCE();
-        //ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-        //collection.getComponents().clear();
-        //collection.setComponents(list);
+        ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+        collection.getComponents().clear();
+        collection.setComponents(list);
 
     }
 
