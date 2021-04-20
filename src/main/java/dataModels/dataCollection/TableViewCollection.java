@@ -115,7 +115,7 @@ public class TableViewCollection {
      * Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter
      */
     public void fillCategoryComboBox(ComboBox<String> categoryOptions, ComboBox<String> subcategoryOptions) {
-        String[] definedCategories = {"Korn", "Traktør", "Jødsel", "Arbeidsklær"};
+        String[] definedCategories = {"Korn", "Landbruk", "Gjødsel", "Arbeidsklær"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
         for (Product p : PRODUCTS) {
@@ -158,10 +158,10 @@ public class TableViewCollection {
 
     // Hjelper metode for ComboBox verdiene:
     private void subcategoryChooser(String category){
-        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
-        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
-        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
-        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
+        String[] kornTyper = {"Såkorn", "Økologisk såkorn", "Underkultur og fangvekster", "Plantevern", ""};
+        String[] klaerTyper = {"Jakker", "Hansker", "Bukser", "Regntøy", "Varselklær"};
+        String[] gjodselTyper = {"Bladgjødsel", "Nitrogengjødsel", "NPK-gjødsel"};
+        String[] landbruk = {"Traktor", "Tresker", "Hjullaster", "Nyttekjøretøy"};
         switch (category) {
             case "Korn":
                 subcategories.clear();
@@ -169,15 +169,15 @@ public class TableViewCollection {
                 break;
             case "Arbeidsklær":
                 subcategories.clear();
-                subcategories.addAll(klærTyper);
+                subcategories.addAll(klaerTyper);
                 break;
-            case "Jødsel":
+            case "Gjødsel":
                 subcategories.clear();
-                subcategories.addAll(jødselTyper);
+                subcategories.addAll(gjodselTyper);
                 break;
-            case "Traktør":
+            case "Landbruk":
                 subcategories.clear();
-                subcategories.addAll(traktørTyper);
+                subcategories.addAll(landbruk);
                 break;
         }
     }
