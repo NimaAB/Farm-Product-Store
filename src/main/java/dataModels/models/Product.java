@@ -42,6 +42,7 @@ public class Product implements Serializable {
     }
     public void setProductID(int id){
         this.productID = new SimpleIntegerProperty(id);
+        Product.id = id;
     }
 
     public String getProductName() {

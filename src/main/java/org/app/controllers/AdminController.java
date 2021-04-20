@@ -60,6 +60,7 @@ public class AdminController implements Initializable {
         collection.filterTableView(tableview,txtFilter);
         collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
         collection.fillSubCategoryCombobox(tableview);
+
         //System.out.println(collection.isModified());
 
         tableSelectionModel = tableview.getSelectionModel();
