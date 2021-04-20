@@ -59,6 +59,7 @@ public class AdminController implements Initializable {
         collection.fillFilterComboBox(filterComboBox);
         collection.filterTableView(tableview,txtFilter);
         collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
+        collection.fillSubCategoryCombobox(tableview);
         //System.out.println(collection.isModified());
 
         tableSelectionModel = tableview.getSelectionModel();
@@ -191,6 +192,8 @@ public class AdminController implements Initializable {
     @FXML void editCategory(TableColumn.CellEditEvent<Product, String> event){
         try {
             event.getRowValue().setCategory(event.getNewValue());
+            event.getRowValue().setSubCategory("");
+            Alerts.warning("Du har endret foreldre kategori.\nVelg en ny subkategori.");
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
@@ -202,7 +205,6 @@ public class AdminController implements Initializable {
     @FXML void editSubCategory(TableColumn.CellEditEvent<Product, String> event){
         try {
             event.getRowValue().setSubCategory(event.getNewValue());
-            collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {

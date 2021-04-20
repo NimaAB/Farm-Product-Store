@@ -154,13 +154,52 @@ public class TableViewCollection {
             }
         });
 
-        subcategoryOptions.setEditable(true);
         subcategoryOptions.setPromptText("Velg Subkategori");
-
-        categoryOptions.setEditable(true);
         categoryOptions.setPromptText("Velg Kategori");
         categoryOptions.setItems(categories);
         this.categories = categories;
+    }
+
+    /**
+     * Fyller opp subkategori combobox i tableview basert på elementenes hovedkategori
+     */
+
+    public void fillSubCategoryCombobox(TableView<Product> tableView){
+
+        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
+        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
+        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
+        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
+
+        tableView.setRowFactory(tv -> {
+            TableRow<Product> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if(event.getClickCount() == 1) {
+                    if(row.getItem() != null) {
+                        Product product = row.getItem();
+                        switch (product.getCategory()) {
+                            case "Korn":
+                                subcategories.clear();
+                                subcategories.addAll(kornTyper);
+                                break;
+                            case "Arbeidsklær":
+                                subcategories.clear();
+                                subcategories.addAll(klærTyper);
+                                break;
+                            case "Jødsel":
+                                subcategories.clear();
+                                subcategories.addAll(jødselTyper);
+                                break;
+                            case "Traktør":
+                                subcategories.clear();
+                                subcategories.addAll(traktørTyper);
+                                break;
+                        }
+                    }
+                }
+            });
+            return row;
+        });
     }
 
     /**
