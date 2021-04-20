@@ -4,6 +4,8 @@ import dataModels.models.Product;
 import io.FileInfo;
 import io.fileThreads.OpenThread;
 import io.fileThreads.SaveThread;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -12,7 +14,6 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import validations.Alerts;
 import validations.ioExceptions.InvalidTypeException;
-
 import java.util.ArrayList;
 
 /**
@@ -22,6 +23,7 @@ public class TableViewCollection {
 
     private final ObservableList<Product> PRODUCTS = FXCollections.observableArrayList();
     private ObservableList<String> categories = FXCollections.observableArrayList();
+    private ObservableList<String> subcategories = FXCollections.observableArrayList();
     private boolean reloadComponents = true;
     private boolean modified = false;
     private String filterChoice = "Navn";
@@ -111,9 +113,14 @@ public class TableViewCollection {
     /**
      * Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter
      */
-    public void fillCategoryComboBox(ComboBox<String> categoryOptions) {
-        String[] definedCategories = {"Korn", "Traktor", "Jødsel", "Arbeidsklær"};
+    public void fillCategoryComboBox(ComboBox<String> categoryOptions, ComboBox<String> subcategoryOptions) {
+        String[] definedCategories = {"Korn", "Traktør", "Jødsel", "Arbeidsklær"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
+
+        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
+        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
+        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
+        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
 
         for (Product p : PRODUCTS) {
             String category = p.getCategory().substring(0, 1).toUpperCase() + p.getCategory().substring(1);
@@ -121,6 +128,35 @@ public class TableViewCollection {
                 categories.add(p.getCategory());
             }
         }
+
+        categoryOptions.valueProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
+                switch (newValue) {
+                    case "Korn":
+                        subcategories.clear();
+                        subcategories.addAll(kornTyper);
+                        break;
+                    case "Arbeidsklær":
+                        subcategories.clear();
+                        subcategories.addAll(klærTyper);
+                        break;
+                    case "Jødsel":
+                        subcategories.clear();
+                        subcategories.addAll(jødselTyper);
+                        break;
+                    case "Traktør":
+                        subcategories.clear();
+                        subcategories.addAll(traktørTyper);
+                        break;
+                }
+                subcategoryOptions.setItems(subcategories);
+            }
+        });
+
+        subcategoryOptions.setEditable(true);
+        subcategoryOptions.setPromptText("Velg Subkategori");
+
         categoryOptions.setEditable(true);
         categoryOptions.setPromptText("Velg Kategori");
         categoryOptions.setItems(categories);
@@ -208,6 +244,10 @@ public class TableViewCollection {
 
     public ObservableList<String> getCategories() {
         return categories;
+    }
+
+    public ObservableList<String> getSubcategories() {
+        return subcategories;
     }
 
     public void setReloadComponents(boolean reloadComponents1) {

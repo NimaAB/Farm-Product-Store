@@ -16,15 +16,17 @@ public class Product implements Serializable {
     private transient SimpleIntegerProperty productID;
     private transient SimpleStringProperty productName;
     private transient SimpleStringProperty category;
+    private transient SimpleStringProperty subcategory;
     private transient SimpleStringProperty specification;
     private transient SimpleDoubleProperty price;
 
     private static int id = 0;
-    public Product (String productName,String category, String specs, double price){
+    public Product (String productName, String category, String subCategory, String specs, double price){
         this.productID = new SimpleIntegerProperty(id + 1);
         id = this.productID.getValue();
         this.productName = new SimpleStringProperty(productName);
         this.category = new SimpleStringProperty(category);
+        this.subcategory = new SimpleStringProperty(subCategory);
         this.specification = new SimpleStringProperty(specs);
         this.price = new SimpleDoubleProperty(price);
     }
@@ -58,6 +60,14 @@ public class Product implements Serializable {
         this.category = new SimpleStringProperty(category);
     }
 
+    public String getSubCategory() {
+        return this.subcategory.getValue();
+    }
+    public void setSubCategory(String subCategory){
+        //validation call
+        this.subcategory = new SimpleStringProperty(subCategory);
+    }
+
     public String getSpecification() {
         return this.specification.getValue();
     }
@@ -79,15 +89,16 @@ public class Product implements Serializable {
                 "\t\"productID\" :" + "\"" + getProductID() + "\"," + "\n" +
                 "\t\"productName\" :" + "\"" + getProductName() + "\"," + "\n" +
                 "\t\"category\" :" + "\"" + getCategory() + "\"," + "\n" +
+                "\t\"subcategory\" :" + "\"" + getSubCategory() + "\"," + "\n" +
                 "\t\"specification\" :" + "\"" + getSpecification() + "\"," + "\n" +
                 "\t\"price\" :" + "\"" + getPrice() + "\"" + "\n" +
                 "}";
     }
 
     public String csvFormat(char delimiter){
-        String format = "%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s";
+        String format = "%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s";
         return String.format(format, getProductID(), getProductName(),
-                getCategory(), getSpecification(), getPrice());
+                getCategory(), getSubCategory(), getSpecification(), getPrice());
     }
 
     private void writeObject(ObjectOutputStream ost) throws IOException {
@@ -95,6 +106,7 @@ public class Product implements Serializable {
         ost.writeInt(getProductID());
         ost.writeUTF(getProductName());
         ost.writeUTF(getCategory());
+        ost.writeUTF(getSubCategory());
         ost.writeUTF(getSpecification());
         ost.writeDouble(getPrice());
     }
@@ -103,15 +115,15 @@ public class Product implements Serializable {
         int productID = ist.readInt();
         String name = ist.readUTF();
         String category = ist.readUTF();
+        String subcategory = ist.readUTF();
         String specs = ist.readUTF();
         double price = ist.readDouble();
 
         setProductID(productID);
         setProductName(name);
         setCategory(category);
+        setSubCategory(subcategory);
         setSpecification(specs);
         setPrice(price);
-
     }
-
 }

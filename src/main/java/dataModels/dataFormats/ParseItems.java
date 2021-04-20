@@ -12,20 +12,22 @@ import validations.ioExceptions.InvalidTypeException;
 public class ParseItems {
     public static Product parseItem(String str) throws InvalidTypeException {
         String[] inputArray = str.split(""+ItemsFormat.DELIMITER);
-        if(inputArray.length != 5){
+        if(inputArray.length != 6){
             throw new InvalidTypeException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
                     "attributter enn det programmet forventer");
         }
         int id = Integer.parseInt(inputArray[0]);
         String name = inputArray[1];
         String category = inputArray[2];
-        String specs = inputArray[3];
-        double price = Double.parseDouble(inputArray[4]);
+        String subcategory = inputArray[3];
+        String specs = inputArray[4];
+        double price = Double.parseDouble(inputArray[5]);
 
         Product object = new Product();
         object.setProductID(id);
         object.setProductName(name);
         object.setCategory(category);
+        object.setSubCategory(subcategory);
         object.setSpecification(specs);
         object.setPrice(price);
 

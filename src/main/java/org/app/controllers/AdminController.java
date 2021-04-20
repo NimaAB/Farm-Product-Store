@@ -27,9 +27,11 @@ public class AdminController implements Initializable {
     @FXML private TextField name, price, txtFilter;
     @FXML private TextArea specifications;
     @FXML private ComboBox<String> categoriesCombobox;
+    @FXML private ComboBox<String> subcategoryCombobox;
     @FXML private ComboBox<String> filterComboBox;
     @FXML private TableView<Product> tableview;
     @FXML private TableColumn<Product,String> categoryCol;
+    @FXML private TableColumn<Product,String> subcategoryCol;
     @FXML private TableColumn<Product,Double> priceCol;
     @FXML private TableColumn<Product,Integer> idCol;
 
@@ -56,13 +58,14 @@ public class AdminController implements Initializable {
         collection.setTableView(tableview);
         collection.fillFilterComboBox(filterComboBox);
         collection.filterTableView(tableview,txtFilter);
-        collection.fillCategoryComboBox(categoriesCombobox);
+        collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
         //System.out.println(collection.isModified());
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
 
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getSubcategories()));
         idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
     }
@@ -73,12 +76,14 @@ public class AdminController implements Initializable {
 
             String name = this.name.getText();
             String category = categoriesCombobox.getValue();
+            String subcategory = subcategoryCombobox.getValue();
             String specs = specifications.getText();
             double price = stringToDouble.fromString(this.price.getText());
 
             product.setProductID();
             product.setProductName(name);
             product.setCategory(category);
+            product.setSubCategory(subcategory);
             product.setSpecification(specs);
             product.setPrice(price);
 
@@ -99,8 +104,9 @@ public class AdminController implements Initializable {
         price.setText("");
 
         // legger nye kategorier på dropdown om det finnes
-        collection.fillCategoryComboBox(categoriesCombobox);
+        collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getSubcategories()));
     }
 
     @FXML
@@ -185,6 +191,18 @@ public class AdminController implements Initializable {
     @FXML void editCategory(TableColumn.CellEditEvent<Product, String> event){
         try {
             event.getRowValue().setCategory(event.getNewValue());
+            collection.setModified(true);
+            tableview.refresh();
+        } catch (IllegalArgumentException e) {
+            Alerts.warning(e.getMessage());
+            tableview.refresh();
+        }
+    }
+
+    @FXML void editSubCategory(TableColumn.CellEditEvent<Product, String> event){
+        try {
+            event.getRowValue().setSubCategory(event.getNewValue());
+            collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
             collection.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
