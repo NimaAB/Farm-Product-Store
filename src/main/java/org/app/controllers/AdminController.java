@@ -75,14 +75,14 @@ public class AdminController implements Initializable {
         try {
             Product product = new Product();
 
-            String name = this.name.getText();
+            String product_name = name.getText();
             String category = categoriesCombobox.getValue();
             String subcategory = subcategoryCombobox.getValue();
             String specs = specifications.getText();
             double price = stringToDouble.fromString(this.price.getText());
 
             product.setProductID();
-            product.setProductName(name);
+            product.setProductName(product_name);
             product.setCategory(category);
             product.setSubCategory(subcategory);
             product.setSpecification(specs);

@@ -14,6 +14,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
 import validations.Alerts;
 import validations.ioExceptions.InvalidTypeException;
+
 import java.util.ArrayList;
 
 /**
@@ -117,11 +118,6 @@ public class TableViewCollection {
         String[] definedCategories = {"Korn", "Traktør", "Jødsel", "Arbeidsklær"};
         ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
 
-        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
-        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
-        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
-        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
-
         for (Product p : PRODUCTS) {
             String category = p.getCategory().substring(0, 1).toUpperCase() + p.getCategory().substring(1);
             if (!categories.contains(category)) {
@@ -129,29 +125,9 @@ public class TableViewCollection {
             }
         }
 
-        categoryOptions.valueProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldValue, String newValue) {
-                switch (newValue) {
-                    case "Korn":
-                        subcategories.clear();
-                        subcategories.addAll(kornTyper);
-                        break;
-                    case "Arbeidsklær":
-                        subcategories.clear();
-                        subcategories.addAll(klærTyper);
-                        break;
-                    case "Jødsel":
-                        subcategories.clear();
-                        subcategories.addAll(jødselTyper);
-                        break;
-                    case "Traktør":
-                        subcategories.clear();
-                        subcategories.addAll(traktørTyper);
-                        break;
-                }
-                subcategoryOptions.setItems(subcategories);
-            }
+        categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> {
+            subcategoryChooser(newValue);
+            subcategoryOptions.setItems(subcategories);
         });
 
         subcategoryOptions.setPromptText("Velg Subkategori");
@@ -164,43 +140,47 @@ public class TableViewCollection {
      * Fyller opp subkategori combobox i tableview basert på elementenes hovedkategori
      */
 
-    public void fillSubCategoryCombobox(TableView<Product> tableView){
-
-        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
-        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
-        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
-        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
+    public void fillSubCategoryCombobox(TableView<Product> tableView) {
 
         tableView.setRowFactory(tv -> {
             TableRow<Product> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
-                if(event.getClickCount() == 1) {
-                    if(row.getItem() != null) {
+                if (event.getClickCount() == 1) {
+                    if (row.getItem() != null) {
                         Product product = row.getItem();
-                        switch (product.getCategory()) {
-                            case "Korn":
-                                subcategories.clear();
-                                subcategories.addAll(kornTyper);
-                                break;
-                            case "Arbeidsklær":
-                                subcategories.clear();
-                                subcategories.addAll(klærTyper);
-                                break;
-                            case "Jødsel":
-                                subcategories.clear();
-                                subcategories.addAll(jødselTyper);
-                                break;
-                            case "Traktør":
-                                subcategories.clear();
-                                subcategories.addAll(traktørTyper);
-                                break;
-                        }
+                        subcategoryChooser(product.getCategory());
                     }
                 }
             });
             return row;
         });
     }
+    // Hjelper metode for ComboBox verdiene:
+    private void subcategoryChooser(String category){
+        String[] kornTyper = {"Korn Type 1", "Korn Type 2"};
+        String[] klærTyper = {"Klær Type 1", "Klær Type 2"};
+        String[] jødselTyper = {"Jødsel Type 1", "Jødsel Type 2"};
+        String[] traktørTyper = {"Traktor Type 1", "Traktor Type 2"};
+        switch (category) {
+            case "Korn":
+                subcategories.clear();
+                subcategories.addAll(kornTyper);
+                break;
+            case "Arbeidsklær":
+                subcategories.clear();
+                subcategories.addAll(klærTyper);
+                break;
+            case "Jødsel":
+                subcategories.clear();
+                subcategories.addAll(jødselTyper);
+                break;
+            case "Traktør":
+                subcategories.clear();
+                subcategories.addAll(traktørTyper);
+                break;
+        }
+    }
+
 
     /**
      * Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv.
