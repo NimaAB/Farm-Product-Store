@@ -1,12 +1,13 @@
 # Farm-Product-Store
 
 ## Todos:
-- [ ] (class Korn & class maskin & class jødsel & class klar) extends class produkt. 
+- [x] class produkt. 
 - [ ] changing to relevant validation methods.
-- [ ] changing io.
-- [ ] renaming methods and classes to relevant names.
-- [ ] update searching/filter methods.
+- [x] changing io.
+- [x] renaming methods and classes to relevant names.
+- [x] update searching/filter methods.
 - [ ] adding improvment and simplicity to the code.
+- [ ] gui changes
 
 
 
