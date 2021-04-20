@@ -13,17 +13,17 @@ public class PathDialogBox {
     private TextInputDialog pathDialog = new TextInputDialog();
 
     public String getPathToSave(){
-        pathDialog.setTitle("Save");
-        pathDialog.setHeaderText("Where do you want to save your file?");
-        pathDialog.setContentText("path: ");
+        pathDialog.setTitle("Lagre");
+        pathDialog.setHeaderText("Gi filen din et navn med .csv eller .bin:");
+        pathDialog.setContentText("Filnavn: ");
         Optional<String> path = pathDialog.showAndWait();
         return path.orElse(null);
     }
 
     public String getPathToOpen(){
-        pathDialog.setTitle("Open");
-        pathDialog.setHeaderText("What is the path of the file, you want open?");
-        pathDialog.setContentText("path: ");
+        pathDialog.setTitle("Åpne");
+        pathDialog.setHeaderText("Hva heter filen du vil åpne?");
+        pathDialog.setContentText("Filnavn: ");
         Optional<String> path = pathDialog.showAndWait();
         return path.orElse(null);
     }

@@ -40,6 +40,7 @@ public class IOClient<T> {
 
     private void saveDone(WorkerStateEvent e) {
         saveThread.call();
+        Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -48,6 +49,7 @@ public class IOClient<T> {
     }
 
     public void runOpenThread() {
+
         openThread.setOnSucceeded(this::openDone);
         openThread.setOnFailed(this::openFailed);
         Thread th = new Thread(openThread);
@@ -55,9 +57,9 @@ public class IOClient<T> {
         th.start();
     }
 
-    private void openDone(WorkerStateEvent e) {
-        TableViewCollection collection = TableViewCollection.getINSTANCE();
+    private void openDone(WorkerStateEvent e){
         try {
+            TableViewCollection collection = TableViewCollection.getINSTANCE();
             ArrayList<Product> list = (ArrayList<Product>) openThread.call();
             collection.getComponents().clear();
             collection.setComponents(list);
