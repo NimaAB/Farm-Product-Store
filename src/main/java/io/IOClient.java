@@ -7,6 +7,7 @@ import io.fileThreads.SaveThread;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Label;
 import validations.Alerts;
+import validations.ioExceptions.InvalidTypeException;
 
 
 import java.util.ArrayList;
@@ -56,10 +57,13 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         TableViewCollection collection = TableViewCollection.getINSTANCE();
-        ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-        collection.getComponents().clear();
-        collection.setComponents(list);
-
+        try {
+            ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+            collection.getComponents().clear();
+            collection.setComponents(list);
+        }catch (InvalidTypeException exception){
+            Alerts.warning(exception.getMessage());
+        }
     }
 
     private void openFailed(WorkerStateEvent event) {

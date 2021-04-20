@@ -7,6 +7,7 @@ import io.open.OpenCsvBehavior;
 import javafx.concurrent.Task;
 
 import validations.ioExceptions.InvalidExtensionException;
+import validations.ioExceptions.InvalidTypeException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
     }
 
     @Override
-    public ArrayList<T> call() {
+    public ArrayList<T> call() throws InvalidTypeException {
         try { Thread.sleep(2000); }
         catch (InterruptedException ignored){}
         return openBehaviorFactory().read(new File(file.getPath()));
