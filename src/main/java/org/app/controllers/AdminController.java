@@ -16,24 +16,38 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
+import validations.customExceptions.InvalidArgument;
+import validations.customExceptions.InvalidTextInputException;
 import validations.ioExceptions.*;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class AdminController implements Initializable {
 
-    @FXML private BorderPane adminPane;
-    @FXML private TextField name, price, txtFilter;
-    @FXML private TextArea specifications;
-    @FXML private ComboBox<String> categoriesCombobox;
-    @FXML private ComboBox<String> subcategoryCombobox;
-    @FXML private ComboBox<String> filterComboBox;
-    @FXML private TableView<Product> tableview;
-    @FXML private TableColumn<Product,String> categoryCol;
-    @FXML private TableColumn<Product,String> subcategoryCol;
-    @FXML private TableColumn<Product,Double> priceCol;
-    @FXML private TableColumn<Product,Integer> idCol;
+    @FXML
+    private BorderPane adminPane;
+    @FXML
+    private TextField name, price, txtFilter;
+    @FXML
+    private TextArea specifications;
+    @FXML
+    private ComboBox<String> categoriesCombobox;
+    @FXML
+    private ComboBox<String> subcategoryCombobox;
+    @FXML
+    private ComboBox<String> filterComboBox;
+    @FXML
+    private TableView<Product> tableview;
+    @FXML
+    private TableColumn<Product, String> categoryCol;
+    @FXML
+    private TableColumn<Product, String> subcategoryCol;
+    @FXML
+    private TableColumn<Product, Double> priceCol;
+    @FXML
+    private TableColumn<Product, Integer> idCol;
 
     private TableSelectionModel<Product> tableSelectionModel;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
@@ -46,7 +60,8 @@ public class AdminController implements Initializable {
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
     }
-    private String getOpenedFile(){
+
+    private String getOpenedFile() {
         return openedFile;
     }
 
@@ -57,7 +72,7 @@ public class AdminController implements Initializable {
         collection.loadComponents(file);
         collection.setTableView(tableview);
         collection.fillFilterComboBox(filterComboBox);
-        collection.filterTableView(tableview,txtFilter);
+        collection.filterTableView(tableview, txtFilter);
         collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
         collection.fillSubCategoryCombobox(tableview);
 
@@ -72,33 +87,40 @@ public class AdminController implements Initializable {
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
     }
 
-    @FXML void createComponents(){
+    @FXML
+    void createComponents() {
+
+        Product product = new Product();
+
+
         try {
-            Product product = new Product();
+            product.setProductID();
 
             String product_name = name.getText();
-            String category = categoriesCombobox.getValue();
-            String subcategory = subcategoryCombobox.getValue();
-            String specs = specifications.getText();
-            double price = stringToDouble.fromString(this.price.getText());
-
-            product.setProductID();
             product.setProductName(product_name);
+
+            String category = categoriesCombobox.getValue();
             product.setCategory(category);
+
+            String subcategory = subcategoryCombobox.getValue();
             product.setSubCategory(subcategory);
+
+            String specs = specifications.getText();
             product.setSpecification(specs);
+
+            double price = stringToDouble.fromString(this.price.getText());
             product.setPrice(price);
 
             collection.addComponent(product);
             reset();
 
             Alerts.success("Komponent Opprettet");
-        } catch (IllegalArgumentException e) {
+        } catch (InvalidTextInputException | InvalidArgument | NullPointerException e) {
             Alerts.warning(e.getMessage());
         }
     }
 
-    private void reset(){
+    private void reset() {
         // Resetter feltene
         //nr.setText("");
         name.setText("");
@@ -107,12 +129,12 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    void open(){
-        boolean doOpen= Alerts.confirm("Vil du erstatte dataen du har" +
-                        " i tabellen med dataen som ligger i filen som du skal laste opp?");
-        if(doOpen){
+    void open() {
+        boolean doOpen = Alerts.confirm("Vil du erstatte dataen du har" +
+                " i tabellen med dataen som ligger i filen som du skal laste opp?");
+        if (doOpen) {
             String path = "DataFraApp/" + pathDialogBox.getPathToOpen();
-            try{
+            try {
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
                 pathDialogBox.fileNotFound(path);
@@ -121,49 +143,50 @@ public class AdminController implements Initializable {
                 io.runOpenThread();
                 setOpenedFile(path);
                 collection.setLoadedFile(path);
-            }catch (FileDontExistsException| NullPointerException | InvalidExtensionException e){
+            } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
                 return;
             }
-        }else{
+        } else {
             Alerts.success("Your data isn't changed.");
         }
     }
 
-    private String getPath(){
-        if(getOpenedFile()==null){
+    private String getPath() {
+        if (getOpenedFile() == null) {
             return pathDialogBox.getPathToSave();
         }
 
         boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
-        if(newFile){
+        if (newFile) {
             return pathDialogBox.getPathToSave();
-        }else{
+        } else {
             return getOpenedFile();
         }
     }
 
-    @FXML void save(){
+    @FXML
+    void save() {
         ArrayList<Product> components = new ArrayList<>(collection.getComponents());
-        if(!components.isEmpty()){
-            String path = "DataFraApp/" +  getPath();
-            try{
+        if (!components.isEmpty()) {
+            String path = "DataFraApp/" + getPath();
+            try {
                 pathDialogBox.nullPathHandling(path);
                 pathDialogBox.extensionCheck(path);
-            }catch (NullPointerException | InvalidExtensionException e){
+            } catch (NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
                 return;
             }
             FileInfo file = new FileInfo(path);
             IOClient<Product> io = new IOClient<>(file, components);
             io.runSaveThread();
-        }
-        else{
+        } else {
             Alerts.warning("There is nothing to save!");
         }
     }
 
-    @FXML void editName(TableColumn.CellEditEvent<Product, String> event){
+    @FXML
+    void editName(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setProductName(event.getNewValue());
             collection.setModified(true);
@@ -174,7 +197,8 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void editSpecs(TableColumn.CellEditEvent<Product, String> event){
+    @FXML
+    void editSpecs(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setSpecification(event.getNewValue());
             collection.setModified(true);
@@ -185,7 +209,8 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void editCategory(TableColumn.CellEditEvent<Product, String> event){
+    @FXML
+    void editCategory(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setCategory(event.getNewValue());
             event.getRowValue().setSubCategory("");
@@ -198,7 +223,8 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void editSubCategory(TableColumn.CellEditEvent<Product, String> event){
+    @FXML
+    void editSubCategory(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setSubCategory(event.getNewValue());
             collection.setModified(true);
@@ -209,7 +235,8 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void editPrice(TableColumn.CellEditEvent<Product, Double> event){
+    @FXML
+    void editPrice(TableColumn.CellEditEvent<Product, Double> event) {
         try {
             event.getRowValue().setPrice(event.getNewValue());
             collection.setModified(true);
@@ -222,21 +249,23 @@ public class AdminController implements Initializable {
         }
     }
 
-    @FXML void delete(){
+    @FXML
+    void delete() {
         ObservableList<Product> selectedRows = tableSelectionModel.getSelectedItems();
         boolean doRemove = Alerts.confirm("Er du sikker på at du vil slette varen/varene du har valgt?");
-        if(doRemove) {
+        if (doRemove) {
             collection.deleteSelectedComponents(selectedRows);
             tableview.refresh();
-        }else{
+        } else {
             tableSelectionModel.clearSelection();
         }
     }
 
-    @FXML void logOut(){
-        if(collection.isModified()){
+    @FXML
+    void logOut() {
+        if (collection.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
-            if(response){
+            if (response) {
                 collection.saveData();
             } else {
                 Alerts.success("Endringer er ikke lagret");
@@ -245,10 +274,10 @@ public class AdminController implements Initializable {
                 collection.setModified(false);
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml","Login",stage);
+            Load.window("loginView.fxml", "Login", stage);
         } else {
             Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml","Login",stage);
+            Load.window("loginView.fxml", "Login", stage);
         }
     }
 }

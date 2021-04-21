@@ -2,6 +2,7 @@ package dataModels.dataFormats;
 
 
 import dataModels.models.Product;
+import validations.customExceptions.InvalidArgument;
 import validations.ioExceptions.InvalidTypeException;
 
 /**
@@ -16,21 +17,26 @@ public class ParseItems {
             throw new InvalidTypeException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
                     "attributter enn det programmet forventer");
         }
-        int id = Integer.parseInt(inputArray[0]);
-        String name = inputArray[1];
-        String category = inputArray[2];
-        String subcategory = inputArray[3];
-        String specs = inputArray[4];
-        double price = Double.parseDouble(inputArray[5]);
+
 
         Product object = new Product();
-        object.setProductID(id);
-        object.setProductName(name);
-        object.setCategory(category);
-        object.setSubCategory(subcategory);
-        object.setSpecification(specs);
-        object.setPrice(price);
-
+        try{
+            int id = Integer.parseInt(inputArray[0]);
+            String name = inputArray[1];
+            String category = inputArray[2];
+            String subcategory = inputArray[3];
+            String specs = inputArray[4];
+            double price = Double.parseDouble(inputArray[5]);
+            object.setProductID(id);
+            object.setProductName(name);
+            object.setCategory(category);
+            object.setSubCategory(subcategory);
+            object.setSpecification(specs);
+            object.setPrice(price);
+        }catch (NumberFormatException | InvalidArgument e ){
+            e.printStackTrace();
+        }
+        
         return object;
     }
 }

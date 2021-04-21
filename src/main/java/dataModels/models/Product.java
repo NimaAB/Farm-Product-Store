@@ -4,6 +4,10 @@ package dataModels.models;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
+import validations.Alerts;
+import validations.customExceptions.InvalidArgument;
+import validations.customExceptions.InvalidNumberException;
+import validations.customExceptions.InvalidTextInputException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,7 +25,8 @@ public class Product implements Serializable {
     private transient SimpleDoubleProperty price;
 
     private static int id = 0;
-    public Product (String productName, String category, String subCategory, String specs, double price){
+
+    public Product(String productName, String category, String subCategory, String specs, double price) {
         this.productID = new SimpleIntegerProperty(id + 1);
         id = this.productID.getValue();
         this.productName = new SimpleStringProperty(productName);
@@ -31,16 +36,19 @@ public class Product implements Serializable {
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public Product (){ }
+    public Product() {
+    }
 
-    public int getProductID(){
+    public int getProductID() {
         return this.productID.getValue();
     }
-    public void setProductID(){
+
+    public void setProductID() {
         this.productID = new SimpleIntegerProperty(id + 1);
         id = this.productID.getValue();
     }
-    public void setProductID(int id){
+
+    public void setProductID(int id) {
         this.productID = new SimpleIntegerProperty(id);
         Product.id = id;
     }
@@ -48,23 +56,31 @@ public class Product implements Serializable {
     public String getProductName() {
         return this.productName.getValue();
     }
-    public void setProductName(String name){
-        //validation call
+
+    public void setProductName(String name) throws InvalidTextInputException {
+        if (name.isEmpty() || name.isBlank()) {
+            throw new InvalidTextInputException("Feil navn format" + name);
+        }
         this.productName = new SimpleStringProperty(name);
     }
 
     public String getCategory() {
         return this.category.getValue();
     }
-    public void setCategory(String category){
-        //validation call
+
+    public void setCategory(String category) throws InvalidTextInputException {
+        if (category.isEmpty() || category.isBlank()) {
+            throw new InvalidTextInputException("Ingen category valgt");
+
+        }
         this.category = new SimpleStringProperty(category);
     }
 
     public String getSubCategory() {
         return this.subcategory.getValue();
     }
-    public void setSubCategory(String subCategory){
+
+    public void setSubCategory(String subCategory) {
         //validation call
         this.subcategory = new SimpleStringProperty(subCategory);
     }
@@ -72,7 +88,8 @@ public class Product implements Serializable {
     public String getSpecification() {
         return this.specification.getValue();
     }
-    public void setSpecification(String specs){
+
+    public void setSpecification(String specs) {
         //validation call
         this.specification = new SimpleStringProperty(specs);
     }
@@ -80,12 +97,16 @@ public class Product implements Serializable {
     public double getPrice() {
         return this.price.getValue();
     }
-    public void setPrice(double price){
+
+    public void setPrice(double price) throws  InvalidArgument{
         //validation call
+        if (price <= 0){
+            throw new InvalidArgument("Ugyldig pris!");
+        }
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public String toString(){
+    public String toString() {
         return "{" + "\n" +
                 "\t\"productID\" :" + "\"" + getProductID() + "\"," + "\n" +
                 "\t\"productName\" :" + "\"" + getProductName() + "\"," + "\n" +
@@ -96,8 +117,8 @@ public class Product implements Serializable {
                 "}";
     }
 
-    public String csvFormat(char delimiter){
-        String format = "%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s"+delimiter+"%s";
+    public String csvFormat(char delimiter) {
+        String format = "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s";
         return String.format(format, getProductID(), getProductName(),
                 getCategory(), getSubCategory(), getSpecification(), getPrice());
     }
@@ -112,19 +133,23 @@ public class Product implements Serializable {
         ost.writeDouble(getPrice());
     }
 
-    private void readObject(ObjectInputStream ist) throws IOException,ClassNotFoundException{
-        int productID = ist.readInt();
-        String name = ist.readUTF();
-        String category = ist.readUTF();
-        String subcategory = ist.readUTF();
-        String specs = ist.readUTF();
-        double price = ist.readDouble();
+    private void readObject(ObjectInputStream ist) throws IOException, ClassNotFoundException {
+        try {
+            int productID = ist.readInt();
+            String name = ist.readUTF();
+            String category = ist.readUTF();
+            String subcategory = ist.readUTF();
+            String specs = ist.readUTF();
+            double price = ist.readDouble();
 
-        setProductID(productID);
-        setProductName(name);
-        setCategory(category);
-        setSubCategory(subcategory);
-        setSpecification(specs);
-        setPrice(price);
+            setProductID(productID);
+            setProductName(name);
+            setCategory(category);
+            setSubCategory(subcategory);
+            setSpecification(specs);
+            setPrice(price);
+        } catch (InvalidTextInputException | InvalidArgument e) {
+            e.printStackTrace();
+        }
     }
 }
