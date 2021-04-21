@@ -31,7 +31,12 @@ public class SaveThread<T> extends Task<Void> {
 
     @Override
     public Void call(){
-        try { Thread.sleep(2000); }
+        try {
+            for(int i = 0; i < 100; i++){
+                Thread.sleep(20);
+                updateProgress(i, 100);
+            }
+        }
         catch (InterruptedException ignored){}
         saveBehaviorFactory().write(this.file.getPath(), this.listToWrite);
         return null;

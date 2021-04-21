@@ -33,8 +33,12 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
 
     @Override
     public ArrayList<T> call() throws InvalidTypeException {
-        try { Thread.sleep(2000); }
-        catch (InterruptedException ignored){}
+        try {
+            for(int i = 0; i < 100; i++){
+                Thread.sleep(20);
+                updateProgress(i, 100);
+            }
+        } catch (InterruptedException ignored){}
         return openBehaviorFactory().read(new File(file.getPath()));
     }
 }
