@@ -44,8 +44,8 @@ public class IOClient<T> {
 
     private void saveDone(WorkerStateEvent e) {
         saveThread.call();
-        Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
         loadingAlert.close();
+        Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
     }
 
     private void saveFailed(WorkerStateEvent event) {

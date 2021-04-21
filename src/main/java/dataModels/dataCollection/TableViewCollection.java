@@ -2,19 +2,14 @@ package dataModels.dataCollection;
 
 import dataModels.models.Product;
 import io.FileInfo;
-import io.fileThreads.OpenThread;
-import io.fileThreads.SaveThread;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import io.IOClient;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.scene.control.*;
-import validations.Alerts;
-import validations.ioExceptions.InvalidTypeException;
-
 import java.util.ArrayList;
 
 /**
@@ -55,16 +50,11 @@ public class TableViewCollection {
      * Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>
      */
     public void loadComponents(String filePath) {
-        try {
-            OpenThread<Product> openTh = new OpenThread<>(new FileInfo(filePath));
-            ArrayList<Product> componentList = openTh.call();
-            loadedFile = filePath;
-            if (reloadComponents) {
-                setComponents(componentList);
-                reloadComponents = false;
-            }
-        } catch (InvalidTypeException e) {
-            Alerts.warning(e.getMessage());
+        IOClient<Product> open = new IOClient<>(new FileInfo(filePath));
+        loadedFile = filePath;
+        if (reloadComponents) {
+            open.runOpenThread();
+            reloadComponents = false;
         }
         modified = false;
     }
@@ -75,10 +65,7 @@ public class TableViewCollection {
     public void deleteSelectedComponents(ObservableList<Product> selectedProducts) {
         if (selectedProducts.size() >= 1) {
             PRODUCTS.removeAll(selectedProducts);
-        } else {
-            return;
         }
-        //throw new UnsupportedOperationException("Not yet implemented");
     }
 
     /**
@@ -99,8 +86,10 @@ public class TableViewCollection {
      */
     public void saveData() {
         ArrayList<Product> data = new ArrayList<>(getComponents());
-        SaveThread<Product> saveTh = new SaveThread<>(new FileInfo(loadedFile), data);
-        saveTh.call();
+        IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
+        save.runSaveThread();
+        /*SaveThread<Product> saveTh = new SaveThread<>(new FileInfo(loadedFile), data);
+        saveTh.call();*/
         modified = false;
     }
 

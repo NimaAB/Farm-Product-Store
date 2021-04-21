@@ -29,9 +29,9 @@ public class Load {
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if(response){
                 collection.saveData();
-                Alerts.success("Alle endringer er lagret");
             } else {
-                Alerts.success("Endringer er ikke lagret"); }
+                Alerts.success("Endringer er ikke lagret");
+            }
         }
         stage.close();
     }

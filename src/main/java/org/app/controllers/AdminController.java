@@ -238,7 +238,6 @@ public class AdminController implements Initializable {
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if(response){
                 collection.saveData();
-                Alerts.success("Alle endringer er lagret");
             } else {
                 Alerts.success("Endringer er ikke lagret");
                 collection.setReloadComponents(true);
