@@ -4,10 +4,10 @@ package dataModels.models;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import validations.Alerts;
 import validations.customExceptions.InvalidArgument;
 import validations.customExceptions.InvalidNumberException;
 import validations.customExceptions.InvalidTextInputException;
+import validations.customExceptions.NullObject;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -58,8 +58,9 @@ public class Product implements Serializable {
     }
 
     public void setProductName(String name) throws InvalidTextInputException {
-        if (name.isEmpty() || name.isBlank()) {
-            throw new InvalidTextInputException("Feil navn format" + name);
+
+        if (name.isEmpty() || name.isBlank() || Character.isDigit(name.charAt(0)) ) {
+            throw new InvalidTextInputException("Feil: Produkt navn er tom eller starter med et nummer");
         }
         this.productName = new SimpleStringProperty(name);
     }
@@ -68,9 +69,9 @@ public class Product implements Serializable {
         return this.category.getValue();
     }
 
-    public void setCategory(String category) throws InvalidTextInputException {
+    public void setCategory(String category) throws InvalidArgument  {
         if (category.isEmpty() || category.isBlank()) {
-            throw new InvalidTextInputException("Ingen category valgt");
+            throw new InvalidArgument("Feil: Velg kategori");
 
         }
         this.category = new SimpleStringProperty(category);
@@ -80,8 +81,12 @@ public class Product implements Serializable {
         return this.subcategory.getValue();
     }
 
-    public void setSubCategory(String subCategory) {
+    public void setSubCategory(String subCategory) throws InvalidTextInputException  {
         //validation call
+        if (subCategory.isEmpty() || subCategory.isBlank()) {
+            throw new InvalidTextInputException("Feil: Velg under kategori!");
+
+        }
         this.subcategory = new SimpleStringProperty(subCategory);
     }
 
@@ -89,8 +94,10 @@ public class Product implements Serializable {
         return this.specification.getValue();
     }
 
-    public void setSpecification(String specs) {
+    public void setSpecification(String specs) throws InvalidTextInputException  {
         //validation call
+        if(specs.isEmpty() || specs.isBlank()) throw new InvalidTextInputException("Feil: Produkt beskrivelse mangler");
+
         this.specification = new SimpleStringProperty(specs);
     }
 
@@ -98,10 +105,11 @@ public class Product implements Serializable {
         return this.price.getValue();
     }
 
-    public void setPrice(double price) throws  InvalidArgument{
+    public void setPrice(Double price) throws InvalidArgument{
         //validation call
         if (price <= 0){
-            throw new InvalidArgument("Ugyldig pris!");
+            throw new InvalidNumberException("Ugyldig pris!");
+
         }
         this.price = new SimpleDoubleProperty(price);
     }

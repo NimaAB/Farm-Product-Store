@@ -4,6 +4,8 @@ package org.app.controllers;
 import dataModels.models.Product;
 import io.FileInfo;
 import io.IOClient;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import org.app.Load;
 import org.app.PathDialogBox;
@@ -18,6 +20,7 @@ import validations.Alerts;
 import validations.NumberConversion;
 import validations.customExceptions.InvalidArgument;
 import validations.customExceptions.InvalidTextInputException;
+import validations.customExceptions.NullObject;
 import validations.ioExceptions.*;
 
 import java.net.URL;
@@ -85,6 +88,16 @@ public class AdminController implements Initializable {
         subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getSubcategories()));
         idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
+
+        price.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,
+                                String newValue) {
+                if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                    price.setText(newValue.replaceAll("[^\\d*(\\.\\d*)?]", ""));
+                }
+            }
+        });
     }
 
     @FXML
@@ -115,9 +128,14 @@ public class AdminController implements Initializable {
             reset();
 
             Alerts.success("Komponent Opprettet");
-        } catch (InvalidTextInputException | InvalidArgument | NullPointerException e) {
+        } catch (InvalidTextInputException | InvalidArgument e) {
+
             Alerts.warning(e.getMessage());
+        }catch (NullPointerException e){
+
+            Alerts.warning("En eller flere av feltene er tom");
         }
+
     }
 
     private void reset() {
