@@ -20,9 +20,7 @@ import validations.Alerts;
 import validations.NumberConversion;
 import validations.customExceptions.InvalidArgument;
 import validations.customExceptions.InvalidTextInputException;
-import validations.customExceptions.NullObject;
 import validations.ioExceptions.*;
-
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;

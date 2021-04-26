@@ -7,8 +7,6 @@ import javafx.beans.property.SimpleStringProperty;
 import validations.customExceptions.InvalidArgument;
 import validations.customExceptions.InvalidNumberException;
 import validations.customExceptions.InvalidTextInputException;
-import validations.customExceptions.NullObject;
-
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
