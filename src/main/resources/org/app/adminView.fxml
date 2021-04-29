@@ -168,12 +168,12 @@
                   </HBox>
                   <TableView fx:id="tableview" editable="true" minWidth="-Infinity" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="135.0" resizable="false" text="KomponentNr">
+                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="135.0" text="KomponentNr">
                            <cellValueFactory>
                               <PropertyValueFactory property="productID" />
                            </cellValueFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#editName" prefWidth="148.0" text="Produkt Navn">
+                        <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#editName" prefWidth="164.0" text="Produkt Navn">
                            <cellValueFactory>
                               <PropertyValueFactory property="productName" />
                            </cellValueFactory>
@@ -197,7 +197,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="-1.0" onEditCommit="#editSpecs" prefWidth="229.33331298828125" text="Spesifikasjoner">
+                        <TableColumn maxWidth="300.0" minWidth="-1.0" onEditCommit="#editSpecs" prefWidth="194.2777099609375" text="Spesifikasjoner">
                            <cellValueFactory>
                               <PropertyValueFactory property="specification" />
                            </cellValueFactory>
@@ -205,7 +205,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="priceCol" maxWidth="150.0" minWidth="-Infinity" onEditCommit="#editPrice" prefWidth="97.9998779296875" resizable="false" text="Pris">
+                        <TableColumn fx:id="priceCol" maxWidth="150.0" minWidth="-Infinity" onEditCommit="#editPrice" prefWidth="140.7222900390625" text="Pris">
                            <cellValueFactory>
                               <PropertyValueFactory property="price" />
                            </cellValueFactory>
