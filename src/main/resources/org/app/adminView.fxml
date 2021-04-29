@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="adminPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
+<BorderPane fx:id="adminPane" maxWidth="-Infinity" minWidth="-Infinity" minHeight="600.0" maxHeight="700.0" prefHeight="700.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
    <top>
       <MenuBar style="-fx-background-color: #f58bc24;" BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
