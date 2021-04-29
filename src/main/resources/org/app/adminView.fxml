@@ -23,7 +23,7 @@
 
 <BorderPane fx:id="adminPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
    <top>
-      <MenuBar style="-fx-background-color: #f58bc24;" BorderPane.alignment="CENTER">
+      <MenuBar  BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
             <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
@@ -141,7 +141,7 @@
                         <Insets left="20.0" top="30.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: #14;" text="Slett" textFill="#d12300">
+                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0"  text="Slett" textFill="#d12300">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
