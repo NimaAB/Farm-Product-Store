@@ -1,0 +1,31 @@
+.root {
+    -fx-background-image: url("./images/cornField.jpg");
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: 100% 100%;
+}
+
+.text-field {
+    -fx-border-width: 2px;
+    -fx-prompt-text-fill: gray;
+    -fx-text-fill: black;
+    -fx-background-radius: 6px;
+    -fx-font-size: 16.0 pt;
+}
+.text-area {
+    -fx-background-insets: 0;
+}
+
+.text-field:focused, .text-area:focused{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:rgba(0,0,0,0);
+}
+
+Button {
+    -fx-background-color: #276968;
+    -fx-text-fill: white;
+}
+
+Button:hover {
+    -fx-background-color: #1a4645;
+    -fx-cursor: hand;
+}
