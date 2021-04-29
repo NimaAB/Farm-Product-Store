@@ -1,0 +1,201 @@
+root {
+    -fx-background-color: #EBEDEF;
+}
+AnchorPane {
+    -fx-background-color: white;
+    -fx-border-width: 1;
+}
+
+Button {
+    -fx-background-color: #276968;
+    -fx-text-fill: white;
+    -fx-background-radius: 0 15 15 0;
+}
+
+Button:hover {
+    -fx-background-color: #1a4645;
+    -fx-cursor: hand;
+}
+
+.text-field, .text-area {
+    -fx-border-width: 2px;
+    -fx-prompt-text-fill: gray;
+    -fx-text-fill: black;
+    -fx-background-radius: 6px;
+}
+.text-area .content{
+    -fx-background-insets: 0;
+}
+
+.text-field:focused, .text-area:focused{
+    -fx-faint-focus-color: transparent;
+    -fx-focus-color:rgba(0,0,0,0);
+}
+
+
+
+
+
+
+
+
+/* Gjelder til alle dropdown */
+.combo-box{
+    -fx-background-radius: 4px;
+    -fx-background-color: white;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #1a4645;
+}
+.combo-box .arrow {
+    -fx-background-color: #1a4645;
+}
+/*.combo-box .arrow-button{*/
+/*    -fx-background-color: #EBEDEF;*/
+/*    -fx-border-color: white white #28a3f4 white;*/
+/*    -fx-border-width: 2px;*/
+/*}*/
+.combo-box .cell:selected {
+    -fx-text-fill: #1a4645;
+}
+.combo-box-popup .list-view {
+    -fx-background-color: whitesmoke;
+    -fx-border-color: white;
+}
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: white;
+    -fx-text-fill: black
+}
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #f8bd25;
+    -fx-text-fill: white;
+    -fx-cursor: hand;
+}
+.combo-box-popup .list-view .scroll-bar:vertical .track {
+    -fx-background-color: whitesmoke;
+}
+.combo-box-popup .list-view .scroll-bar:vertical .thumb {
+    -fx-background-color: white;
+}
+.combo-box-popup .list-view .increment-button {
+    -fx-background-color: whitesmoke;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+.combo-box-popup .list-view .decrement-button {
+    -fx-background-color: whitesmoke;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+
+/* Gjelder bare til filterOptions dropdown */
+.combo-box.filterOptions {
+    -fx-background-radius: 6px;
+}
+
+.combo-box.filterOptions .arrow-button{
+    -fx-background-color: transparent;
+    -fx-border-width: 0px;
+}
+
+
+
+
+
+
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-width: 2;
+    -fx-border-color: #f8bd25;
+}
+.table-view .cell {
+    -fx-background-color: transparent;
+    -fx-border-color: whitesmoke;
+    -fx-text-fill: black;
+}
+.table-view .column-header-background .filler  {
+    -fx-background-color: #f8bd25;
+}
+.table-view .column-header {
+    -fx-background-color: #f8bd25;
+    -fx-alignment: TOP_LEFT;
+    -fx-border-color: transparent rgba(0,0,0,0.3) transparent transparent;
+    -fx-border-width: 3px;
+}
+
+.table-view .column-header .label{
+    -fx-text-fill: #1a4645;
+    -fx-alignment: CENTER_LEFT;
+}
+.table-view .table-row-cell:selected .label {
+    -fx-text-fill: black;
+}
+.table-view .table-row-cell:selected {
+    -fx-background-color: #8c8b8b;
+    -fx-text-fill: black;
+}
+.table-view .increment-button ,.table-view .decrement-button {
+    -fx-background-color: whitesmoke;
+    -fx-background-radius: 0;
+    -fx-background-insets: 0;
+    -fx-shape: "";
+}
+.table-view .scroll-bar:horizontal .track,
+.table-view .scroll-bar:vertical .track{
+    -fx-background-color: whitesmoke;
+    -fx-border-color:lightgrey;
+}
+.table-view .scroll-bar:horizontal .thumb,
+.table-view .scroll-bar:vertical .thumb {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+}
+
+
+
+
+
+
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #cccccc;
+    -fx-border-radius:3px;
+}
+.check-box:selected .mark {
+    -fx-background-color: #f8bd25;
+}
+
+.check-box:selected .box {
+    -fx-background-color: white;
+    -fx-border-color: #f8bd25;
+
+}
+
+.menu-bar {
+    -fx-border-width: 1.0;
+}
+
+.menu {
+    -fx-text-fill: white;
+    -fx-background: #f8bd25 ;
+}
+
+.menu-bar:cell-selection{
+    -fx-text-fill: white;
+}
+
+.menu-item {
+    -fx-font-size: 16.0 pt;
+    -fx-background: #f8bd25 ;
+}
+
+#menuVBox {
+    -fx-background-radius: 0 25 25 0;
+}
+
+#priceCol {
+    -fx-border-color: transparent;
+}
