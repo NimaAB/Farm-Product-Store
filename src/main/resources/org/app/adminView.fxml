@@ -21,7 +21,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="adminPane" prefHeight="813.0" prefWidth="1304.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
+<BorderPane fx:id="adminPane" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="737.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
    <top>
       <MenuBar style="-fx-background-color: #f58bc24;" BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
@@ -32,44 +32,44 @@
       </MenuBar>
    </top>
    <center>
-      <GridPane>
+      <GridPane prefHeight="700.0" prefWidth="1015.0">
          <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="340.0" minWidth="340.0" prefWidth="329.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="705.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="297.0" minWidth="297.0" prefWidth="297.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="600.0" />
          </columnConstraints>
          <rowConstraints>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          </rowConstraints>
          <children>
-            <VBox fx:id="menuVBox" prefHeight="753.0" prefWidth="200.0" style="-fx-background-color: #f58800;">
+            <VBox fx:id="menuVBox" prefHeight="705.0" prefWidth="293.0" style="-fx-background-color: #f58800;">
                <children>
                   <Label alignment="CENTER" prefHeight="35.0" prefWidth="240.0" text="Gårdsbutikk" textFill="#051821">
                      <font>
-                        <Font name="System Bold" size="24.0" />
+                        <Font name="System Bold" size="21.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="50.0" top="50.0" />
+                        <Insets left="25.0" top="25.0" />
                      </VBox.margin>
                   </Label>
                   <Label prefHeight="30.0" prefWidth="178.0" text="Komponent Nummer:" textFill="#051821">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" top="50.0" />
+                        <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
                         <Label prefHeight="30.0" prefWidth="80.0" text="Navn:" textFill="#051821">
                            <font>
-                              <Font name="System Bold" size="16.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <padding>
                               <Insets left="20.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="name" prefHeight="32.0" prefWidth="235.0" promptText="eks. (Komponent...)">
+                        <TextField fx:id="name" prefHeight="37.0" prefWidth="193.0" promptText="eks. (Komponent...)">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -79,25 +79,25 @@
                         <Insets top="20.0" />
                      </padding>
                   </HBox>
-                  <ComboBox fx:id="categoriesCombobox" prefHeight="35.0" prefWidth="296.0" promptText="Kategori">
+                  <ComboBox fx:id="categoriesCombobox" prefHeight="35.0" prefWidth="253.0" promptText="Kategori">
                      <VBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <ComboBox fx:id="subcategoryCombobox" prefHeight="31.0" prefWidth="296.0" promptText="Subkategory">
+                  <ComboBox fx:id="subcategoryCombobox" prefHeight="31.0" prefWidth="254.0" promptText="Subkategory">
                      <VBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </ComboBox>
                   <Label prefHeight="30.0" prefWidth="147.0" text="Spesifikasjoner:" textFill="#051821">
                      <font>
-                        <Font name="System Bold" size="16.0" />
+                        <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea fx:id="specifications" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0">
+                  <TextArea fx:id="specifications" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="255.0">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -109,7 +109,7 @@
                      <children>
                         <Label prefHeight="31.0" prefWidth="51.0" text="Pris:" textFill="#051821">
                            <font>
-                              <Font name="System Bold" size="16.0" />
+                              <Font name="System Bold" size="14.0" />
                            </font>
                            <HBox.margin>
                               <Insets left="20.0" />
@@ -133,7 +133,7 @@
                         <Insets top="20.0" />
                      </padding>
                   </HBox>
-                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#createComponents" prefHeight="30.0" prefWidth="301.0" text="Opprett Komponent" textAlignment="CENTER">
+                  <Button alignment="CENTER" mnemonicParsing="false" onAction="#createComponents" prefHeight="30.0" prefWidth="250.0" text="Opprett Komponent" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -141,7 +141,7 @@
                         <Insets left="20.0" top="30.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="301.0" style="-fx-background-color: #14;" text="Slett" textFill="#d12300">
+                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0" style="-fx-background-color: #14;" text="Slett" textFill="#d12300">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -155,25 +155,25 @@
                <children>
                   <HBox prefHeight="56.0" prefWidth="935.0">
                      <children>
-                        <TextField fx:id="txtFilter" prefHeight="25.0" prefWidth="698.0" promptText="Filter / Search" HBox.hgrow="ALWAYS">
+                        <TextField fx:id="txtFilter" prefHeight="31.0" prefWidth="568.0" promptText="Filter / Search" HBox.hgrow="ALWAYS">
                            <HBox.margin>
                               <Insets right="20.0" />
                            </HBox.margin>
                         </TextField>
-                        <ComboBox fx:id="filterComboBox" prefWidth="150.0" styleClass="filterOptions" />
+                        <ComboBox fx:id="filterComboBox" prefHeight="31.0" prefWidth="130.0" styleClass="filterOptions" />
                      </children>
                      <padding>
                         <Insets bottom="20.0" left="10.0" right="10.0" top="20.0" />
                      </padding>
                   </HBox>
-                  <TableView fx:id="tableview" editable="true" minWidth="-Infinity" VBox.vgrow="ALWAYS">
+                  <TableView fx:id="tableview" editable="true" prefHeight="623.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="135.0" text="KomponentNr">
+                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="125.0" text="KomponentNr">
                            <cellValueFactory>
                               <PropertyValueFactory property="productID" />
                            </cellValueFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#editName" prefWidth="164.0" text="Produkt Navn">
+                        <TableColumn maxWidth="300.0" minWidth="50.0" onEditCommit="#editName" prefWidth="178.0" text="Produkt Navn">
                            <cellValueFactory>
                               <PropertyValueFactory property="productName" />
                            </cellValueFactory>
@@ -181,7 +181,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editCategory" prefWidth="154.0" text="Kategori">
+                        <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editCategory" prefWidth="138.8333740234375" text="Kategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="category" />
                            </cellValueFactory>
@@ -189,7 +189,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="subcategoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editSubCategory" prefWidth="154.0" text="Subkategori">
+                        <TableColumn fx:id="subcategoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editSubCategory" prefWidth="137.52783203125" text="Subkategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="subCategory" />
                            </cellValueFactory>
@@ -197,7 +197,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn maxWidth="300.0" minWidth="-1.0" onEditCommit="#editSpecs" prefWidth="194.2777099609375" text="Spesifikasjoner">
+                        <TableColumn maxWidth="300.0" minWidth="-1.0" onEditCommit="#editSpecs" prefWidth="151.945068359375" text="Spesifikasjoner">
                            <cellValueFactory>
                               <PropertyValueFactory property="specification" />
                            </cellValueFactory>
@@ -205,7 +205,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="priceCol" maxWidth="150.0" minWidth="-Infinity" onEditCommit="#editPrice" prefWidth="140.7222900390625" text="Pris">
+                        <TableColumn fx:id="priceCol" maxWidth="228.393798828125" minWidth="-Infinity" onEditCommit="#editPrice" prefWidth="228.393798828125" text="Pris">
                            <cellValueFactory>
                               <PropertyValueFactory property="price" />
                            </cellValueFactory>
