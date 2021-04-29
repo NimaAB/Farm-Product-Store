@@ -42,7 +42,7 @@ public class Alerts {
         p.setPrefWidth(300);
         p.setPrefHeight(15);
         Label label = new Label("Thread running...");
-        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: dodgerblue");
+        label.setStyle("-fx-padding: 10px 0 0 0; -fx-font-size: 14px; -fx-text-fill: #2f5d62");
 
         // Parent
         VBox box = new VBox();

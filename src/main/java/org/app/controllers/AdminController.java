@@ -146,8 +146,8 @@ public class AdminController implements Initializable {
 
     @FXML
     void open() {
-        boolean doOpen = Alerts.confirm("Vil du erstatte dataen du har" +
-                " i tabellen med dataen som ligger i filen som du skal laste opp?");
+        boolean doOpen = Alerts.confirm("Vil du erstatte dataene du har i tabellen " +
+                                        "med dataene som ligger i filen som du skal laste opp?");
         if (doOpen) {
             String path = "DataFraApp/" + pathDialogBox.getPathToOpen();
             try {
@@ -164,7 +164,7 @@ public class AdminController implements Initializable {
                 return;
             }
         } else {
-            Alerts.success("Your data isn't changed.");
+            Alerts.success("Dataene er ikke erstattet.");
         }
     }
 
@@ -197,7 +197,7 @@ public class AdminController implements Initializable {
             IOClient<Product> io = new IOClient<>(file, components);
             io.runSaveThread();
         } else {
-            Alerts.warning("There is nothing to save!");
+            Alerts.warning("Ingenting er lagret.");
         }
     }
 

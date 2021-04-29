@@ -14,7 +14,7 @@ public class PathDialogBox {
 
     public String getPathToSave(){
         pathDialog.setTitle("Lagre");
-        pathDialog.setHeaderText("Gi filen din et navn med .csv eller .bin:");
+        pathDialog.setHeaderText("Gi filen et navn med .csv eller .bin som filutvidelse: ");
         pathDialog.setContentText("Filnavn: ");
         Optional<String> path = pathDialog.showAndWait();
         return path.orElse(null);
@@ -22,7 +22,7 @@ public class PathDialogBox {
 
     public String getPathToOpen(){
         pathDialog.setTitle("Åpne");
-        pathDialog.setHeaderText("Hva heter filen du vil åpne?");
+        pathDialog.setHeaderText("Hva heter filen du vil åpne?\nÅpne filer kun fra DataFraApp/");
         pathDialog.setContentText("Filnavn: ");
         Optional<String> path = pathDialog.showAndWait();
         return path.orElse(null);
@@ -30,19 +30,19 @@ public class PathDialogBox {
 
     public void extensionCheck(String path) throws InvalidExtensionException{
         if(!path.contains(".")){
-            throw new InvalidExtensionException("The given path doesn't include any extension!");
+            throw new InvalidExtensionException("Filen mangler en filutvidelse.");
         }
     }
 
     public void fileNotFound(String path) throws  FileDontExistsException{
         if(!new File(path).exists()){
-            throw  new FileDontExistsException("File  with path: " + path + " not found!");
+            throw  new FileDontExistsException("Filen: " + path + " er ikke funnet!");
         }
     }
 
     public void nullPathHandling(String path) throws NullPointerException{
         if(path.isBlank()|| path.isEmpty()) {
-            throw new NullPointerException("No path given!");
+            throw new NullPointerException("En fil er ikke gitt.");
         }
     }
 }

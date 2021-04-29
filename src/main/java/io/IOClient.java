@@ -33,7 +33,7 @@ public class IOClient<T> {
     }
 
     public void runSaveThread() {
-        loadingAlert = Alerts.showLoadingDialog(saveThread, "Saving file...");
+        loadingAlert = Alerts.showLoadingDialog(saveThread, "Lagrer filen...");
         saveThread.setOnSucceeded(this::saveDone);
         saveThread.setOnFailed(this::saveFailed);
         saveThread.setOnRunning((e) -> loadingAlert.show());
@@ -55,7 +55,7 @@ public class IOClient<T> {
     }
 
     public void runOpenThread() {
-        loadingAlert = Alerts.showLoadingDialog(openThread, "Opening file...");
+        loadingAlert = Alerts.showLoadingDialog(openThread, "Åpner filen...");
         openThread.setOnSucceeded(this::openDone);
         openThread.setOnFailed(this::openFailed);
         openThread.setOnRunning((e) -> loadingAlert.show());
