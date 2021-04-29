@@ -27,7 +27,7 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
             case ".bin":
                 return new OpenBinBehavior<>();
             default:
-                throw new InvalidExtensionException("This file type is not supported!\nrequired types: .csv & .bin");
+                throw new InvalidExtensionException("Filtype støttes ikke.\nÅpne kun *.bin & *.csv");
         }
     }
 

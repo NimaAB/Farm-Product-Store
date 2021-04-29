@@ -14,7 +14,7 @@ public class ParseItems {
     public static Product parseItem(String str) throws InvalidTypeException {
         String[] inputArray = str.split(""+ItemsFormat.DELIMITER);
         if(inputArray.length != 6){
-            throw new InvalidTypeException("Feil Type: Prgrammet støtter ikke din fil på grunn av ulike antall " +
+            throw new InvalidTypeException("Feil Type: Programmet støtter ikke din fil på grunn av ulike antall " +
                     "attributter enn det programmet forventer");
         }
 
