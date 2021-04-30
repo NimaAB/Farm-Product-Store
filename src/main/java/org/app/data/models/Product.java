@@ -35,9 +35,6 @@ public class Product implements Serializable {
         this.price = new SimpleDoubleProperty(price);
     }
 
-    public Product() {
-    }
-
     public int getProductID() {
         return this.productID.getValue();
     }
@@ -52,13 +49,6 @@ public class Product implements Serializable {
         this.productID = new SimpleIntegerProperty(id);
         Product.id = id;
     }
-
-    /*
-    public void setProductID(String id) {
-        int ID = Validator.isValidID(id);
-        this.productID = new SimpleIntegerProperty(ID);
-    }
-    */
 
     public String getProductName() {
         return this.productName.getValue();
@@ -99,11 +89,6 @@ public class Product implements Serializable {
     public double getPrice() {
         return this.price.getValue();
     }
-
-    /*public void setPrice(String newPrice) throws InvalidTextInputException, EmptyFieldException {
-        Double price = Validator.validatePrice(newPrice);
-        this.price = new SimpleDoubleProperty(price);
-    }*/
 
     public void setPrice(Double price) {
         this.price = new SimpleDoubleProperty(price);
