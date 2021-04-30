@@ -1,4 +1,4 @@
-package org.validation.ioExceptions;
+package org.app.validation.ioExceptions;
 
 import java.io.FileNotFoundException;
 

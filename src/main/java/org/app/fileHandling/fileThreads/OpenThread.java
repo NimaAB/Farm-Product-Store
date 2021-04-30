@@ -1,12 +1,12 @@
-package org.fileHandling.fileThreads;
+package org.app.fileHandling.fileThreads;
 
-import org.fileHandling.FileInfo;
-import org.fileHandling.open.OpenAbstract;
-import org.fileHandling.open.OpenBinBehavior;
-import org.fileHandling.open.OpenCsvBehavior;
+import org.app.fileHandling.FileInfo;
+import org.app.fileHandling.open.OpenAbstract;
+import org.app.fileHandling.open.OpenBinBehavior;
+import org.app.fileHandling.open.OpenCsvBehavior;
 import javafx.concurrent.Task;
-import org.validation.ioExceptions.InvalidExtensionException;
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.validation.ioExceptions.InvalidExtensionException;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 
 import java.io.File;

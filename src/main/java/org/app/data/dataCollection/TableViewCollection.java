@@ -1,8 +1,8 @@
-package org.data.dataCollection;
+package org.app.data.dataCollection;
 
-import org.data.models.Product;
-import org.fileHandling.FileInfo;
-import org.fileHandling.IOClient;
+import org.app.data.models.Product;
+import org.app.fileHandling.FileInfo;
+import org.app.fileHandling.IOClient;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;

@@ -1,7 +1,7 @@
-package org.validation;
+package org.app.validation;
 
-import org.validation.customExceptions.EmptyFieldException;
-import org.validation.customExceptions.InvalidTextInputException;
+import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidTextInputException;
 
 import java.util.regex.Pattern;
 

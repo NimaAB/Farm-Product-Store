@@ -1,7 +1,7 @@
-package org.fileHandling.open;
+package org.app.fileHandling.open;
 
-import org.data.dataFormats.ParseItems;
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.data.dataFormats.ParseItems;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 
 import java.io.*;

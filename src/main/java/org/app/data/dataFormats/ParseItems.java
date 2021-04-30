@@ -1,11 +1,11 @@
-package org.data.dataFormats;
+package org.app.data.dataFormats;
 
 
-import org.data.models.Product;
-import org.validation.Validator;
-import org.validation.customExceptions.EmptyFieldException;
-import org.validation.customExceptions.InvalidTextInputException;
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.data.models.Product;
+import org.app.validation.Validator;
+import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidTextInputException;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 /**
  * Klassens metode parseItem() tar imot en text fil som string etter at denne skannet

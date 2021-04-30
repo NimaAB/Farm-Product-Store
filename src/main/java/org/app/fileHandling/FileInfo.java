@@ -1,4 +1,4 @@
-package org.fileHandling;
+package org.app.fileHandling;
 
 public class FileInfo {
     private String path;

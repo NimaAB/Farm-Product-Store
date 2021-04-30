@@ -1,4 +1,4 @@
-package org.validation;
+package org.app.validation;
 
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.IntegerStringConverter;

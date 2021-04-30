@@ -2,8 +2,8 @@
 
 ## Todos:
 - [x] class produkt. 
-- [ ] changing to relevant validation methods.
-- [x] changing io.
+- [ ] changing to relevant org.app.validation methods.
+- [x] changing org.io.
 - [x] renaming methods and classes to relevant names.
 - [x] update searching/filter methods.
 - [ ] adding improvment and simplicity to the code.
@@ -15,7 +15,7 @@
 # PC_configuration
 This repository contains a PC configuration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
 
-The app has to users: 
+The org.app has to users: 
 where both users can Save data as binary and comma-seperated-values *csv*.
 But each user it is own role: 
 #### 1. Administration user: 

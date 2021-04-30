@@ -1,11 +1,11 @@
 package org.app;
 
-import dataModels.dataCollection.TableViewCollection;
+import org.app.data.dataCollection.TableViewCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import validations.Alerts;
+import org.app.validation.Alerts;
 import java.io.IOException;
 
 public class Load {

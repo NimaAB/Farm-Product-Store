@@ -1,13 +1,13 @@
-package org.fileHandling;
+package org.app.fileHandling;
 
-import org.data.dataCollection.TableViewCollection;
-import org.data.models.Product;
-import org.fileHandling.fileThreads.OpenThread;
-import org.fileHandling.fileThreads.SaveThread;
+import org.app.data.dataCollection.TableViewCollection;
+import org.app.data.models.Product;
+import org.app.fileHandling.fileThreads.OpenThread;
+import org.app.fileHandling.fileThreads.SaveThread;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.scene.control.Alert;
-import org.validation.Alerts;
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.validation.Alerts;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 
 import java.util.ArrayList;

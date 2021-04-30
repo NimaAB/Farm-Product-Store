@@ -7,7 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import validations.Alerts;
+import org.app.validation.Alerts;
 
 public class LoginController {
 

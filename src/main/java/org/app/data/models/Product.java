@@ -1,12 +1,12 @@
-package org.data.models;
+package org.app.data.models;
 
 
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import org.validation.Validator;
-import org.validation.customExceptions.EmptyFieldException;
-import org.validation.customExceptions.InvalidTextInputException;
+import org.app.validation.Validator;
+import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidTextInputException;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -100,10 +100,10 @@ public class Product implements Serializable {
         return this.price.getValue();
     }
 
-    public void setPrice(String newPrice) throws InvalidTextInputException, EmptyFieldException {
+    /*public void setPrice(String newPrice) throws InvalidTextInputException, EmptyFieldException {
         Double price = Validator.validatePrice(newPrice);
         this.price = new SimpleDoubleProperty(price);
-    }
+    }*/
 
     public void setPrice(Double price) {
         this.price = new SimpleDoubleProperty(price);

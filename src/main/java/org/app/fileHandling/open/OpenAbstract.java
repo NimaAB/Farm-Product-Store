@@ -1,6 +1,6 @@
-package org.fileHandling.open;
+package org.app.fileHandling.open;
 
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 import java.io.File;
 import java.util.ArrayList;

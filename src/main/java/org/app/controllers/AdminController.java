@@ -1,27 +1,28 @@
 package org.app.controllers;
 
 
-import dataModels.models.Product;
-import io.FileInfo;
-import io.IOClient;
+import org.app.data.models.Product;
+import org.app.fileHandling.FileInfo;
+import org.app.fileHandling.IOClient;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import org.app.Load;
 import org.app.PathDialogBox;
-import dataModels.dataCollection.TableViewCollection;
+import org.app.data.dataCollection.TableViewCollection;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.*;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import validations.Alerts;
-import validations.NumberConversion;
-import validations.Validator;
-import validations.customExceptions.EmptyFieldException;
-import validations.customExceptions.InvalidTextInputException;
-import validations.ioExceptions.*;
+import org.app.validation.Alerts;
+import org.app.validation.NumberConversion;
+import org.app.validation.ioExceptions.*;
+import org.app.validation.Validator;
+import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidTextInputException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -145,7 +146,6 @@ public class AdminController implements Initializable {
                 collection.setLoadedFile(path);
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
-                return;
             }
         } else {
             Alerts.success("Dataene er ikke erstattet.");

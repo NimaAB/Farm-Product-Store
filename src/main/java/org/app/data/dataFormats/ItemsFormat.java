@@ -1,7 +1,7 @@
-package org.data.dataFormats;
+package org.app.data.dataFormats;
 
-import org.data.models.Product;
-import org.validation.ioExceptions.InvalidTypeException;
+import org.app.data.models.Product;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 import java.util.ArrayList;
 

@@ -1,9 +1,7 @@
 package org.app;
 
 import javafx.scene.control.TextInputDialog;
-import validations.Alerts;
-import validations.ioExceptions.FileDontExistsException;
-import validations.ioExceptions.InvalidExtensionException;
+import org.app.validation.ioExceptions.*;
 
 import java.io.File;
 import java.util.Optional;
@@ -28,13 +26,13 @@ public class PathDialogBox {
         return path.orElse(null);
     }
 
-    public void extensionCheck(String path) throws InvalidExtensionException{
+    public void extensionCheck(String path) throws InvalidExtensionException {
         if(!path.contains(".")){
             throw new InvalidExtensionException("Filen mangler en filutvidelse.");
         }
     }
 
-    public void fileNotFound(String path) throws  FileDontExistsException{
+    public void fileNotFound(String path) throws FileDontExistsException {
         if(!new File(path).exists()){
             throw  new FileDontExistsException("Filen: " + path + " er ikke funnet!");
         }

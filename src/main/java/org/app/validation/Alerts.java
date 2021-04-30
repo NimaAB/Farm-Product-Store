@@ -1,4 +1,4 @@
-package org.validation;
+package org.app.validation;
 
 import javafx.concurrent.Task;
 import javafx.event.Event;
