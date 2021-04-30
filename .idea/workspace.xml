@@ -5,38 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ada2f6-0544-450e-9f72-c2360f14577d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidNumberFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/DataFraApp/Database/products.bin" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/DataFraApp/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/DataFraApp/test.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dataModels/dataCollection/TableViewCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/TableViewCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dataModels/dataFormats/ItemsFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dataModels/dataFormats/ParseItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/dataModels/models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/models/Product.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/FileInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fileThreads/OpenThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/fileThreads/OpenThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/fileThreads/SaveThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/fileThreads/SaveThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/open/OpenAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/open/OpenAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/open/OpenBinBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/open/OpenBinBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/open/OpenCsvBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/open/OpenCsvBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/save/SaveAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/save/SaveBinBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveBinBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/io/save/SaveCsvBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveCsvBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/PathDialogBox.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/PathDialogBox.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/controllers/LoginController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/controllers/LoginController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/Alerts.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/Alerts.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/NumberConversion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/NumberConversion.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/customExceptions/EmptyFieldException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/EmptyFieldException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/customExceptions/InvalidNumberException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidNumberException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/customExceptions/InvalidTextInputException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidTextInputException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/ioExceptions/FileDontExistsException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/ioExceptions/FileDontExistsException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/ioExceptions/InvalidExtensionException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/ioExceptions/InvalidExtensionException.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/validations/ioExceptions/InvalidTypeException.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/ioExceptions/InvalidTypeException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidNumberException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -139,7 +115,7 @@
       <workItem from="1618919062720" duration="15144000" />
       <workItem from="1619007845202" duration="10575000" />
       <workItem from="1619377178581" duration="5214000" />
-      <workItem from="1619646812386" duration="21371000" />
+      <workItem from="1619646812386" duration="25406000" />
     </task>
     <servers />
   </component>

@@ -1,35 +1,50 @@
 package org.app.validation;
 
 import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidNumberFormat;
 import org.app.validation.customExceptions.InvalidTextInputException;
 
 import java.util.regex.Pattern;
 
 public class Validator {
-    private static final NumberConversion.StringtoInteger strToIntConvertor =
-            new NumberConversion.StringtoInteger();
-    private static final NumberConversion.StringToDouble stringToDoubleConvertor =
-            new NumberConversion.StringToDouble();
 
-    public static Integer isValidID(String ID){
-        return strToIntConvertor.fromString(ID);
+    public static Integer isValidID(String ID) throws InvalidNumberFormat{
+        int id;
+        try {
+            id = Integer.parseInt(ID);
+
+        }catch (NumberFormatException e){
+            throw new InvalidNumberFormat("Ugyldig verdi: " + ID);
+        }
+        if(id<=0){
+            throw new InvalidTextInputException("Feil: id kan må være større enn null");
+        }
+
+        return id;
     }
 
-    public static Double validatePrice(String priceStr) throws  InvalidTextInputException, EmptyFieldException{
+    public static Double validatePrice(String priceStr) throws  InvalidTextInputException,
+            EmptyFieldException, InvalidNumberFormat{
         if(priceStr == null || priceStr.isEmpty() || priceStr.isBlank()){
             throw new EmptyFieldException("Feil: Pris kan ikke være tom!");
         }
+        double price;
+        try {
+            price= Double.parseDouble(priceStr);
 
-        Double price = stringToDoubleConvertor.fromString(priceStr);
+
+        }catch (NumberFormatException e){
+            throw new InvalidNumberFormat("Ugyldig verdi: " + priceStr);
+        }
 
         if(price<=0){
             throw new InvalidTextInputException("Feil: Pris må være større enn null!");
         }
-
         return price;
+
     }
 
-    public static String validateName(String name) throws InvalidTextInputException, EmptyFieldException{
+    public static String validateName(String name) throws InvalidTextInputException, EmptyFieldException {
         if (name == null || name.isEmpty() || name.isBlank()){
             throw new EmptyFieldException("Feil: Ingen navn gitt!");
         }
@@ -41,7 +56,8 @@ public class Validator {
         return name;
     }
 
-    public static String validateCategory(String category) throws InvalidTextInputException, EmptyFieldException{
+    public static String validateCategory(String category) throws InvalidTextInputException,
+            EmptyFieldException {
         if (category == null || category.isEmpty() || category.isBlank()) {
             throw new EmptyFieldException("Feil: Velg begge kategoriene!");
         }

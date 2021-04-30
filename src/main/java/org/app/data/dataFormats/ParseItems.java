@@ -4,6 +4,7 @@ package org.app.data.dataFormats;
 import org.app.data.models.Product;
 import org.app.validation.Validator;
 import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidNumberFormat;
 import org.app.validation.customExceptions.InvalidTextInputException;
 import org.app.validation.ioExceptions.InvalidTypeException;
 
@@ -19,7 +20,7 @@ public class ParseItems {
             throw new InvalidTypeException("Feil Type: Programmet støtter ikke din fil på grunn av ulike antall " +
                     "attributter enn det programmet forventer");
         }
-
+        Product object;
         try{
             Integer id = Validator.isValidID(inputArray[0]);
             String name = Validator.validateName(inputArray[1]);
@@ -28,13 +29,12 @@ public class ParseItems {
             String specs = Validator.validateSpecs(inputArray[4]);
             double price = Validator.validatePrice(inputArray[5]);
 
-            Product object = new Product(name, category, subcategory, specs, price);
+            object = new Product(name, category, subcategory, specs, price);
             object.setProductID(id);
-            return object;
-        }catch (EmptyFieldException | InvalidTextInputException e){
-            e.printStackTrace();
+        }catch (EmptyFieldException | InvalidTextInputException | InvalidNumberFormat e){
+            throw new InvalidTypeException("Feil: Dataene i CSV-filen støttes ikke av programmet.");
         }
-        
-        return null;
+
+        return object;
     }
 }

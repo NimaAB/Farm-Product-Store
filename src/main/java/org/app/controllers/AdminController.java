@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.app.validation.Alerts;
 import org.app.validation.NumberConversion;
+import org.app.validation.customExceptions.InvalidNumberFormat;
 import org.app.validation.ioExceptions.*;
 import org.app.validation.Validator;
 import org.app.validation.customExceptions.EmptyFieldException;
@@ -116,7 +117,7 @@ public class AdminController implements Initializable {
             reset();
 
             Alerts.success("Ny Produkt Opprettet");
-        } catch (InvalidTextInputException | EmptyFieldException e) {
+        } catch (InvalidTextInputException | EmptyFieldException | InvalidNumberFormat e) {
 
             Alerts.warning(e.getMessage());
         }

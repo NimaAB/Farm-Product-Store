@@ -63,7 +63,7 @@ public class IOClient<T> {
         th.start();
     }
 
-    private void openDone(WorkerStateEvent e){
+    private void openDone(WorkerStateEvent e) {
         try {
             TableViewCollection collection = TableViewCollection.getINSTANCE();
             ArrayList<Product> list = (ArrayList<Product>) openThread.call();
