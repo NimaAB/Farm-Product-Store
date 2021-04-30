@@ -27,6 +27,9 @@ public class ParseItems {
             String category = Validator.validateCategory(inputArray[2]);
             String subcategory = Validator.validateCategory(inputArray[3]);
             String specs = Validator.validateSpecs(inputArray[4]);
+            if(specs.contains("|")){
+                specs = specs.replace('|',',');
+            }
             double price = Validator.validatePrice(inputArray[5]);
 
             object = new Product(name, category, subcategory, specs, price);

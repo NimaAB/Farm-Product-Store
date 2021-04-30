@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ada2f6-0544-450e-9f72-c2360f14577d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidNumberFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/DataFraApp/test.csv" beforeDir="false" afterPath="$PROJECT_DIR$/DataFraApp/test.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/validation/customExceptions/InvalidNumberException.java" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -115,7 +111,7 @@
       <workItem from="1618919062720" duration="15144000" />
       <workItem from="1619007845202" duration="10575000" />
       <workItem from="1619377178581" duration="5214000" />
-      <workItem from="1619646812386" duration="25406000" />
+      <workItem from="1619646812386" duration="27088000" />
     </task>
     <servers />
   </component>

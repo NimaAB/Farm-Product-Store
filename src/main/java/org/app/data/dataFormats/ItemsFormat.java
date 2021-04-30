@@ -17,6 +17,10 @@ public class ItemsFormat {
 
     public static <T> String objectFormat(T object) throws InvalidTypeException {
         if(object instanceof Product){
+            if(((Product) object).getSpecification().contains(",")){
+                ((Product) object).setSpecification(((Product) object)
+                        .getSpecification().replace(',','|'));
+            }
             return ((Product) object).csvFormat(DELIMITER);
         }
         throw new InvalidTypeException("Programmet støtter ikke denne objekt typen!");
