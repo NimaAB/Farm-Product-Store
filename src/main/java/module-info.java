@@ -1,4 +1,4 @@
-module pc_configuration {
+module Farm_Product_Store {
     requires javafx.controls;
     requires javafx.fxml;
 

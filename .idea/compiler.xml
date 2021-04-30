@@ -6,10 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="FinalProject-DATA1600" />
+        <module name="Farm-Product-Store" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="Farm-Product-Store" target="11" />
       <module name="FinalProject-DATA1600" target="11" />
       <module name="pc_configuration" target="11" />
     </bytecodeTargetLevel>

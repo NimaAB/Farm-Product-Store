@@ -1,6 +1,6 @@
 package validations.customExceptions;
 
-public class InvalidTextInputException extends InvalidNumberException {
+public class InvalidTextInputException extends IllegalArgumentException {
     public InvalidTextInputException(String msg){
         super(msg);
     }

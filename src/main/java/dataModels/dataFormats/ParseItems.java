@@ -2,7 +2,9 @@ package dataModels.dataFormats;
 
 
 import dataModels.models.Product;
-import validations.customExceptions.InvalidArgument;
+import validations.Validator;
+import validations.customExceptions.EmptyFieldException;
+import validations.customExceptions.InvalidTextInputException;
 import validations.ioExceptions.InvalidTypeException;
 
 /**
@@ -18,25 +20,21 @@ public class ParseItems {
                     "attributter enn det programmet forventer");
         }
 
-
-        Product object = new Product();
         try{
-            int id = Integer.parseInt(inputArray[0]);
-            String name = inputArray[1];
-            String category = inputArray[2];
-            String subcategory = inputArray[3];
-            String specs = inputArray[4];
-            double price = Double.parseDouble(inputArray[5]);
+            Integer id = Validator.isValidID(inputArray[0]);
+            String name = Validator.validateName(inputArray[1]);
+            String category = Validator.validateCategory(inputArray[2]);
+            String subcategory = Validator.validateCategory(inputArray[3]);
+            String specs = Validator.validateSpecs(inputArray[4]);
+            double price = Validator.validatePrice(inputArray[5]);
+
+            Product object = new Product(name, category, subcategory, specs, price);
             object.setProductID(id);
-            object.setProductName(name);
-            object.setCategory(category);
-            object.setSubCategory(subcategory);
-            object.setSpecification(specs);
-            object.setPrice(price);
-        }catch (NumberFormatException | InvalidArgument e ){
+            return object;
+        }catch (EmptyFieldException | InvalidTextInputException e){
             e.printStackTrace();
         }
         
-        return object;
+        return null;
     }
 }

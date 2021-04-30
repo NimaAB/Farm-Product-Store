@@ -4,9 +4,10 @@ package dataModels.models;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
-import validations.customExceptions.InvalidArgument;
-import validations.customExceptions.InvalidNumberException;
+import validations.Validator;
+import validations.customExceptions.EmptyFieldException;
 import validations.customExceptions.InvalidTextInputException;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -46,20 +47,25 @@ public class Product implements Serializable {
         id = this.productID.getValue();
     }
 
-    public void setProductID(int id) {
+    public void setProductID(Integer id) {
+
         this.productID = new SimpleIntegerProperty(id);
         Product.id = id;
     }
+
+    /*
+    public void setProductID(String id) {
+        int ID = Validator.isValidID(id);
+        this.productID = new SimpleIntegerProperty(ID);
+    }
+    */
 
     public String getProductName() {
         return this.productName.getValue();
     }
 
-    public void setProductName(String name) throws InvalidTextInputException {
-
-        if (name.isEmpty() || name.isBlank() || Character.isDigit(name.charAt(0)) ) {
-            throw new InvalidTextInputException("Feil: Produkt navn er tom eller starter med et nummer");
-        }
+    public void setProductName(String newName) throws InvalidTextInputException {
+        String name = Validator.validateName(newName);
         this.productName = new SimpleStringProperty(name);
     }
 
@@ -67,11 +73,8 @@ public class Product implements Serializable {
         return this.category.getValue();
     }
 
-    public void setCategory(String category) throws InvalidArgument  {
-        if (category.isEmpty() || category.isBlank()) {
-            throw new InvalidArgument("Feil: Velg kategori");
-
-        }
+    public void setCategory(String newCategory) throws InvalidTextInputException, EmptyFieldException{
+        String category = Validator.validateCategory(newCategory);
         this.category = new SimpleStringProperty(category);
     }
 
@@ -79,12 +82,8 @@ public class Product implements Serializable {
         return this.subcategory.getValue();
     }
 
-    public void setSubCategory(String subCategory) throws InvalidTextInputException  {
-        //validation call
-        if (subCategory.isEmpty() || subCategory.isBlank()) {
-            throw new InvalidTextInputException("Feil: Velg under kategori!");
-
-        }
+    public void setSubCategory(String newSubCategory) throws InvalidTextInputException, EmptyFieldException {
+        String subCategory = Validator.validateCategory(newSubCategory);
         this.subcategory = new SimpleStringProperty(subCategory);
     }
 
@@ -92,10 +91,8 @@ public class Product implements Serializable {
         return this.specification.getValue();
     }
 
-    public void setSpecification(String specs) throws InvalidTextInputException  {
-        //validation call
-        if(specs.isEmpty() || specs.isBlank()) throw new InvalidTextInputException("Feil: Produkt beskrivelse mangler");
-
+    public void setSpecification(String newSpecs) throws InvalidTextInputException {
+        String specs = Validator.validateSpecs(newSpecs);
         this.specification = new SimpleStringProperty(specs);
     }
 
@@ -103,12 +100,12 @@ public class Product implements Serializable {
         return this.price.getValue();
     }
 
-    public void setPrice(Double price) throws InvalidArgument{
-        //validation call
-        if (price <= 0){
-            throw new InvalidNumberException("Ugyldig pris!");
+    public void setPrice(String newPrice) throws InvalidTextInputException, EmptyFieldException {
+        Double price = Validator.validatePrice(newPrice);
+        this.price = new SimpleDoubleProperty(price);
+    }
 
-        }
+    public void setPrice(Double price) {
         this.price = new SimpleDoubleProperty(price);
     }
 
@@ -140,22 +137,19 @@ public class Product implements Serializable {
     }
 
     private void readObject(ObjectInputStream ist) throws IOException, ClassNotFoundException {
-        try {
-            int productID = ist.readInt();
-            String name = ist.readUTF();
-            String category = ist.readUTF();
-            String subcategory = ist.readUTF();
-            String specs = ist.readUTF();
-            double price = ist.readDouble();
 
-            setProductID(productID);
-            setProductName(name);
-            setCategory(category);
-            setSubCategory(subcategory);
-            setSpecification(specs);
-            setPrice(price);
-        } catch (InvalidTextInputException | InvalidArgument e) {
-            e.printStackTrace();
-        }
+        int productID = ist.readInt();
+        String name = ist.readUTF();
+        String category = ist.readUTF();
+        String subcategory = ist.readUTF();
+        String specs = ist.readUTF();
+        double price = ist.readDouble();
+
+        this.setProductID(productID);
+        this.setProductName(name);
+        this.setCategory(category);
+        this.setSubCategory(subcategory);
+        this.setSpecification(specs);
+        this.setPrice(price);
     }
 }

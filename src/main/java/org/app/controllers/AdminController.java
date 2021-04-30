@@ -18,7 +18,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import validations.Alerts;
 import validations.NumberConversion;
-import validations.customExceptions.InvalidArgument;
+import validations.Validator;
+import validations.customExceptions.EmptyFieldException;
 import validations.customExceptions.InvalidTextInputException;
 import validations.ioExceptions.*;
 import java.net.URL;
@@ -101,44 +102,27 @@ public class AdminController implements Initializable {
     @FXML
     void createComponents() {
 
-        Product product = new Product();
-
-
         try {
-            product.setProductID();
 
-            String product_name = name.getText();
-            product.setProductName(product_name);
+            String product_name = Validator.validateName(name.getText());
+            String category = Validator.validateCategory(categoriesCombobox.getValue());
+            String subcategory = Validator.validateCategory(subcategoryCombobox.getValue());
+            String specs = Validator.validateSpecs(specifications.getText());
+            Double product_price = Validator.validatePrice(price.getText());
 
-            String category = categoriesCombobox.getValue();
-            product.setCategory(category);
-
-            String subcategory = subcategoryCombobox.getValue();
-            product.setSubCategory(subcategory);
-
-            String specs = specifications.getText();
-            product.setSpecification(specs);
-
-            double price = stringToDouble.fromString(this.price.getText());
-            product.setPrice(price);
-
+            Product product = new Product(product_name, category, subcategory, specs, product_price);
             collection.addComponent(product);
             reset();
 
-            Alerts.success("Komponent Opprettet");
-        } catch (InvalidTextInputException | InvalidArgument e) {
+            Alerts.success("Ny Produkt Opprettet");
+        } catch (InvalidTextInputException | EmptyFieldException e) {
 
             Alerts.warning(e.getMessage());
-        }catch (NullPointerException e){
-
-            Alerts.warning("En eller flere av feltene er tom");
         }
-
     }
 
     private void reset() {
         // Resetter feltene
-        //nr.setText("");
         name.setText("");
         specifications.setText("");
         price.setText("");

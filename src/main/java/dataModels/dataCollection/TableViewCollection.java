@@ -65,6 +65,7 @@ public class TableViewCollection {
     public void deleteSelectedComponents(ObservableList<Product> selectedProducts) {
         if (selectedProducts.size() >= 1) {
             PRODUCTS.removeAll(selectedProducts);
+            modified = true;
         }
     }
 
@@ -79,6 +80,7 @@ public class TableViewCollection {
             }
         }
         PRODUCTS.add(product);
+        modified = true;
     }
 
     /**
@@ -88,8 +90,6 @@ public class TableViewCollection {
         ArrayList<Product> data = new ArrayList<>(getComponents());
         IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
         save.runSaveThread();
-        /*SaveThread<Product> saveTh = new SaveThread<>(new FileInfo(loadedFile), data);
-        saveTh.call();*/
         modified = false;
     }
 
