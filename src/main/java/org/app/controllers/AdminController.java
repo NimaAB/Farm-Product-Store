@@ -80,7 +80,6 @@ public class AdminController implements Initializable {
         collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
         collection.fillSubCategoryCombobox(tableview);
 
-        //System.out.println(collection.isModified());
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
@@ -90,19 +89,15 @@ public class AdminController implements Initializable {
         idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
 
-        price.textProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue,
-                                String newValue) {
-                if (!newValue.matches("\\d*(\\.\\d*)?")) {
-                    price.setText(newValue.replaceAll("[^\\d*(\\.\\d*)?]", ""));
-                }
+        price.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*(\\.\\d*)?")) {
+                price.setText(newValue.replaceAll("[^\\d*(\\.\\d*)?]", ""));
             }
         });
     }
 
     @FXML
-    void createComponents() {
+    void registerProduct() {
 
         try {
 
