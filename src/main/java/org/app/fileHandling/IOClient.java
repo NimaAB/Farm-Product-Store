@@ -70,6 +70,7 @@ public class IOClient<T> {
             collection.getComponents().clear();
             collection.setComponents(list);
             loadingAlert.close();
+            collection.setModified(false);
         }catch (InvalidTypeException exception){
             Alerts.warning(exception.getMessage());
         }

@@ -56,7 +56,6 @@ public class TableViewCollection {
             open.runOpenThread();
             reloadComponents = false;
         }
-        modified = false;
     }
 
     /**
