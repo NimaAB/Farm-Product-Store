@@ -2,34 +2,32 @@
 
 ## Todos:
 - [x] class produkt. 
-- [ ] changing to relevant org.app.validation methods.
+- [x] changing to relevant org.app.validation methods.
 - [x] changing org.io.
 - [x] renaming methods and classes to relevant names.
 - [x] update searching/filter methods.
-- [ ] adding improvment and simplicity to the code.
-- [ ] gui changes
+- [x] adding improvment and simplicity to the code.
+- [x] gui changes
+- [ ] Example data.
 
 
 
-################################################The-Old-Project############################################
-# PC_configuration
-This repository contains a PC configuration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
 
-The org.app has to users: 
-where both users can Save data as binary and comma-seperated-values *csv*.
-But each user it is own role: 
-#### 1. Administration user: 
-The Admin user is able to add, delete and edit productes in the system.
-And loges in with: 
+This project is a simple regitration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
+
+
+## Login info:
  ```
     username: Admin
     Password: 1234
  ```
- #### 2. Customer user:
- The Customer is able to choose products from a table, and configure a PC. At the end, the Costumer can save the PC cofiguration list to a file.
- And load it again to the program.
- The Custumer logs in with:
- ```
-    username: Customer
-    password: 1234
- ```
+## App functionalities:
+- Creating new Items from the user interface.
+- Editing items from the tabel.
+- saving to and reading from both Comma-Separated Values (.csv) and Binary (.bin) files.
+
+All data will be saved in a folder named `DataFraApp`. 
+
+## Requirements:
+JDK-13 or higher
+
