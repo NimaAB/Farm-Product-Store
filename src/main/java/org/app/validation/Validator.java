@@ -62,7 +62,10 @@ public class Validator {
             throw new EmptyFieldException("Feil: Velg begge kategoriene!");
         }
 
-        boolean newCategoryOK = Pattern.matches("^[A-ZÅØÆ]?[a-zåøæ]*\\ {0,1}[A-ZÅØÆ]?[a-zåøæ]*", category);
+
+
+        // boolean newCategoryOK = Pattern.matches("^[A-ZÅØÆ]?[a-zåøæ]*\\ {0,1}[A-ZÅØÆ]?[a-zåøæ]*", category);
+        boolean newCategoryOK = Pattern.matches("^[A-ZÅØÆ]*[\\- a-zåøæ]*", category);
         if (!newCategoryOK){
             throw new InvalidTextInputException("Feil: Kategori må begynne med et stort bokstav" +
                     " og fortsette med små boktaver, tall er ugyldig!");
