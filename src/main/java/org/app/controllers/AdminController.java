@@ -209,11 +209,11 @@ public class AdminController implements Initializable {
     void editCategory(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setCategory(event.getNewValue());
-            event.getRowValue().setSubCategory("");
-            Alerts.warning("Du har endret foreldre kategori.\nVelg en ny subkategori.");
+            event.getRowValue().setSubCategory("Velg på nytt");
+            Alerts.success("Du har endret foreldre kategori.\nVelg en ny subkategori.");
             collection.setModified(true);
             tableview.refresh();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             Alerts.warning(e.getMessage());
             tableview.refresh();
         }
@@ -225,7 +225,7 @@ public class AdminController implements Initializable {
             event.getRowValue().setSubCategory(event.getNewValue());
             collection.setModified(true);
             tableview.refresh();
-        } catch (IllegalArgumentException e) {
+        } catch (Exception e) {
             Alerts.warning(e.getMessage());
             tableview.refresh();
         }

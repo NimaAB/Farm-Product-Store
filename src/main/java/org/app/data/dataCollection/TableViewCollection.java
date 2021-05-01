@@ -146,7 +146,7 @@ public class TableViewCollection {
 
     // Hjelper metode for ComboBox verdiene:
     private void subcategoryChooser(String category){
-        String[] kornTyper = {"Såkorn", "Økologisk såkorn", "Underkultur og fangvekster", "Plantevern", ""};
+        String[] kornTyper = {"Såkorn", "Økologisk såkorn", "Underkultur og fangvekster", "Plantevern"};
         String[] klaerTyper = {"Jakker", "Hansker", "Bukser", "Regntøy", "Varselklær"};
         String[] gjodselTyper = {"Bladgjødsel", "Nitrogengjødsel", "NPK-gjødsel"};
         String[] landbruk = {"Traktor", "Tresker", "Hjullaster", "Nyttekjøretøy"};
