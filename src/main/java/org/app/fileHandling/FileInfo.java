@@ -24,4 +24,5 @@ public class FileInfo {
             Files.deleteIfExists(Paths.get(this.path));
         }catch (IOException ignore){ }
     }
+
 }

@@ -6,13 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="b8ada2f6-0544-450e-9f72-c2360f14577d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/FileInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/FileInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/fileThreads/SaveThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/fileThreads/SaveThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveAbstract.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveAbstract.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveCsvBehavior.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/save/SaveCsvBehavior.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/validation/Validator.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

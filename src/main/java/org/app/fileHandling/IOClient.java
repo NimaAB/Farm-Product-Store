@@ -20,7 +20,7 @@ public class IOClient<T> {
     private OpenThread<T> openThread;
     private SaveThread<T> saveThread;
     private Alert loadingAlert;
-
+    private TableViewCollection collection = TableViewCollection.getINSTANCE();
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
         this.listToWrite = listToWrite;
@@ -47,10 +47,7 @@ public class IOClient<T> {
             saveThread.call();
             loadingAlert.close();
             Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
-        } catch (InvalidTypeException exception) {
-            Alerts.warning(exception.getMessage());
-            //fileInfo.deleteFile();
-        }
+        } catch (InvalidTypeException ignore) {}
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -71,15 +68,12 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         try {
-            TableViewCollection collection = TableViewCollection.getINSTANCE();
             ArrayList<Product> list = (ArrayList<Product>) openThread.call();
             collection.getComponents().clear();
             collection.setComponents(list);
             loadingAlert.close();
             collection.setModified(false);
-        } catch (InvalidTypeException exception) {
-            Alerts.warning(exception.getMessage());
-        }
+        } catch (InvalidTypeException ignored) {}
     }
 
     private void openFailed(WorkerStateEvent event) {
