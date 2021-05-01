@@ -5,9 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ada2f6-0544-450e-9f72-c2360f14577d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/DataFraApp/test2.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/TableViewCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/TableViewCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ItemsFormat.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataFormats/ParseItems.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/models/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/org/app/adminView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/app/adminView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +54,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="add_unversioned_files" value="$PROJECT_DIR$/target/classes/dataModels/dataCollection/TableViewCollection.class" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/.idea" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/DataFraApp" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -63,6 +66,7 @@
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\nimab\Desktop\Farm-Product-Store\DataFraApp" />
       <recent name="C:\Users\nimab\Desktop\Farm-Product-Store\.idea" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -85,6 +89,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -100,7 +115,10 @@
       <workItem from="1619007845202" duration="10575000" />
       <workItem from="1619377178581" duration="5214000" />
       <workItem from="1619646812386" duration="27940000" />
-      <workItem from="1619787440356" duration="2786000" />
+      <workItem from="1619787440356" duration="3541000" />
+      <workItem from="1619818031492" duration="46000" />
+      <workItem from="1619818178482" duration="699000" />
+      <workItem from="1619868439667" duration="1412000" />
     </task>
     <servers />
   </component>

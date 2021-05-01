@@ -18,7 +18,7 @@ public class ParseItems {
         String[] inputArray = str.split(""+ItemsFormat.DELIMITER);
         if(inputArray.length != 6){
             throw new InvalidTypeException("Feil Type: Programmet støtter ikke din fil på grunn av ulike antall " +
-                    "attributter enn det programmet forventer");
+                    "attributter enn det programmet forventer!");
         }
         Product object;
         try{
@@ -28,14 +28,15 @@ public class ParseItems {
             String subcategory = Validator.validateCategory(inputArray[3]);
             String specs = Validator.validateSpecs(inputArray[4]);
             if(specs.contains("|")){
-                specs = specs.replace('|',',');
+                specs = specs.replace('|',ItemsFormat.DELIMITER.charAt(0));
             }
             double price = Validator.validatePrice(inputArray[5]);
 
             object = new Product(name, category, subcategory, specs, price);
             object.setProductID(id);
         }catch (EmptyFieldException | InvalidTextInputException | InvalidNumberFormat e){
-            throw new InvalidTypeException("Feil: Dataene i CSV-filen støttes ikke av programmet.");
+            throw new InvalidTypeException("Feil: Dataene i CSV-filen støttes ikke av programmet!\n" +
+                    "Sjekk om alle dataene er i riktig format og rekkefølge.");
         }
 
         return object;

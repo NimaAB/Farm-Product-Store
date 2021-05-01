@@ -13,11 +13,11 @@ import java.util.ArrayList;
  */
 
 public class ItemsFormat {
-    public static final char DELIMITER = ',';
+    public static final String DELIMITER = ",";
 
     public static <T> String objectFormat(T object) throws InvalidTypeException {
         if(object instanceof Product){
-            if(((Product) object).getSpecification().contains(",")){
+            if(((Product) object).getSpecification().contains(DELIMITER)){
                 ((Product) object).setSpecification(((Product) object)
                         .getSpecification().replace(',','|'));
             }

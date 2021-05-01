@@ -105,7 +105,7 @@ public class Product implements Serializable {
                 "}";
     }
 
-    public String csvFormat(char delimiter) {
+    public String csvFormat(String delimiter) {
         String format = "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s" + delimiter + "%s";
         return String.format(format, getProductID(), getProductName(),
                 getCategory(), getSubCategory(), getSpecification(), getPrice());

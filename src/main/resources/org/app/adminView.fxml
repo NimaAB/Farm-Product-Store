@@ -21,9 +21,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="adminPane" maxWidth="-Infinity" minWidth="-Infinity" minHeight="600.0" maxHeight="700.0" prefHeight="700.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
+<BorderPane fx:id="adminPane" maxHeight="700.0" maxWidth="-Infinity" minHeight="600.0" minWidth="-Infinity" prefHeight="700.0" prefWidth="1025.0" snapToPixel="false" stylesheets="@adminViewStyle.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.app.controllers.AdminController">
    <top>
-      <MenuBar  BorderPane.alignment="CENTER">
+      <MenuBar BorderPane.alignment="CENTER">
          <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#open" text="Open" />
             <MenuItem mnemonicParsing="false" onAction="#save" text="Save" />
@@ -43,7 +43,7 @@
          <children>
             <VBox fx:id="menuVBox" prefHeight="705.0" prefWidth="293.0" style="-fx-background-color: #f58800;">
                <children>
-                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="240.0" text="Gårdsbutikk" textFill="#051821">
+                  <Label alignment="CENTER" prefHeight="35.0" prefWidth="240.0" text="Gårdsbutikk" textFill="#173e3c">
                      <font>
                         <Font name="System Bold" size="21.0" />
                      </font>
@@ -51,7 +51,7 @@
                         <Insets left="25.0" top="25.0" />
                      </VBox.margin>
                   </Label>
-                  <Label prefHeight="30.0" prefWidth="178.0" text="Komponent Nummer:" textFill="#051821">
+                  <Label alignment="CENTER" prefHeight="34.0" prefWidth="246.0" text="Opprett et nytt produkt" textAlignment="CENTER" textFill="#173e3c">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -61,7 +61,7 @@
                   </Label>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="30.0" prefWidth="80.0" text="Navn:" textFill="#051821">
+                        <Label prefHeight="30.0" prefWidth="80.0" text="Navn:" textFill="#173e3c">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -69,7 +69,7 @@
                               <Insets left="20.0" />
                            </padding>
                         </Label>
-                        <TextField fx:id="name" prefHeight="37.0" prefWidth="193.0" promptText="eks. (Komponent...)">
+                        <TextField fx:id="name" prefHeight="37.0" prefWidth="193.0" promptText="Produkt navn">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -89,7 +89,7 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Label prefHeight="30.0" prefWidth="147.0" text="Spesifikasjoner:" textFill="#051821">
+                  <Label prefHeight="30.0" prefWidth="147.0" text="Spesifikasjoner:" textFill="#173e3c">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -97,9 +97,9 @@
                         <Insets left="20.0" top="20.0" />
                      </VBox.margin>
                   </Label>
-                  <TextArea fx:id="specifications" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="255.0">
+                  <TextArea fx:id="specifications" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="255.0" promptText="Kort beskrivelse">
                      <font>
-                        <Font size="14.0" />
+                        <Font size="16.0" />
                      </font>
                      <VBox.margin>
                         <Insets left="20.0" top="5.0" />
@@ -107,7 +107,7 @@
                   </TextArea>
                   <HBox prefHeight="30.0" prefWidth="200.0">
                      <children>
-                        <Label prefHeight="31.0" prefWidth="51.0" text="Pris:" textFill="#051821">
+                        <Label prefHeight="31.0" prefWidth="51.0" text="Pris:" textFill="#173e3c">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
@@ -120,7 +120,7 @@
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <Label alignment="BOTTOM_LEFT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="50.0" text=",-Kr" textFill="#051821">
+                        <Label alignment="BOTTOM_LEFT" contentDisplay="RIGHT" prefHeight="25.0" prefWidth="50.0" text=",-Kr" textFill="#173e3c">
                            <font>
                               <Font size="15.0" />
                            </font>
@@ -141,7 +141,7 @@
                         <Insets left="20.0" top="30.0" />
                      </VBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0"  text="Slett" textFill="#d12300">
+                  <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0" text="Slett">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -168,7 +168,7 @@
                   </HBox>
                   <TableView fx:id="tableview" editable="true" prefHeight="623.0" prefWidth="700.0" VBox.vgrow="ALWAYS">
                      <columns>
-                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="125.0" text="KomponentNr">
+                        <TableColumn fx:id="idCol" maxWidth="150.0" minWidth="50.0" prefWidth="125.0" text="ID">
                            <cellValueFactory>
                               <PropertyValueFactory property="productID" />
                            </cellValueFactory>
