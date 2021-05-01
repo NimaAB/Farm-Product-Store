@@ -5,6 +5,7 @@ import org.app.fileHandling.save.*;
 
 import javafx.concurrent.Task;
 import org.app.validation.ioExceptions.InvalidExtensionException;
+import org.app.validation.ioExceptions.InvalidTypeException;
 
 import java.util.ArrayList;
 
@@ -30,7 +31,7 @@ public class SaveThread<T> extends Task<Void> {
     }
 
     @Override
-    public Void call(){
+    public Void call() throws InvalidTypeException {
         try {
             for(int i = 0; i < 100; i++){
                 Thread.sleep(20);

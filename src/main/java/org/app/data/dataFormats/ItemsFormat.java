@@ -1,6 +1,8 @@
 package org.app.data.dataFormats;
 
 import org.app.data.models.Product;
+import org.app.validation.Alerts;
+import org.app.validation.customExceptions.EmptyFieldException;
 import org.app.validation.ioExceptions.InvalidTypeException;
 
 import java.util.ArrayList;
@@ -16,20 +18,26 @@ public class ItemsFormat {
     public static final String DELIMITER = ",";
 
     public static <T> String objectFormat(T object) throws InvalidTypeException {
-        if(object instanceof Product){
-            if(((Product) object).getSpecification().contains(DELIMITER)){
+        if (object instanceof Product) {
+            if (((Product) object).getSpecification().contains(DELIMITER)) {
                 ((Product) object).setSpecification(((Product) object)
-                        .getSpecification().replace(',','|'));
+                        .getSpecification().replace(',', '|'));
             }
+
+            if (((Product) object).getSubCategory().equals("Velg på nytt")) {
+                throw new InvalidTypeException("Feil: Produktet med id: " + ((Product) object).getProductID()
+                        + " mangler under kategori! Prøv å rette det på tabellen.");
+            }
+
             return ((Product) object).csvFormat(DELIMITER);
         }
         throw new InvalidTypeException("Programmet støtter ikke denne objekt typen!");
 
     }
 
-    public static <T> String itemsText(ArrayList<T> items) throws InvalidTypeException {
+    public static <T> String itemsText(ArrayList<T> items) throws InvalidTypeException{
         StringBuilder itemText = new StringBuilder();
-        for( T item: items){
+        for (T item : items) {
             itemText.append(objectFormat(item));
             itemText.append("\n");
         }

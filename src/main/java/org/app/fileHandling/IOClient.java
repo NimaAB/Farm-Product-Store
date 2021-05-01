@@ -10,6 +10,7 @@ import org.app.validation.Alerts;
 import org.app.validation.ioExceptions.InvalidTypeException;
 
 
+import java.io.File;
 import java.util.ArrayList;
 
 public class IOClient<T> {
@@ -42,9 +43,14 @@ public class IOClient<T> {
     }
 
     private void saveDone(WorkerStateEvent e) {
-        saveThread.call();
-        loadingAlert.close();
-        Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
+        try {
+            saveThread.call();
+            loadingAlert.close();
+            Alerts.success("Filen din ble lagret i: " + fileInfo.getPath());
+        } catch (InvalidTypeException exception) {
+            Alerts.warning(exception.getMessage());
+            //fileInfo.deleteFile();
+        }
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -71,7 +77,7 @@ public class IOClient<T> {
             collection.setComponents(list);
             loadingAlert.close();
             collection.setModified(false);
-        }catch (InvalidTypeException exception){
+        } catch (InvalidTypeException exception) {
             Alerts.warning(exception.getMessage());
         }
     }
