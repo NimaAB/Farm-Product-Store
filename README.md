@@ -8,12 +8,13 @@
 - [x] update searching/filter methods.
 - [x] adding improvment and simplicity to the code.
 - [x] gui changes
-- [ ] Example data.
+- [x] Example data.
+- [ ] Editable ComboBoxes
 
 
 
 
-This project is a simple regitration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2020.
+This project is a simple regitration application. Which is developed by a group of students at Oslo Metropolitant Univercity at Oslo for the spring semester 2021.
 
 
 ## Login info:
@@ -27,7 +28,3 @@ This project is a simple regitration application. Which is developed by a group 
 - saving to and reading from both Comma-Separated Values (.csv) and Binary (.bin) files.
 
 All data will be saved in a folder named `DataFraApp`. 
-
-## Requirements:
-JDK-13 or higher
-
