@@ -1,5 +1,6 @@
 package org.app.fileHandling;
 
+import org.app.controllers.AdminController;
 import org.app.data.dataCollection.TableViewCollection;
 import org.app.data.models.Product;
 import org.app.fileHandling.fileThreads.OpenThread;
@@ -70,8 +71,12 @@ public class IOClient<T> {
             ArrayList<Product> list = (ArrayList<Product>) openThread.call();
             collection.getComponents().clear();
             collection.setComponents(list);
+            collection.setLoadedFile(fileInfo.getFullPath());
             loadingAlert.close();
             collection.setModified(false);
+            if(!fileInfo.getFileName().equals("Database/products.bin")){
+                AdminController.filenameLabel.setText(fileInfo.getFileName());
+            }
         } catch (InvalidTypeException ignored) {}
     }
 

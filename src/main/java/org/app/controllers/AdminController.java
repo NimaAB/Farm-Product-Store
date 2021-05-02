@@ -4,8 +4,6 @@ package org.app.controllers;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
 import org.app.fileHandling.IOClient;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import org.app.Load;
 import org.app.PathDialogBox;
@@ -53,15 +51,15 @@ public class AdminController implements Initializable {
     @FXML
     private TableColumn<Product, Integer> idCol;
     @FXML
-    private Label filenameLabel;
+    public static Label filenameLabel;
 
     private TableSelectionModel<Product> tableSelectionModel;
-    private TableViewCollection collection = TableViewCollection.getINSTANCE();
+    private final TableViewCollection COLLECTION = TableViewCollection.getINSTANCE();
     private String openedFile;
-    private PathDialogBox pathDialogBox = new PathDialogBox();
+    private final PathDialogBox PATH_DIALOG_BOX = new PathDialogBox();
 
-    private NumberConversion.StringToDouble stringToDouble = new NumberConversion.StringToDouble();
-    private NumberConversion.StringtoInteger stringtoInteger = new NumberConversion.StringtoInteger();
+    private final NumberConversion.StringToDouble STR_2_DOUBLE = new NumberConversion.StringToDouble();
+    private final NumberConversion.StringtoInteger STR_2_INT = new NumberConversion.StringtoInteger();
 
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
@@ -75,21 +73,21 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String file = "DataFraApp/Database/products.bin";
-        collection.loadComponents(file);
-        collection.setTableView(tableview);
-        collection.fillFilterComboBox(filterComboBox);
-        collection.filterTableView(tableview, txtFilter);
-        collection.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
-        collection.fillSubCategoryCombobox(tableview);
+        COLLECTION.loadComponents(file);
+        COLLECTION.setTableView(tableview);
+        COLLECTION.fillFilterComboBox(filterComboBox);
+        COLLECTION.filterTableView(tableview, txtFilter);
+        COLLECTION.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
+        COLLECTION.fillSubCategoryCombobox(tableview);
 
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(collection.getSubcategories()));
-        idCol.setCellFactory(TextFieldTableCell.forTableColumn(stringtoInteger));
-        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(stringToDouble));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
+        //idCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_INT));
+        priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*(\\.\\d*)?")) {
@@ -110,7 +108,7 @@ public class AdminController implements Initializable {
             Double product_price = Validator.validatePrice(price.getText());
 
             Product product = new Product(product_name, category, subcategory, specs, product_price);
-            collection.addComponent(product);
+            COLLECTION.addComponent(product);
             reset();
 
             Alerts.success("Ny Produkt Opprettet");
@@ -132,17 +130,15 @@ public class AdminController implements Initializable {
         boolean doOpen = Alerts.confirm("Vil du erstatte dataene du har i tabellen " +
                                         "med dataene som ligger i filen som du skal laste opp?");
         if (doOpen) {
-            String path = "DataFraApp/" + pathDialogBox.getPathToOpen();
+            String path = "DataFraApp/" + PATH_DIALOG_BOX.getPathToOpen();
             try {
-                pathDialogBox.nullPathHandling(path);
-                pathDialogBox.extensionCheck(path);
-                pathDialogBox.fileNotFound(path);
+                PATH_DIALOG_BOX.nullPathHandling(path);
+                PATH_DIALOG_BOX.extensionCheck(path);
+                PATH_DIALOG_BOX.fileNotFound(path);
                 FileInfo file = new FileInfo(path);
                 IOClient<Product> io = new IOClient<>(file);
                 io.runOpenThread();
                 setOpenedFile(file.getFullPath());
-                filenameLabel.setText(file.getFileName());
-                collection.setLoadedFile(file.getFullPath());
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
             }
@@ -153,12 +149,12 @@ public class AdminController implements Initializable {
 
     private String getPath() {
         if (getOpenedFile() == null) {
-            return pathDialogBox.getPathToSave();
+            return PATH_DIALOG_BOX.getPathToSave();
         }
 
         boolean newFile = Alerts.confirm("Vil du lagre filen som en ny fil?");
         if (newFile) {
-            return pathDialogBox.getPathToSave();
+            return PATH_DIALOG_BOX.getPathToSave();
         } else {
             return getOpenedFile();
         }
@@ -166,12 +162,12 @@ public class AdminController implements Initializable {
 
     @FXML
     void save() {
-        ArrayList<Product> components = new ArrayList<>(collection.getComponents());
+        ArrayList<Product> components = new ArrayList<>(COLLECTION.getComponents());
         if (!components.isEmpty()) {
             String path = "DataFraApp/" + getPath();
             try {
-                pathDialogBox.nullPathHandling(path);
-                pathDialogBox.extensionCheck(path);
+                PATH_DIALOG_BOX.nullPathHandling(path);
+                PATH_DIALOG_BOX.extensionCheck(path);
             } catch (NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
                 return;
@@ -188,7 +184,7 @@ public class AdminController implements Initializable {
     void editName(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setProductName(event.getNewValue());
-            collection.setModified(true);
+            COLLECTION.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -200,7 +196,7 @@ public class AdminController implements Initializable {
     void editSpecs(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setSpecification(event.getNewValue());
-            collection.setModified(true);
+            COLLECTION.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -214,7 +210,7 @@ public class AdminController implements Initializable {
             event.getRowValue().setCategory(event.getNewValue());
             event.getRowValue().setSubCategory("Velg på nytt");
             Alerts.success("Du har endret foreldre kategori.\nVelg en ny subkategori.");
-            collection.setModified(true);
+            COLLECTION.setModified(true);
             tableview.refresh();
         } catch (Exception e) {
             Alerts.warning(e.getMessage());
@@ -226,7 +222,7 @@ public class AdminController implements Initializable {
     void editSubCategory(TableColumn.CellEditEvent<Product, String> event) {
         try {
             event.getRowValue().setSubCategory(event.getNewValue());
-            collection.setModified(true);
+            COLLECTION.setModified(true);
             tableview.refresh();
         } catch (Exception e) {
             Alerts.warning(e.getMessage());
@@ -238,7 +234,7 @@ public class AdminController implements Initializable {
     void editPrice(TableColumn.CellEditEvent<Product, Double> event) {
         try {
             event.getRowValue().setPrice(event.getNewValue());
-            collection.setModified(true);
+            COLLECTION.setModified(true);
             tableview.refresh();
         } catch (IllegalArgumentException e) {
             Alerts.warning(e.getMessage());
@@ -253,7 +249,7 @@ public class AdminController implements Initializable {
         ObservableList<Product> selectedRows = tableSelectionModel.getSelectedItems();
         boolean doRemove = Alerts.confirm("Er du sikker på at du vil slette varen/varene du har valgt?");
         if (doRemove) {
-            collection.deleteSelectedComponents(selectedRows);
+            COLLECTION.deleteSelectedComponents(selectedRows);
             tableview.refresh();
         } else {
             tableSelectionModel.clearSelection();
@@ -262,15 +258,15 @@ public class AdminController implements Initializable {
 
     @FXML
     void logOut() {
-        if (collection.isModified()) {
+        if (COLLECTION.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if (response) {
-                collection.saveData();
+                COLLECTION.saveData();
             } else {
                 Alerts.success("Endringer er ikke lagret");
-                collection.setReloadComponents(true);
-                collection.getComponents().clear();
-                collection.setModified(false);
+                COLLECTION.setReloadComponents(true);
+                COLLECTION.getComponents().clear();
+                COLLECTION.setModified(false);
             }
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("loginView.fxml", "Login", stage);

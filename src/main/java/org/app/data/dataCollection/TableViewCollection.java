@@ -30,7 +30,7 @@ public class TableViewCollection {
      * Når et objekt av denne klasse blir opprettet, skal den alltid passe på om dataene i tableview er endret.
      */
     private TableViewCollection() {
-        PRODUCTS.addListener((ListChangeListener<Product>) change -> modified = true);
+        PRODUCTS.addListener((ListChangeListener<Product>) change -> setModified(true));
     }
 
     /**
@@ -59,7 +59,7 @@ public class TableViewCollection {
     public void deleteSelectedComponents(ObservableList<Product> selectedProducts) {
         if (selectedProducts.size() >= 1) {
             PRODUCTS.removeAll(selectedProducts);
-            modified = true;
+            setModified(true);
         }
     }
 
@@ -74,7 +74,7 @@ public class TableViewCollection {
             }
         }
         PRODUCTS.add(product);
-        modified = true;
+        setModified(true);
     }
 
     /**
@@ -84,7 +84,7 @@ public class TableViewCollection {
         ArrayList<Product> data = new ArrayList<>(getComponents());
         IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
         save.runSaveThread();
-        modified = false;
+        setModified(false);
     }
 
     /**

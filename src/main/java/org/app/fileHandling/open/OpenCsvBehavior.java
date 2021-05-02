@@ -21,6 +21,10 @@ public class OpenCsvBehavior<T> extends OpenAbstract<T>{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // ikke sikker enda!!
+        if(items.size()==0){
+            throw new InvalidTypeException("Filen du vil laste opp er tom!");
+        }
         return items;
     }
 }
