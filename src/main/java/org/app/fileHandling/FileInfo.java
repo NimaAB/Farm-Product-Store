@@ -1,28 +1,22 @@
 package org.app.fileHandling;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 
 public class FileInfo {
-    private String path;
+    private String fullPath;
     public FileInfo(String path){
-        this.path = path;
+        this.fullPath = path;
     }
 
-    public String getPath(){
-        return this.path;
+    public String getFullPath(){
+        return this.fullPath;
     }
 
     public String getExtension(){
-        return path.substring(path.lastIndexOf("."));
+        return fullPath.substring(fullPath.lastIndexOf("."));
     }
 
-    public void deleteFile(){
-        try{
-            Files.deleteIfExists(Paths.get(this.path));
-        }catch (IOException ignore){ }
+    public String getFileName(){
+        return fullPath.substring("DataFraApp/".length());
     }
 
 }

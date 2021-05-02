@@ -140,9 +140,9 @@ public class AdminController implements Initializable {
                 FileInfo file = new FileInfo(path);
                 IOClient<Product> io = new IOClient<>(file);
                 io.runOpenThread();
-                setOpenedFile(path);
-                filenameLabel.setText(path);
-                collection.setLoadedFile(path);
+                setOpenedFile(file.getFullPath());
+                filenameLabel.setText(file.getFileName());
+                collection.setLoadedFile(file.getFullPath());
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
             }

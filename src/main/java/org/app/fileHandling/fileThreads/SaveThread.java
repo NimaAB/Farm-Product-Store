@@ -39,7 +39,7 @@ public class SaveThread<T> extends Task<Void> {
             }
         }
         catch (InterruptedException ignored){}
-        saveBehaviorFactory().write(this.file.getPath(), this.listToWrite);
+        saveBehaviorFactory().write(this.file.getFullPath(), this.listToWrite);
         return null;
     }
 }

@@ -30,12 +30,7 @@ public class TableViewCollection {
      * Når et objekt av denne klasse blir opprettet, skal den alltid passe på om dataene i tableview er endret.
      */
     private TableViewCollection() {
-        PRODUCTS.addListener(new ListChangeListener<Product>() {
-            @Override
-            public void onChanged(Change<? extends Product> change) {
-                modified = true;
-            }
-        });
+        PRODUCTS.addListener((ListChangeListener<Product>) change -> modified = true);
     }
 
     /**

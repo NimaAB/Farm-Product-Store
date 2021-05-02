@@ -40,6 +40,6 @@ public class OpenThread<T> extends Task<ArrayList<T>> {
                 updateProgress(i, 100);
             }
         } catch (InterruptedException ignored){}
-        return openBehaviorFactory().read(new File(file.getPath()));
+        return openBehaviorFactory().read(new File(file.getFullPath()));
     }
 }
