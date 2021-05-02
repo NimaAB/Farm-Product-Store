@@ -52,6 +52,8 @@ public class AdminController implements Initializable {
     private TableColumn<Product, Double> priceCol;
     @FXML
     private TableColumn<Product, Integer> idCol;
+    @FXML
+    private Label filenameLabel;
 
     private TableSelectionModel<Product> tableSelectionModel;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
@@ -139,6 +141,7 @@ public class AdminController implements Initializable {
                 IOClient<Product> io = new IOClient<>(file);
                 io.runOpenThread();
                 setOpenedFile(path);
+                filenameLabel.setText(path);
                 collection.setLoadedFile(path);
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
