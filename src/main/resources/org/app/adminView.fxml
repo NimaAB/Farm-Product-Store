@@ -89,7 +89,7 @@
                         <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </ComboBox>
-                  <Button alignment="CENTER" layoutX="30.0" layoutY="525.0" mnemonicParsing="false" onAction="#popCategoryRegister" prefHeight="30.0" prefWidth="250.0" text="Opprett ny kategori" textAlignment="CENTER">
+                  <Button alignment="CENTER" layoutX="30.0" layoutY="525.0" mnemonicParsing="false" onAction="#showCategoryRegister" prefHeight="30.0" prefWidth="250.0" text="Opprett ny kategori" textAlignment="CENTER">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>

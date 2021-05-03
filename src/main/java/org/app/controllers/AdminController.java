@@ -279,7 +279,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    void popCategoryRegister(ActionEvent actionEvent) {
+    void showCategoryRegister(ActionEvent actionEvent) {
        CategoryCollection.openCategoryPopup();
     }
 }
