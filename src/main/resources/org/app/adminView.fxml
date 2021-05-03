@@ -187,7 +187,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editCategory" prefWidth="138.8333740234375" text="Kategori">
+                        <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" prefWidth="138.8333740234375" text="Kategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="category" />
                            </cellValueFactory>
@@ -195,7 +195,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="subcategoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editSubCategory" prefWidth="137.52783203125" text="Subkategori">
+                        <TableColumn fx:id="subcategoryCol" maxWidth="300.0" minWidth="50.0" prefWidth="137.52783203125" text="Subkategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="subCategory" />
                            </cellValueFactory>

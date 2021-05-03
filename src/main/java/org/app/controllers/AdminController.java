@@ -1,6 +1,9 @@
 package org.app.controllers;
 
 
+import javafx.event.ActionEvent;
+import javafx.scene.input.MouseEvent;
+import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
 import org.app.fileHandling.IOClient;
@@ -86,8 +89,8 @@ public class AdminController implements Initializable {
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         filenameLabelStatic = filenameLabel;
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
+        categoryCol.setOnEditStart(event -> CategoryCollection.openCategoryPopup());
+        subcategoryCol.setOnEditStart(event -> CategoryCollection.openCategoryPopup());
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -207,7 +210,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void editCategory(TableColumn.CellEditEvent<Product, String> event) {
-        try {
+        /*try {
             event.getRowValue().setCategory(event.getNewValue());
             event.getRowValue().setSubCategory("Velg på nytt");
             Alerts.success("Du har endret foreldre kategori.\nVelg en ny subkategori.");
@@ -216,7 +219,7 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             Alerts.warning(e.getMessage());
             tableview.refresh();
-        }
+        }*/
     }
 
     @FXML
