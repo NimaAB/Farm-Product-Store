@@ -83,6 +83,7 @@ public class AdminController implements Initializable {
         CategoryCollection.setComboBoxes(categoriesCombobox, subcategoryCombobox);
         CategoryCollection.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
         CategoryCollection.updateSubCategoriesOnChange(categoriesCombobox);
+        CategoryCollection.updateSubCategoriesOnTableView(tableview);
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);

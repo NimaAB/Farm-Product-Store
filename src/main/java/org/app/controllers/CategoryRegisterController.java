@@ -26,7 +26,6 @@ public class CategoryRegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        CategoryCollection.loadDefinedCategories();
         listViewOnChange();
     }
 
