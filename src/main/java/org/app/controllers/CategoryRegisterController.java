@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.models.Category;
 import org.app.validation.Alerts;
+import org.app.validation.Validator;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -26,13 +27,15 @@ public class CategoryRegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        listViewOnChange();
+        subCategories.addListener((ListChangeListener<String>) change -> childCategoryListview.setItems(subCategories));
     }
 
     @FXML
     void addNewCategory() {
         try {
             String categoryName = parentCategoryTextField.getText();
+            Validator.validateCategory(categoryName);
+
             Category newCategory = new Category(categoryName);
             newCategory.addAll(new ArrayList<>(subCategories));
             CategoryCollection.addCategory(newCategory);
@@ -52,6 +55,12 @@ public class CategoryRegisterController implements Initializable {
     void addNewSubCategory() {
         try {
             String subCategoryName = childCategoryTextField.getText();
+
+            Validator.validateCategory(subCategoryName);
+            if(subCategories.contains(subCategoryName)) {
+                throw new IllegalArgumentException("Sub-kategorien " + subCategoryName + " er allerede definert");
+            }
+
             subCategories.add(subCategoryName);
             childCategoryTextField.setText("");
         } catch (Exception e) {
@@ -63,14 +72,5 @@ public class CategoryRegisterController implements Initializable {
     void avbryt() {
         Stage stage = (Stage) parentPane.getScene().getWindow();
         stage.close();
-    }
-
-    void listViewOnChange(){
-        subCategories.addListener(new ListChangeListener<String>() {
-            @Override
-            public void onChanged(Change<? extends String> change) {
-                childCategoryListview.setItems(subCategories);
-            }
-        });
     }
 }

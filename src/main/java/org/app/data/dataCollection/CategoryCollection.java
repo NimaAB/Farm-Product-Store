@@ -22,8 +22,12 @@ public class CategoryCollection {
     /** legger nye kategorier */
     public static void addCategory(Category toAdd){
         if(!CATEGORIES.contains(toAdd)) {
-            mainCategories.add(toAdd.getName());
-            CATEGORIES.add(toAdd);
+            if(!mainCategories.contains(toAdd.getName())) {
+                mainCategories.add(toAdd.getName());
+                CATEGORIES.add(toAdd);
+            } else {
+                throw new IllegalArgumentException("En kategori med navn " +toAdd.getName()+ " finnes allerede!");
+            }
         }
     }
 
