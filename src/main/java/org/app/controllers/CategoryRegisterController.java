@@ -23,6 +23,7 @@ public class CategoryRegisterController implements Initializable {
     @FXML private TextField childCategoryTextField;
     @FXML private ListView<String> childCategoryListview;
     private final ObservableList<String> subCategories = FXCollections.observableArrayList();
+    private final CategoryCollection CATEGORY_COLLECTION = CategoryCollection.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -35,7 +36,7 @@ public class CategoryRegisterController implements Initializable {
             String categoryName = parentCategoryTextField.getText();
             Category newCategory = new Category(categoryName);
             newCategory.addAll(new ArrayList<>(subCategories));
-            CategoryCollection.addCategory(newCategory);
+            CATEGORY_COLLECTION.addCategory(newCategory);
 
             parentCategoryTextField.setText("");
             childCategoryTextField.setText("");

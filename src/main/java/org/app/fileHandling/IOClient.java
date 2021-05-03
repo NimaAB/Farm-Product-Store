@@ -1,7 +1,9 @@
 package org.app.fileHandling;
 
 import org.app.controllers.AdminController;
+import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.dataCollection.TableViewCollection;
+import org.app.data.models.Category;
 import org.app.data.models.Product;
 import org.app.fileHandling.fileThreads.OpenThread;
 import org.app.fileHandling.fileThreads.SaveThread;
@@ -21,6 +23,7 @@ public class IOClient<T> {
     private SaveThread<T> saveThread;
     private Alert loadingAlert;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
+    private CategoryCollection categoryCollection = CategoryCollection.getInstance();
 
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
@@ -70,13 +73,19 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         try {
-            ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-            collection.getComponents().clear();
-            collection.setComponents(list);
-            collection.setLoadedFile(fileInfo.getFullPath());
-            loadingAlert.close();
-            collection.setModified(false);
-            AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
+            if(fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")){
+                ArrayList<Category> list = (ArrayList<Category>) openThread.call();
+                categoryCollection.setCategories(list);
+            }else{
+                ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+                collection.getComponents().clear();
+                collection.setComponents(list);
+                collection.setLoadedFile(fileInfo.getFullPath());
+                loadingAlert.close();
+                collection.setModified(false);
+                AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
+            }
+
         } catch (InvalidTypeException ignored) {
         }
     }

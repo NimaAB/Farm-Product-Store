@@ -56,6 +56,7 @@ public class AdminController implements Initializable {
 
     private TableSelectionModel<Product> tableSelectionModel;
     private final TableViewCollection COLLECTION = TableViewCollection.getINSTANCE();
+    private final CategoryCollection CATEGORY_COLLECTION = CategoryCollection.getInstance();
     private String openedFile;
     private final PathDialogBox PATH_DIALOG_BOX = new PathDialogBox();
 
@@ -79,18 +80,18 @@ public class AdminController implements Initializable {
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
 
-        CategoryCollection.loadDefinedCategories();
-        CategoryCollection.setComboBoxes(categoriesCombobox, subcategoryCombobox);
-        CategoryCollection.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
-        CategoryCollection.updateSubCategoriesOnChange(categoriesCombobox);
-        CategoryCollection.updateSubCategoriesOnTableView(tableview);
+        CATEGORY_COLLECTION.loadDefinedCategories();
+        CATEGORY_COLLECTION.setComboBoxes(categoriesCombobox, subcategoryCombobox);
+        CATEGORY_COLLECTION.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
+        CATEGORY_COLLECTION.updateSubCategoriesOnChange(categoriesCombobox);
+        CATEGORY_COLLECTION.updateSubCategoriesOnTableView(tableview);
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         filenameLabelStatic = filenameLabel;
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CategoryCollection.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CategoryCollection.getSubCategories()));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CATEGORY_COLLECTION.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CATEGORY_COLLECTION.getSubCategories()));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -280,7 +281,7 @@ public class AdminController implements Initializable {
     }
 
     @FXML
-    void showCategoryRegister(ActionEvent actionEvent) {
-       CategoryCollection.openCategoryPopup();
+    void showCategoryRegister() {
+       Load.openCategoryPopup();
     }
 }
