@@ -52,8 +52,6 @@ public class AdminController implements Initializable {
     @FXML
     private TableColumn<Product, Double> priceCol;
     @FXML
-    private TableColumn<Product, Integer> idCol;
-    @FXML
     private Label filenameLabel;
     public static Label filenameLabelStatic;
 
@@ -89,8 +87,8 @@ public class AdminController implements Initializable {
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         filenameLabelStatic = filenameLabel;
 
-        categoryCol.setOnEditStart(event -> CategoryCollection.openCategoryPopup());
-        subcategoryCol.setOnEditStart(event -> CategoryCollection.openCategoryPopup());
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -210,7 +208,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void editCategory(TableColumn.CellEditEvent<Product, String> event) {
-        /*try {
+        try {
             event.getRowValue().setCategory(event.getNewValue());
             event.getRowValue().setSubCategory("Velg på nytt");
             Alerts.success("Du har endret foreldre kategori.\nVelg en ny subkategori.");
@@ -219,7 +217,7 @@ public class AdminController implements Initializable {
         } catch (Exception e) {
             Alerts.warning(e.getMessage());
             tableview.refresh();
-        }*/
+        }
     }
 
     @FXML
@@ -278,5 +276,10 @@ public class AdminController implements Initializable {
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("loginView.fxml", "Login", stage);
         }
+    }
+
+    @FXML
+    void popCategoryRegister(ActionEvent actionEvent) {
+       CategoryCollection.openCategoryPopup();
     }
 }

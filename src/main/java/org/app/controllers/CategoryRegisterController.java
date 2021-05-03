@@ -18,7 +18,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-public class popEditCategoryController implements Initializable {
+public class CategoryRegisterController implements Initializable {
 
     @FXML private ComboBox<String> parentCategory;
     @FXML private ComboBox<String> childCategory;
