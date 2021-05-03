@@ -21,6 +21,7 @@ public class IOClient<T> {
     private SaveThread<T> saveThread;
     private Alert loadingAlert;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
+
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
         this.listToWrite = listToWrite;
@@ -47,7 +48,8 @@ public class IOClient<T> {
             saveThread.call();
             loadingAlert.close();
             Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
-        } catch (InvalidTypeException ignore) {}
+        } catch (InvalidTypeException ignore) {
+        }
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -74,10 +76,9 @@ public class IOClient<T> {
             collection.setLoadedFile(fileInfo.getFullPath());
             loadingAlert.close();
             collection.setModified(false);
-            if(!fileInfo.getFileName().equals("Database/products.bin")){
-                AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
-            }
-        } catch (InvalidTypeException ignored) {}
+            AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
+        } catch (InvalidTypeException ignored) {
+        }
     }
 
     private void openFailed(WorkerStateEvent event) {

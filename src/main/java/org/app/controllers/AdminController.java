@@ -60,7 +60,7 @@ public class AdminController implements Initializable {
     private final PathDialogBox PATH_DIALOG_BOX = new PathDialogBox();
 
     private final NumberConversion.StringToDouble STR_2_DOUBLE = new NumberConversion.StringToDouble();
-    private final NumberConversion.StringtoInteger STR_2_INT = new NumberConversion.StringtoInteger();
+
 
     private void setOpenedFile(String openedFile) {
         this.openedFile = openedFile;
@@ -88,7 +88,6 @@ public class AdminController implements Initializable {
 
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
         subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
-        //idCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_INT));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
