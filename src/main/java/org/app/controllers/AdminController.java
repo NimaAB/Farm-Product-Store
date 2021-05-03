@@ -2,7 +2,6 @@ package org.app.controllers;
 
 
 import javafx.event.ActionEvent;
-import javafx.scene.input.MouseEvent;
 import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
@@ -79,16 +78,18 @@ public class AdminController implements Initializable {
         COLLECTION.setTableView(tableview);
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
-        COLLECTION.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
-        COLLECTION.fillSubCategoryCombobox(tableview);
 
+        CategoryCollection.loadDefinedCategories();
+        CategoryCollection.setComboBoxes(categoriesCombobox, subcategoryCombobox);
+        CategoryCollection.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
+        CategoryCollection.updateSubCategoriesOnChange(categoriesCombobox);
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         filenameLabelStatic = filenameLabel;
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CategoryCollection.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CategoryCollection.getSubCategories()));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -115,7 +116,6 @@ public class AdminController implements Initializable {
 
             Alerts.success("Ny Produkt Opprettet");
         } catch (InvalidTextInputException | EmptyFieldException | InvalidNumberFormat e) {
-
             Alerts.warning(e.getMessage());
         }
     }

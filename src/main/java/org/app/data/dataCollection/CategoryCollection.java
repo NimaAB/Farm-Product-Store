@@ -13,27 +13,28 @@ import java.util.Arrays;
 public class CategoryCollection {
 
     private static final ObservableList<Category> CATEGORIES = FXCollections.observableArrayList();
-    private static final ObservableList<String> parentCategories = FXCollections.observableArrayList();
-    private static final ObservableList<String> childCategories = FXCollections.observableArrayList();
-    private static final TableViewCollection productCollection = TableViewCollection.getINSTANCE();
+    private static final ObservableList<String> mainCategories = FXCollections.observableArrayList();
+    private static final ObservableList<String> subCategories = FXCollections.observableArrayList();
 
     public static void addCategory(Category toAdd){
-        parentCategories.add(toAdd.getName());
-        CATEGORIES.add(toAdd);
+        if(!CATEGORIES.contains(toAdd)) {
+            mainCategories.add(toAdd.getName());
+            CATEGORIES.add(toAdd);
+        }
     }
 
-    public static void collectionOnChange(ComboBox<String> parentOptions, ComboBox<String> childOptions){
+    public static void updateCategoriesOnChange(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions){
         CATEGORIES.addListener((ListChangeListener<Category>) change -> {
-            setComboBoxes(parentOptions, childOptions);
+            setComboBoxes(categoryOptions, subCategoryOptions);
         });
     }
 
-    public static void parentCategoriesOnChange(ComboBox<String> parentCategoriesOptions){
+    public static void updateSubCategoriesOnChange(ComboBox<String> parentCategoriesOptions){
         parentCategoriesOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            childCategories.clear();
+            subCategories.clear();
             for(Category category: CATEGORIES) {
                 if(category.getName().equals(newValue)) {
-                    childCategories.addAll(category.getSubCategories());
+                    subCategories.addAll(category.getSubCategories());
                 }
             }
         });
@@ -55,27 +56,30 @@ public class CategoryCollection {
         landbruk.addAll(new ArrayList<>(Arrays.asList(landbrukTyper)));
         gjodsel.addAll(new ArrayList<>(Arrays.asList(gjodselTyper)));
 
-        parentCategories.add(korn.getName());
-        parentCategories.add(klaer.getName());
-        parentCategories.add(landbruk.getName());
-        parentCategories.add(gjodsel.getName());
-
-        CATEGORIES.add(korn);
-        CATEGORIES.add(klaer);
-        CATEGORIES.add(landbruk);
-        CATEGORIES.add(gjodsel);
+        addCategory(korn);
+        addCategory(klaer);
+        addCategory(landbruk);
+        addCategory(gjodsel);
     }
 
-    public static void setComboBoxes(ComboBox<String> parentOptions, ComboBox<String> childOptions){
-        parentOptions.setItems(parentCategories);
-        childOptions.setItems(childCategories);
+    public static void setComboBoxes(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions){
+        categoryOptions.setItems(mainCategories);
+        subCategoryOptions.setItems(subCategories);
     }
 
     public static void openCategoryPopup(){
         try {
-            Load.window("popupEditCategory.fxml","Endre Kategori",new Stage());
+            Load.window("category.fxml","Endre Kategori",new Stage());
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static ObservableList<String> getCategories() {
+        return mainCategories;
+    }
+
+    public static ObservableList<String> getSubCategories() {
+        return subCategories;
     }
 }
