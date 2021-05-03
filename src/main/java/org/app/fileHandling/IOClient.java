@@ -75,7 +75,7 @@ public class IOClient<T> {
             loadingAlert.close();
             collection.setModified(false);
             if(!fileInfo.getFileName().equals("Database/products.bin")){
-                AdminController.filenameLabel.setText(fileInfo.getFileName());
+                AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
             }
         } catch (InvalidTypeException ignored) {}
     }

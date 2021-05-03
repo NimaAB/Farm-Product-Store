@@ -51,7 +51,8 @@ public class AdminController implements Initializable {
     @FXML
     private TableColumn<Product, Integer> idCol;
     @FXML
-    public static Label filenameLabel;
+    private Label filenameLabel;
+    public static Label filenameLabelStatic;
 
     private TableSelectionModel<Product> tableSelectionModel;
     private final TableViewCollection COLLECTION = TableViewCollection.getINSTANCE();
@@ -83,6 +84,7 @@ public class AdminController implements Initializable {
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
+        filenameLabelStatic = filenameLabel;
 
         categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
         subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
