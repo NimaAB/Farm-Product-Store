@@ -1,6 +1,9 @@
 package org.app.controllers;
 
 
+import javafx.event.ActionEvent;
+import org.app.data.dataCollection.CategoryCollection;
+import org.app.data.models.Category;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
 import org.app.fileHandling.IOClient;
@@ -49,13 +52,12 @@ public class AdminController implements Initializable {
     @FXML
     private TableColumn<Product, Double> priceCol;
     @FXML
-    private TableColumn<Product, Integer> idCol;
-    @FXML
     private Label filenameLabel;
     public static Label filenameLabelStatic;
 
     private TableSelectionModel<Product> tableSelectionModel;
     private final TableViewCollection COLLECTION = TableViewCollection.getINSTANCE();
+    private final CategoryCollection CATEGORY_COLLECTION = CategoryCollection.getInstance();
     private String openedFile;
     private final PathDialogBox PATH_DIALOG_BOX = new PathDialogBox();
 
@@ -78,16 +80,19 @@ public class AdminController implements Initializable {
         COLLECTION.setTableView(tableview);
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
-        COLLECTION.fillCategoryComboBox(categoriesCombobox, subcategoryCombobox);
-        COLLECTION.fillSubCategoryCombobox(tableview);
 
+        CATEGORY_COLLECTION.loadCategories();
+        CATEGORY_COLLECTION.setComboBoxes(categoriesCombobox, subcategoryCombobox);
+        CATEGORY_COLLECTION.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
+        CATEGORY_COLLECTION.updateSubCategoriesOnChange(categoriesCombobox);
+        CATEGORY_COLLECTION.updateSubCategoriesOnTableView(tableview);
 
         tableSelectionModel = tableview.getSelectionModel();
         tableSelectionModel.setSelectionMode(SelectionMode.MULTIPLE);
         filenameLabelStatic = filenameLabel;
 
-        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getCategories()));
-        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(COLLECTION.getSubcategories()));
+        categoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CATEGORY_COLLECTION.getCategories()));
+        subcategoryCol.setCellFactory(ComboBoxTableCell.forTableColumn(CATEGORY_COLLECTION.getSubCategories()));
         priceCol.setCellFactory(TextFieldTableCell.forTableColumn(STR_2_DOUBLE));
 
         price.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -114,7 +119,6 @@ public class AdminController implements Initializable {
 
             Alerts.success("Ny Produkt Opprettet");
         } catch (InvalidTextInputException | EmptyFieldException | InvalidNumberFormat e) {
-
             Alerts.warning(e.getMessage());
         }
     }
@@ -138,7 +142,7 @@ public class AdminController implements Initializable {
                 PATH_DIALOG_BOX.fileNotFound(path);
                 FileInfo file = new FileInfo(path);
                 IOClient<Product> io = new IOClient<>(file);
-                io.runOpenThread();
+                io.runOpenThread("Åpner filen...");
                 setOpenedFile(file.getFullPath());
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
@@ -175,10 +179,11 @@ public class AdminController implements Initializable {
             }
             FileInfo file = new FileInfo(path);
             IOClient<Product> io = new IOClient<>(file, components);
-            io.runSaveThread();
+            io.runSaveThread("Lagrer Filen...");
         } else {
             Alerts.warning("Ingenting er lagret.");
         }
+
     }
 
     @FXML
@@ -269,11 +274,16 @@ public class AdminController implements Initializable {
                 COLLECTION.getComponents().clear();
                 COLLECTION.setModified(false);
             }
-            Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml", "Login", stage);
-        } else {
-            Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml", "Login", stage);
+        } else if(CATEGORY_COLLECTION.isModified()) {
+            CATEGORY_COLLECTION.saveCategories();
         }
+        CATEGORY_COLLECTION.getCategories().clear();
+        Stage stage = (Stage) adminPane.getScene().getWindow();
+        Load.window("loginView.fxml", "Login", stage);
+    }
+
+    @FXML
+    void showCategoryRegister() {
+       Load.openCategoryPopup();
     }
 }

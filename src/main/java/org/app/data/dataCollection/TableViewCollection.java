@@ -18,8 +18,6 @@ import java.util.ArrayList;
 public class TableViewCollection {
 
     private final ObservableList<Product> PRODUCTS = FXCollections.observableArrayList();
-    private ObservableList<String> categories = FXCollections.observableArrayList();
-    private ObservableList<String> subcategories = FXCollections.observableArrayList();
     private boolean reloadComponents = true;
     private boolean modified = false;
     private String filterChoice = "Navn";
@@ -48,7 +46,7 @@ public class TableViewCollection {
         IOClient<Product> open = new IOClient<>(new FileInfo(filePath));
         loadedFile = filePath;
         if (reloadComponents) {
-            open.runOpenThread();
+            open.runOpenThread("Laster opp produkter...");
             reloadComponents = false;
         }
     }
@@ -83,7 +81,7 @@ public class TableViewCollection {
     public void saveData() {
         ArrayList<Product> data = new ArrayList<>(getComponents());
         IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
-        save.runSaveThread();
+        save.runSaveThread("lagrer filen...");
         setModified(false);
     }
 
@@ -92,77 +90,6 @@ public class TableViewCollection {
      */
     public void setTableView(TableView<Product> tableView) {
         tableView.setItems(getComponents());
-    }
-
-    /**
-     * Viser alle kategorier i en comboBox i skjemaen der admin oppretter nye komponenter
-     */
-    public void fillCategoryComboBox(ComboBox<String> categoryOptions, ComboBox<String> subcategoryOptions) {
-        String[] definedCategories = {"Korn", "Landbruk", "Gjødsel", "Arbeidsklær"};
-        ObservableList<String> categories = FXCollections.observableArrayList(definedCategories);
-
-        for (Product p : PRODUCTS) {
-            String category = p.getCategory().substring(0, 1).toUpperCase() + p.getCategory().substring(1);
-            if (!categories.contains(category)) {
-                categories.add(p.getCategory());
-            }
-        }
-
-        categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> {
-            subcategoryChooser(newValue);
-            subcategoryOptions.setItems(subcategories);
-        });
-
-        subcategoryOptions.setPromptText("Velg Subkategori");
-        categoryOptions.setPromptText("Velg Kategori");
-        categoryOptions.setItems(categories);
-        this.categories = categories;
-    }
-
-    /**
-     * Fyller opp subkategori combobox i tableview basert på elementenes hovedkategori
-     */
-
-    public void fillSubCategoryCombobox(TableView<Product> tableView) {
-
-        tableView.setRowFactory(tv -> {
-            TableRow<Product> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 1) {
-                    if (row.getItem() != null) {
-                        Product product = row.getItem();
-                        subcategoryChooser(product.getCategory());
-                    }
-                }
-            });
-            return row;
-        });
-    }
-
-    // Hjelper metode for ComboBox verdiene:
-    private void subcategoryChooser(String category){
-        String[] kornTyper = {"Såkorn", "Økologisk såkorn", "Underkultur og fangvekster", "Plantevern"};
-        String[] klaerTyper = {"Jakker", "Hansker", "Bukser", "Regntøy", "Varselklær"};
-        String[] gjodselTyper = {"Bladgjødsel", "Nitrogengjødsel", "NPK-gjødsel"};
-        String[] landbruk = {"Traktor", "Tresker", "Hjullaster", "Nyttekjøretøy"};
-        switch (category) {
-            case "Korn":
-                subcategories.clear();
-                subcategories.addAll(kornTyper);
-                break;
-            case "Arbeidsklær":
-                subcategories.clear();
-                subcategories.addAll(klaerTyper);
-                break;
-            case "Gjødsel":
-                subcategories.clear();
-                subcategories.addAll(gjodselTyper);
-                break;
-            case "Landbruk":
-                subcategories.clear();
-                subcategories.addAll(landbruk);
-                break;
-        }
     }
 
 
@@ -243,14 +170,6 @@ public class TableViewCollection {
 
     public ObservableList<Product> getComponents() {
         return PRODUCTS;
-    }
-
-    public ObservableList<String> getCategories() {
-        return categories;
-    }
-
-    public ObservableList<String> getSubcategories() {
-        return subcategories;
     }
 
     public void setReloadComponents(boolean reloadComponents1) {

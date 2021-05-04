@@ -1,7 +1,9 @@
 package org.app.fileHandling;
 
 import org.app.controllers.AdminController;
+import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.dataCollection.TableViewCollection;
+import org.app.data.models.Category;
 import org.app.data.models.Product;
 import org.app.fileHandling.fileThreads.OpenThread;
 import org.app.fileHandling.fileThreads.SaveThread;
@@ -21,6 +23,7 @@ public class IOClient<T> {
     private SaveThread<T> saveThread;
     private Alert loadingAlert;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
+    private CategoryCollection categoryCollection = CategoryCollection.getInstance();
 
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
@@ -33,8 +36,8 @@ public class IOClient<T> {
         this.openThread = new OpenThread<>(this.fileInfo);
     }
 
-    public void runSaveThread() {
-        loadingAlert = Alerts.showLoadingDialog(saveThread, "Lagrer filen...");
+    public void runSaveThread(String msg) {
+        loadingAlert = Alerts.showLoadingDialog(saveThread, msg);
         saveThread.setOnSucceeded(this::saveDone);
         saveThread.setOnFailed(this::saveFailed);
         saveThread.setOnRunning((e) -> loadingAlert.show());
@@ -47,9 +50,10 @@ public class IOClient<T> {
         try {
             saveThread.call();
             loadingAlert.close();
-            Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
-        } catch (InvalidTypeException ignore) {
-        }
+            if(!fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")){
+                Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
+            }
+        } catch (InvalidTypeException ignore) {}
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -58,8 +62,8 @@ public class IOClient<T> {
         loadingAlert.close();
     }
 
-    public void runOpenThread() {
-        loadingAlert = Alerts.showLoadingDialog(openThread, "Åpner filen...");
+    public void runOpenThread(String msg) {
+        loadingAlert = Alerts.showLoadingDialog(openThread, msg);
         openThread.setOnSucceeded(this::openDone);
         openThread.setOnFailed(this::openFailed);
         openThread.setOnRunning((e) -> loadingAlert.show());
@@ -68,15 +72,23 @@ public class IOClient<T> {
         th.start();
     }
 
+    @SuppressWarnings("unchecked")
     private void openDone(WorkerStateEvent e) {
         try {
-            ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-            collection.getComponents().clear();
-            collection.setComponents(list);
-            collection.setLoadedFile(fileInfo.getFullPath());
+            if(!openThread.getValue().isEmpty()) {
+                if(openThread.getValue().get(0) instanceof Category) {
+                    categoryCollection.getCategoryObjects().clear();
+                    categoryCollection.setCategoriesObjects((ArrayList<Category>) openThread.call());
+                } else {
+                    ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+                    collection.getComponents().clear();
+                    collection.setComponents(list);
+                    collection.setLoadedFile(fileInfo.getFullPath());
+                    collection.setModified(false);
+                    AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
+                }
+            }
             loadingAlert.close();
-            collection.setModified(false);
-            AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
         } catch (InvalidTypeException ignored) {
         }
     }

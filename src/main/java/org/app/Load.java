@@ -1,5 +1,6 @@
 package org.app;
 
+import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.dataCollection.TableViewCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,6 +23,15 @@ public class Load {
         } catch (IOException e){ e.printStackTrace(); }
     }
 
+    /** Åpner en ny vindu for kategori oppretting */
+    public static void openCategoryPopup(){
+        try {
+            Load.window("category.fxml","Endre Kategori",new Stage());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /** Spør brukeren om å lagre endringer før programmen slutter */
     public static void exit(Stage stage){
         TableViewCollection collection = TableViewCollection.getINSTANCE();
@@ -33,6 +43,8 @@ public class Load {
                 Alerts.success("Endringer er ikke lagret");
             }
         }
+        CategoryCollection categoryCollection = CategoryCollection.getInstance();
+        if(categoryCollection.isModified()) categoryCollection.saveCategories();
         stage.close();
     }
 }

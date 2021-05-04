@@ -79,22 +79,30 @@
                         <Insets top="20.0" />
                      </padding>
                   </HBox>
-                  <ComboBox fx:id="categoriesCombobox" prefHeight="35.0" prefWidth="253.0" promptText="Kategori">
+                  <ComboBox fx:id="categoriesCombobox" prefHeight="33.0" prefWidth="251.0" promptText="Kategori">
                      <VBox.margin>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </ComboBox>
                   <ComboBox fx:id="subcategoryCombobox" prefHeight="31.0" prefWidth="254.0" promptText="Subkategory">
                      <VBox.margin>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </ComboBox>
+                  <Button alignment="CENTER" layoutX="30.0" layoutY="525.0" mnemonicParsing="false" onAction="#showCategoryRegister" prefHeight="30.0" prefWidth="250.0" text="Opprett ny kategori" textAlignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="-25.0" left="20.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
                   <Label prefHeight="30.0" prefWidth="147.0" text="Spesifikasjoner:" textFill="#173e3c">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets left="20.0" top="40.0" />
                      </VBox.margin>
                   </Label>
                   <TextArea fx:id="specifications" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="123.0" prefWidth="255.0" promptText="Kort beskrivelse">
@@ -138,7 +146,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" top="30.0" />
+                        <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#delete" prefHeight="30.0" prefWidth="250.0" text="Slett">
@@ -146,7 +154,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <VBox.margin>
-                        <Insets left="20.0" top="20.0" />
+                        <Insets left="20.0" top="10.0" />
                      </VBox.margin>
                   </Button>
                </children>
@@ -187,7 +195,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="categoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editCategory" prefWidth="138.8333740234375" text="Kategori">
+                        <TableColumn fx:id="categoryCol" maxWidth="300.0" onEditCommit="#editCategory" minWidth="50.0" prefWidth="138.8333740234375" text="Kategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="category" />
                            </cellValueFactory>
@@ -195,7 +203,7 @@
                               <TextFieldTableCell fx:factory="forTableColumn" />
                            </cellFactory>
                         </TableColumn>
-                        <TableColumn fx:id="subcategoryCol" maxWidth="300.0" minWidth="50.0" onEditCommit="#editSubCategory" prefWidth="137.52783203125" text="Subkategori">
+                        <TableColumn fx:id="subcategoryCol" onEditCommit="#editSubCategory" maxWidth="300.0" minWidth="50.0" prefWidth="137.52783203125" text="Subkategori">
                            <cellValueFactory>
                               <PropertyValueFactory property="subCategory" />
                            </cellValueFactory>
