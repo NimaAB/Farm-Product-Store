@@ -13,6 +13,9 @@ import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.models.Category;
 import org.app.validation.Alerts;
 import org.app.validation.Validator;
+import org.app.validation.customExceptions.EmptyFieldException;
+import org.app.validation.customExceptions.InvalidTextInputException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -28,14 +31,14 @@ public class CategoryRegisterController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        subCategories.addListener((ListChangeListener<String>) change -> childCategoryListview.setItems(subCategories));
+        subCategories.addListener((ListChangeListener<String>) change ->
+                childCategoryListview.setItems(subCategories));
     }
 
     @FXML
     void addNewCategory() {
         try {
-            String categoryName = parentCategoryTextField.getText();
-            Validator.validateCategory(categoryName);
+            String categoryName = Validator.validateCategory(parentCategoryTextField.getText());
 
             Category newCategory = new Category(categoryName);
             newCategory.addAll(new ArrayList<>(subCategories));
@@ -55,16 +58,18 @@ public class CategoryRegisterController implements Initializable {
     @FXML
     void addNewSubCategory() {
         try {
-            String subCategoryName = childCategoryTextField.getText();
+            String category = Validator.validateCategory(parentCategoryTextField.getText());
+            String subCategoryName = Validator.validateCategory(childCategoryTextField.getText());
 
-            Validator.validateCategory(subCategoryName);
-            if(subCategories.contains(subCategoryName)) {
-                throw new IllegalArgumentException("Sub-kategorien " + subCategoryName + " er allerede definert");
+            for(Category c: CategoryCollection.CATEGORIES){
+                if(c.getName().equals(category)){
+                    c.addSubCategory(subCategoryName);
+                    break;
+                }
             }
-
             subCategories.add(subCategoryName);
             childCategoryTextField.setText("");
-        } catch (Exception e) {
+        } catch (EmptyFieldException | InvalidTextInputException e) {
             Alerts.warning(e.getMessage());
         }
     }

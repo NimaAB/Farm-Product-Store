@@ -8,14 +8,12 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import org.app.data.models.Category;
 import org.app.data.models.Product;
-import org.app.fileHandling.FileInfo;
-import org.app.fileHandling.IOClient;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CategoryCollection {
-    private static final ObservableList<Category> CATEGORIES = FXCollections.observableArrayList();
+    public static final ObservableList<Category> CATEGORIES = FXCollections.observableArrayList();
     private static final ObservableList<String> mainCategories = FXCollections.observableArrayList();
     private static final ObservableList<String> subCategories = FXCollections.observableArrayList();
 
