@@ -1,5 +1,7 @@
 package org.app.data.models;
 
+import org.app.validation.customExceptions.InvalidTextInputException;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -24,11 +26,11 @@ public class Category implements Serializable {
         return name;
     }
 
-    public void addSubCategory(String newSubCategory){
-        if(!subCategories.contains(newSubCategory)){
-            this.subCategories.add(newSubCategory);
+    public void addSubCategory(String newSubCategory) throws InvalidTextInputException{
+        if(subCategories.contains(newSubCategory)){
+            throw new InvalidTextInputException("En sub-kategori med navnet: " + newSubCategory + " allerede finnes!");
         }
-        //throw a exception.
+        this.subCategories.add(newSubCategory);
     }
 
     @Override

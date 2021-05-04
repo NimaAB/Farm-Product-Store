@@ -50,7 +50,9 @@ public class IOClient<T> {
         try {
             saveThread.call();
             loadingAlert.close();
-            Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
+            if(!fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")){
+                Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
+            }
         } catch (InvalidTypeException ignore) {}
     }
 

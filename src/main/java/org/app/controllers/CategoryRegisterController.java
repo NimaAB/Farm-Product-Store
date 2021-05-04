@@ -42,16 +42,16 @@ public class CategoryRegisterController implements Initializable {
 
             Category newCategory = new Category(categoryName);
             newCategory.setSubCategories(new ArrayList<>(subCategories));
-            CATEGORY_COLLECTION.addCategory(newCategory);
-            CATEGORY_COLLECTION.setModified(true);
-
-            categoryTextField.setText("");
-            subCategoryTextField.setText("");
-            subCategories.clear();
-
-            Alerts.success("Kategori opprettet!");
-            avbryt();
-        } catch (Exception e) {
+            if(!CATEGORY_COLLECTION.getCategories().contains(categoryName)){
+                CATEGORY_COLLECTION.addCategory(newCategory);
+                CATEGORY_COLLECTION.setModified(true);
+                categoryTextField.setText("");
+                subCategoryTextField.setText("");
+                subCategories.clear();
+                Alerts.success("Kategori opprettet!");
+                avbryt();
+            }
+        } catch (EmptyFieldException | InvalidTextInputException e) {
             Alerts.warning(e.getMessage());
         }
     }
@@ -65,10 +65,10 @@ public class CategoryRegisterController implements Initializable {
             for(Category c: CategoryCollection.CATEGORIES){
                 if(c.getName().equals(category)){
                     c.addSubCategory(subCategoryName);
-                    break;
+                    subCategories.add(subCategoryName);
+                    CATEGORY_COLLECTION.setModified(true);
                 }
             }
-            subCategories.add(subCategoryName);
             subCategoryTextField.setText("");
         } catch (EmptyFieldException | InvalidTextInputException e) {
             Alerts.warning(e.getMessage());

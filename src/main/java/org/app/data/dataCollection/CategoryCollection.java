@@ -10,6 +10,7 @@ import org.app.data.models.Category;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
 import org.app.fileHandling.IOClient;
+
 import java.util.ArrayList;
 
 public class CategoryCollection {
@@ -21,66 +22,78 @@ public class CategoryCollection {
     private boolean modified = false;
 
     public static CategoryCollection instance;
-    private CategoryCollection(){}
 
-    public static CategoryCollection getInstance(){
-        if(instance == null){
+    private CategoryCollection() {
+    }
+
+    public static CategoryCollection getInstance() {
+        if (instance == null) {
             instance = new CategoryCollection();
         }
         return instance;
     }
 
-    /** legger nye kategorier */
-    public void addCategory(Category toAdd){
-        if(!CATEGORIES.contains(toAdd)) {
-            if(!mainCategories.contains(toAdd.getName())) {
-                mainCategories.add(toAdd.getName());
-                CATEGORIES.add(toAdd);
-            } else {
-                throw new IllegalArgumentException("En kategori med navn " +toAdd.getName()+ " finnes allerede!");
-            }
-        }
+    /**
+     * legger nye kategorier
+     */
+    public void addCategory(Category toAdd) {
+        mainCategories.add(toAdd.getName());
+        CATEGORIES.add(toAdd);
     }
 
-    /** Når listen av kategorier ble endret, må alle combobokser oppdateres */
-    public void updateCategoriesOnChange(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions){
+    /**
+     * Når listen av kategorier ble endret, må alle combobokser oppdateres
+     */
+    public void updateCategoriesOnChange(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions) {
         CATEGORIES.addListener((ListChangeListener<Category>) change -> setComboBoxes(categoryOptions, subCategoryOptions));
     }
 
-    /** Når hoved kategori ble endret, må sub kategoriene oppdateres */
-    public void updateSubCategoriesOnChange(ComboBox<String> categoryOptions){
+    /**
+     * Når hoved kategori ble endret, må sub kategoriene oppdateres
+     */
+    public void updateSubCategoriesOnChange(ComboBox<String> categoryOptions) {
         categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> loadSubCategories(newValue));
     }
 
-    /** Åpner kategorier filen */
-    public void loadCategories(){
+    /**
+     * Åpner kategorier filen
+     */
+    public void loadCategories() {
         IOClient<Category> openFile = new IOClient<>(categoryFile);
         openFile.runOpenThread("Laster opp kategorier...");
     }
 
-    /** Lagrer kategorier filen */
-    public void saveCategories(){
+    /**
+     * Lagrer kategorier filen
+     */
+    public void saveCategories() {
         IOClient<Category> saveFile = new IOClient<>(categoryFile, new ArrayList<>(CATEGORIES));
         saveFile.runSaveThread("Lagrer nye kategorier...");
     }
 
-    /** Setter verdier til kategori combobokser */
-    public void setComboBoxes(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions){
+    /**
+     * Setter verdier til kategori combobokser
+     */
+    public void setComboBoxes(ComboBox<String> categoryOptions, ComboBox<String> subCategoryOptions) {
         categoryOptions.setItems(mainCategories);
         subCategoryOptions.setItems(subCategories);
     }
 
-    /** Fyller opp sub kategori obslist med verdier basert på hoved kategorien */
-    public void loadSubCategories(String value){
+    /**
+     * Fyller opp sub kategori obslist med verdier basert på hoved kategorien
+     */
+    public void loadSubCategories(String value) {
         subCategories.clear();
-        for(Category category: CATEGORIES) {
-            if(category.getName().equals(value)) {
+        for (Category category : CATEGORIES) {
+            if (category.getName().equals(value)) {
                 subCategories.addAll(category.getSubCategories());
             }
         }
     }
 
-    /** Fyller opp sub-kategorier combobox med riktige verdier på tableview */
+    /**
+     * Fyller opp sub-kategorier combobox med riktige verdier på tableview
+     */
     public void updateSubCategoriesOnTableView(TableView<Product> tableView) {
         tableView.setRowFactory(tv -> {
             TableRow<Product> row = new TableRow<>();
@@ -96,7 +109,9 @@ public class CategoryCollection {
         });
     }
 
-    /** Getter - Setter  metoder */
+    /**
+     * Getter - Setter  metoder
+     */
 
     public ObservableList<String> getCategories() {
         return mainCategories;
@@ -106,11 +121,11 @@ public class CategoryCollection {
         return subCategories;
     }
 
-    public ObservableList<Category> getCategoryObjects(){
+    public ObservableList<Category> getCategoryObjects() {
         return CATEGORIES;
     }
 
-    public void setCategoriesObjects(ArrayList<Category> list){
+    public void setCategoriesObjects(ArrayList<Category> list) {
         CATEGORIES.clear();
         CATEGORIES.addAll(list);
         list.forEach(category -> mainCategories.add(category.getName()));
