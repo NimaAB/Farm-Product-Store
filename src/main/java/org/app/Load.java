@@ -1,5 +1,6 @@
 package org.app;
 
+import org.app.data.dataCollection.CategoryCollection;
 import org.app.data.dataCollection.TableViewCollection;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -42,6 +43,8 @@ public class Load {
                 Alerts.success("Endringer er ikke lagret");
             }
         }
+        CategoryCollection categoryCollection = CategoryCollection.getInstance();
+        if(categoryCollection.isModified()) categoryCollection.saveCategories();
         stage.close();
     }
 }

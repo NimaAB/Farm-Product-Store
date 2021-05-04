@@ -81,7 +81,7 @@ public class AdminController implements Initializable {
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
 
-        CATEGORY_COLLECTION.loadDefinedCategories();
+        CATEGORY_COLLECTION.loadCategories();
         CATEGORY_COLLECTION.setComboBoxes(categoriesCombobox, subcategoryCombobox);
         CATEGORY_COLLECTION.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
         CATEGORY_COLLECTION.updateSubCategoriesOnChange(categoriesCombobox);
@@ -142,7 +142,7 @@ public class AdminController implements Initializable {
                 PATH_DIALOG_BOX.fileNotFound(path);
                 FileInfo file = new FileInfo(path);
                 IOClient<Product> io = new IOClient<>(file);
-                io.runOpenThread();
+                io.runOpenThread("Åpner filen...");
                 setOpenedFile(file.getFullPath());
             } catch (FileDontExistsException | NullPointerException | InvalidExtensionException e) {
                 Alerts.warning(e.getMessage());
@@ -179,7 +179,7 @@ public class AdminController implements Initializable {
             }
             FileInfo file = new FileInfo(path);
             IOClient<Product> io = new IOClient<>(file, components);
-            io.runSaveThread();
+            io.runSaveThread("Lagrer Filen...");
         } else {
             Alerts.warning("Ingenting er lagret.");
         }
@@ -280,6 +280,7 @@ public class AdminController implements Initializable {
             Stage stage = (Stage) adminPane.getScene().getWindow();
             Load.window("loginView.fxml", "Login", stage);
         }
+        if(CATEGORY_COLLECTION.isModified()) CATEGORY_COLLECTION.saveCategories();
     }
 
     @FXML

@@ -30,7 +30,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="parentCategoryTextField" promptText="kategori">
+                        <TextField fx:id="categoryTextField" promptText="kategori">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -40,7 +40,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField fx:id="childCategoryTextField" promptText="sub-kategori">
+                        <TextField fx:id="subCategoryTextField" promptText="sub-kategori">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -57,7 +57,7 @@
                      </padding>
                      <children>
                         <Label alignment="CENTER" prefHeight="17.0" prefWidth="647.0" text="Sub-kategorier" />
-                        <ListView fx:id="childCategoryListview" prefHeight="540.0" prefWidth="295.0" />
+                        <ListView fx:id="subCategoryListView" prefHeight="540.0" prefWidth="295.0" />
                      </children>
                   </VBox>
                </children>

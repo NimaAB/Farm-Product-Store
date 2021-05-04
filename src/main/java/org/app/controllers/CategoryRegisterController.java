@@ -23,29 +23,30 @@ import java.util.ResourceBundle;
 public class CategoryRegisterController implements Initializable {
 
     @FXML private AnchorPane parentPane;
-    @FXML private TextField parentCategoryTextField;
-    @FXML private TextField childCategoryTextField;
-    @FXML private ListView<String> childCategoryListview;
+    @FXML private TextField categoryTextField;
+    @FXML private TextField subCategoryTextField;
+    @FXML private ListView<String> subCategoryListView;
     private final ObservableList<String> subCategories = FXCollections.observableArrayList();
     private final CategoryCollection CATEGORY_COLLECTION = CategoryCollection.getInstance();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         subCategories.addListener((ListChangeListener<String>) change ->
-                childCategoryListview.setItems(subCategories));
+                subCategoryListView.setItems(subCategories));
     }
 
     @FXML
     void addNewCategory() {
         try {
-            String categoryName = Validator.validateCategory(parentCategoryTextField.getText());
+            String categoryName = Validator.validateCategory(categoryTextField.getText());
 
             Category newCategory = new Category(categoryName);
             newCategory.addAll(new ArrayList<>(subCategories));
             CATEGORY_COLLECTION.addCategory(newCategory);
+            CATEGORY_COLLECTION.setModified(true);
 
-            parentCategoryTextField.setText("");
-            childCategoryTextField.setText("");
+            categoryTextField.setText("");
+            subCategoryTextField.setText("");
             subCategories.clear();
 
             Alerts.success("Kategori opprettet!");
@@ -58,8 +59,8 @@ public class CategoryRegisterController implements Initializable {
     @FXML
     void addNewSubCategory() {
         try {
-            String category = Validator.validateCategory(parentCategoryTextField.getText());
-            String subCategoryName = Validator.validateCategory(childCategoryTextField.getText());
+            String category = Validator.validateCategory(categoryTextField.getText());
+            String subCategoryName = Validator.validateCategory(subCategoryTextField.getText());
 
             for(Category c: CategoryCollection.CATEGORIES){
                 if(c.getName().equals(category)){
@@ -68,7 +69,7 @@ public class CategoryRegisterController implements Initializable {
                 }
             }
             subCategories.add(subCategoryName);
-            childCategoryTextField.setText("");
+            subCategoryTextField.setText("");
         } catch (EmptyFieldException | InvalidTextInputException e) {
             Alerts.warning(e.getMessage());
         }

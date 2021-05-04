@@ -8,14 +8,17 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import org.app.data.models.Category;
 import org.app.data.models.Product;
-
+import org.app.fileHandling.FileInfo;
+import org.app.fileHandling.IOClient;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class CategoryCollection {
+
     public static final ObservableList<Category> CATEGORIES = FXCollections.observableArrayList();
-    private static final ObservableList<String> mainCategories = FXCollections.observableArrayList();
-    private static final ObservableList<String> subCategories = FXCollections.observableArrayList();
+    private final ObservableList<String> mainCategories = FXCollections.observableArrayList();
+    private final ObservableList<String> subCategories = FXCollections.observableArrayList();
+    private final FileInfo categoryFile = new FileInfo("DataFraApp/Database/categories.bin");
+    private boolean modified = false;
 
     public static CategoryCollection instance;
     private CategoryCollection(){}
@@ -49,28 +52,16 @@ public class CategoryCollection {
         categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> loadSubCategories(newValue));
     }
 
-    /** Laster opp definerte kategorier */
-    public void loadDefinedCategories(){
+    /** Åpner kategorier filen */
+    public void loadCategories(){
+        IOClient<Category> openFile = new IOClient<>(categoryFile);
+        openFile.runOpenThread("Laster opp kategorier...");
+    }
 
-        Category korn = new Category("Korn");
-        Category klaer = new Category("Arbeidsklær");
-        Category landbruk = new Category("Landbruk");
-        Category gjodsel = new Category("Gjødsel");
-
-        String[] kornTyper = {"Såkorn", "Økologisk såkorn", "Underkultur og fangvekster", "Plantevern"};
-        String[] klaerTyper = {"Jakker", "Hansker", "Bukser", "Regntøy", "Varselklær"};
-        String[] landbrukTyper = {"Traktor", "Tresker", "Hjullaster", "Nyttekjøretøy"};
-        String[] gjodselTyper = {"Bladgjødsel", "Nitrogengjødsel", "NPK-gjødsel"};
-
-        korn.setSubCategories(new ArrayList<>(Arrays.asList(kornTyper)));
-        klaer.setSubCategories(new ArrayList<>(Arrays.asList(klaerTyper)));
-        landbruk.setSubCategories(new ArrayList<>(Arrays.asList(landbrukTyper)));
-        gjodsel.setSubCategories(new ArrayList<>(Arrays.asList(gjodselTyper)));
-
-        addCategory(korn);
-        addCategory(klaer);
-        addCategory(landbruk);
-        addCategory(gjodsel);
+    /** Lagrer kategorier filen */
+    public void saveCategories(){
+        IOClient<Category> saveFile = new IOClient<>(categoryFile, new ArrayList<>(CATEGORIES));
+        saveFile.runSaveThread("Lagrer nye kategorier...");
     }
 
     /** Setter verdier til kategori combobokser */
@@ -113,5 +104,17 @@ public class CategoryCollection {
 
     public ObservableList<String> getSubCategories() {
         return subCategories;
+    }
+
+    public ObservableList<Category> getCategoryObjects(){
+        return CATEGORIES;
+    }
+
+    public boolean isModified() {
+        return modified;
+    }
+
+    public void setModified(boolean modified) {
+        this.modified = modified;
     }
 }

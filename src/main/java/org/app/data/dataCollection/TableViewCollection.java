@@ -46,7 +46,7 @@ public class TableViewCollection {
         IOClient<Product> open = new IOClient<>(new FileInfo(filePath));
         loadedFile = filePath;
         if (reloadComponents) {
-            open.runOpenThread();
+            open.runOpenThread("Laster opp produkter...");
             reloadComponents = false;
         }
     }
@@ -81,7 +81,7 @@ public class TableViewCollection {
     public void saveData() {
         ArrayList<Product> data = new ArrayList<>(getComponents());
         IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
-        save.runSaveThread();
+        save.runSaveThread("lagrer filen...");
         setModified(false);
     }
 
