@@ -274,13 +274,12 @@ public class AdminController implements Initializable {
                 COLLECTION.getComponents().clear();
                 COLLECTION.setModified(false);
             }
-            Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml", "Login", stage);
-        } else {
-            Stage stage = (Stage) adminPane.getScene().getWindow();
-            Load.window("loginView.fxml", "Login", stage);
+        } else if(CATEGORY_COLLECTION.isModified()) {
+            CATEGORY_COLLECTION.saveCategories();
         }
-        if(CATEGORY_COLLECTION.isModified()) CATEGORY_COLLECTION.saveCategories();
+        CATEGORY_COLLECTION.getCategories().clear();
+        Stage stage = (Stage) adminPane.getScene().getWindow();
+        Load.window("loginView.fxml", "Login", stage);
     }
 
     @FXML
