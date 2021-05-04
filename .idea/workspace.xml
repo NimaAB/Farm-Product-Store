@@ -5,16 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b8ada2f6-0544-450e-9f72-c2360f14577d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/DataFraApp/Database/categories.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/Load.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/Load.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/controllers/AdminController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/controllers/CategoryRegisterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/controllers/CategoryRegisterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/CategoryCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/CategoryCollection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/TableViewCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/dataCollection/TableViewCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/data/models/Category.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/data/models/Category.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/app/fileHandling/IOClient.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/org/app/category.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/org/app/category.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -97,6 +92,17 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -130,7 +136,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/glaysa-farm-store" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>

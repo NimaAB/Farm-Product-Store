@@ -41,7 +41,7 @@ public class CategoryRegisterController implements Initializable {
             String categoryName = Validator.validateCategory(categoryTextField.getText());
 
             Category newCategory = new Category(categoryName);
-            newCategory.addAll(new ArrayList<>(subCategories));
+            newCategory.setSubCategories(new ArrayList<>(subCategories));
             CATEGORY_COLLECTION.addCategory(newCategory);
             CATEGORY_COLLECTION.setModified(true);
 

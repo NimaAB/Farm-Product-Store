@@ -76,7 +76,7 @@ public class IOClient<T> {
             if(!openThread.getValue().isEmpty()) {
                 if(openThread.getValue().get(0) instanceof Category) {
                     categoryCollection.getCategoryObjects().clear();
-                    for(T c: openThread.getValue()) categoryCollection.addCategory((Category) c);
+                    categoryCollection.setCategoriesObjects((ArrayList<Category>) openThread.call());
                 } else {
                     ArrayList<Product> list = (ArrayList<Product>) openThread.call();
                     collection.getComponents().clear();

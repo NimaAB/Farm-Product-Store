@@ -110,6 +110,12 @@ public class CategoryCollection {
         return CATEGORIES;
     }
 
+    public void setCategoriesObjects(ArrayList<Category> list){
+        CATEGORIES.clear();
+        CATEGORIES.addAll(list);
+        list.forEach(category -> mainCategories.add(category.getName()));
+    }
+
     public boolean isModified() {
         return modified;
     }

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Category implements Serializable {
+    private static final long serialVersionUID = 1;
     private String name;
     private ArrayList<String> subCategories = new ArrayList<>();
 
@@ -11,21 +12,16 @@ public class Category implements Serializable {
         this.name = name;
     }
 
-    public void addAll(ArrayList<String> subcategories){
+    public void setSubCategories(ArrayList<String> subcategories){
         subCategories.addAll(subcategories);
     }
-
-    public String getName() {
-        return name;
-    }
-
 
     public ArrayList<String> getSubCategories() {
         return subCategories;
     }
 
-    public void setSubCategories(ArrayList<String> list){
-        this.subCategories = list;
+    public String getName() {
+        return name;
     }
 
     public void addSubCategory(String newSubCategory){
