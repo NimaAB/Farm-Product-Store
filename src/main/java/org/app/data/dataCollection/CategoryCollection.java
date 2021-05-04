@@ -52,10 +52,14 @@ public class CategoryCollection {
         categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> loadSubCategories(newValue));
     }
 
-    private void loadCategories(){
+    public void loadCategories(){
         IOClient<Category> openFile = new IOClient<>(categoryFile);
         openFile.runOpenThread();
+    }
 
+    public void saveCategories(){
+        IOClient<Category> saveFile = new IOClient<>(categoryFile,new ArrayList<>(CATEGORIES));
+        saveFile.runSaveThread();
     }
 
 
@@ -114,7 +118,7 @@ public class CategoryCollection {
         });
     }
 
-    /** Get metoder */
+    /** Getter - Setter  metoder */
 
     public ObservableList<String> getCategories() {
         return mainCategories;
@@ -125,6 +129,7 @@ public class CategoryCollection {
     }
 
     public void setCategories(ArrayList<Category> list) {
+        CATEGORIES.clear();
         CATEGORIES.addAll(list);
     }
 }

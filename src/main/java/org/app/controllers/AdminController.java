@@ -80,7 +80,7 @@ public class AdminController implements Initializable {
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
 
-        CATEGORY_COLLECTION.loadDefinedCategories();
+        CATEGORY_COLLECTION.loadCategories();
         CATEGORY_COLLECTION.setComboBoxes(categoriesCombobox, subcategoryCombobox);
         CATEGORY_COLLECTION.updateCategoriesOnChange(categoriesCombobox, subcategoryCombobox);
         CATEGORY_COLLECTION.updateSubCategoriesOnChange(categoriesCombobox);
@@ -262,6 +262,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void logOut() {
+        CATEGORY_COLLECTION.saveCategories();
         if (COLLECTION.isModified()) {
             boolean response = Alerts.confirm("Vil du lagre alle endringer?");
             if (response) {
