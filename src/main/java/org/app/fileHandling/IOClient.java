@@ -23,7 +23,6 @@ public class IOClient<T> {
     private SaveThread<T> saveThread;
     private Alert loadingAlert;
     private TableViewCollection collection = TableViewCollection.getINSTANCE();
-    private CategoryCollection categoryCollection = CategoryCollection.getInstance();
 
     public IOClient(FileInfo fileInfo, ArrayList<T> listToWrite) {
         this.fileInfo = fileInfo;
@@ -37,15 +36,10 @@ public class IOClient<T> {
     }
 
     public void runSaveThread() {
-        if (!fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")) {
-            loadingAlert = Alerts.showLoadingDialog(saveThread, "Lagrer filen...");
-            saveThread.setOnSucceeded(this::saveDone);
-            saveThread.setOnFailed(this::saveFailed);
-            saveThread.setOnRunning((e) -> loadingAlert.show());
-        }else{
-            saveThread.setOnSucceeded(this::saveDone);
-            saveThread.setOnFailed(this::saveFailed);
-        }
+        loadingAlert = Alerts.showLoadingDialog(saveThread, "Lagrer filen...");
+        saveThread.setOnSucceeded(this::saveDone);
+        saveThread.setOnFailed(this::saveFailed);
+        saveThread.setOnRunning((e) -> loadingAlert.show());
         Thread th = new Thread(saveThread);
         th.setDaemon(true);
         th.start();
@@ -54,12 +48,9 @@ public class IOClient<T> {
     private void saveDone(WorkerStateEvent e) {
         try {
             saveThread.call();
-            if (!fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")) {
-                loadingAlert.close();
-                Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
-            }
-        } catch (InvalidTypeException ignore) {
-        }
+            loadingAlert.close();
+            Alerts.success("Filen din ble lagret i: " + fileInfo.getFullPath());
+        } catch (InvalidTypeException ignore) {}
     }
 
     private void saveFailed(WorkerStateEvent event) {
@@ -69,15 +60,10 @@ public class IOClient<T> {
     }
 
     public void runOpenThread() {
-        if (!fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")) {
-            loadingAlert = Alerts.showLoadingDialog(openThread, "Åpner filen...");
-            openThread.setOnSucceeded(this::openDone);
-            openThread.setOnFailed(this::openFailed);
-            openThread.setOnRunning((e) -> loadingAlert.show());
-        }else{
-            openThread.setOnSucceeded(this::openDone);
-            openThread.setOnFailed(this::openFailed);
-        }
+        loadingAlert = Alerts.showLoadingDialog(openThread, "Åpner filen...");
+        openThread.setOnSucceeded(this::openDone);
+        openThread.setOnFailed(this::openFailed);
+        openThread.setOnRunning((e) -> loadingAlert.show());
         Thread th = new Thread(openThread);
         th.setDaemon(true);
         th.start();
@@ -85,19 +71,13 @@ public class IOClient<T> {
 
     private void openDone(WorkerStateEvent e) {
         try {
-            if (fileInfo.getFullPath().equals("DataFraApp/Database/categories.bin")) {
-                ArrayList<Category> list = (ArrayList<Category>) openThread.call();
-                categoryCollection.setCategories(list);
-            } else {
-                ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-                collection.getComponents().clear();
-                collection.setComponents(list);
-                collection.setLoadedFile(fileInfo.getFullPath());
-                loadingAlert.close();
-                collection.setModified(false);
-                AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
-            }
-
+            ArrayList<Product> list = (ArrayList<Product>) openThread.call();
+            collection.getComponents().clear();
+            collection.setComponents(list);
+            collection.setLoadedFile(fileInfo.getFullPath());
+            loadingAlert.close();
+            collection.setModified(false);
+            AdminController.filenameLabelStatic.setText(fileInfo.getFileName());
         } catch (InvalidTypeException ignored) {
         }
     }

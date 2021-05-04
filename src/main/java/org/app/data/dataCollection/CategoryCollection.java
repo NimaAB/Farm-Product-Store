@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class CategoryCollection {
-    private final FileInfo categoryFile = new FileInfo("DataFraApp/Database/categories.bin");
     private static final ObservableList<Category> CATEGORIES = FXCollections.observableArrayList();
     private static final ObservableList<String> mainCategories = FXCollections.observableArrayList();
     private static final ObservableList<String> subCategories = FXCollections.observableArrayList();
@@ -52,19 +51,9 @@ public class CategoryCollection {
         categoryOptions.valueProperty().addListener((observableValue, oldValue, newValue) -> loadSubCategories(newValue));
     }
 
-    public void loadCategories(){
-        IOClient<Category> openFile = new IOClient<>(categoryFile);
-        openFile.runOpenThread();
-    }
-
-    public void saveCategories(){
-        IOClient<Category> saveFile = new IOClient<>(categoryFile,new ArrayList<>(CATEGORIES));
-        saveFile.runSaveThread();
-    }
-
-
     /** Laster opp definerte kategorier */
     public void loadDefinedCategories(){
+
         Category korn = new Category("Korn");
         Category klaer = new Category("Arbeidsklær");
         Category landbruk = new Category("Landbruk");
@@ -126,10 +115,5 @@ public class CategoryCollection {
 
     public ObservableList<String> getSubCategories() {
         return subCategories;
-    }
-
-    public void setCategories(ArrayList<Category> list) {
-        CATEGORIES.clear();
-        CATEGORIES.addAll(list);
     }
 }

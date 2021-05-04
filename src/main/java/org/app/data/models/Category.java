@@ -1,16 +1,8 @@
 package org.app.data.models;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Category implements Serializable {
-
+public class Category {
     private String name;
     private ArrayList<String> subCategories = new ArrayList<>();
 
@@ -45,18 +37,12 @@ public class Category implements Serializable {
         //throw a exception.
     }
 
-    private void writeObject(ObjectOutputStream ost) throws IOException {
-        ost.defaultWriteObject();
-        ost.writeUTF(getName());
-        ost.writeObject(getSubCategories());
+    @Override
+    public String toString() {
+        return "Category{" +
+                "name='" + name + '\'' + "\n"+
+                ", subCategories=" + subCategories +
+                '}';
     }
 
-    private void readObject(ObjectInputStream ist) throws IOException, ClassNotFoundException {
-        String name = ist.readUTF();
-        ArrayList<String> subcategories = (ArrayList<String>) ist.readObject();
-
-        this.setName(name);
-        this.setSubCategories(subcategories);
-
-    }
 }
