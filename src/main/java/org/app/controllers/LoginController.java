@@ -22,7 +22,9 @@ public class LoginController {
         if(isValidUser()){
             Load.window("adminView.fxml","Admin",stage);
         } else{
-            Alerts.warning("Feil Bruker navn eller passord!");
+            Alerts.warning("Feil brukernavn eller passord!\n" +
+                    "Username: Admin\n" +
+                    "Password: 1234");
         }
     }
     private boolean isValidUser(){
