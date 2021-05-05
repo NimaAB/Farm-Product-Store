@@ -106,14 +106,15 @@ Button:hover {
 
 
 .table-view {
-    -fx-background-color: white;
+    -fx-background-color: #f8bc24;
     -fx-border-width: 2;
     -fx-border-color: #f8bd25;
 }
 .table-view .cell {
     -fx-background-color: transparent;
+    -fx-font-weight: bold;
     -fx-border-color: whitesmoke;
-    -fx-text-fill: black;
+    -fx-text-fill: #000000;
 }
 .table-view .column-header-background .filler  {
     -fx-background-color: #f8bd25;
