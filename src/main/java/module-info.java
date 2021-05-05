@@ -1,19 +1,19 @@
-module pc_configuration {
+module Farm_Product_Store {
     requires javafx.controls;
     requires javafx.fxml;
 
     opens org.app.controllers to javafx.fxml;
 
-    exports io.fileThreads;
-    exports io.open;
-    exports io.save;
     exports org.app;
     exports org.app.controllers;
-    exports dataModels.models;
-    exports dataModels.dataCollection;
-    exports dataModels.dataFormats;
-    exports validations;
-    exports validations.customExceptions;
-    exports validations.ioExceptions;
-
+    //exports org.app.data;
+    exports org.app.data.models;
+    exports org.app.data.dataCollection;
+    exports org.app.data.dataFormats;
+    exports org.app.validation;
+    exports org.app.validation.customExceptions;
+    exports org.app.validation.ioExceptions;
+    exports org.app.fileHandling.open;
+    exports org.app.fileHandling.save;
+    exports org.app.fileHandling.fileThreads;
 }
