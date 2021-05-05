@@ -40,9 +40,9 @@ public class CategoryRegisterController implements Initializable {
         try {
             String categoryName = Validator.validateCategory(categoryTextField.getText());
 
-            Category newCategory = new Category(categoryName);
-            newCategory.setSubCategories(new ArrayList<>(subCategories));
             if(!CATEGORY_COLLECTION.getCategories().contains(categoryName)){
+                Category newCategory = new Category(categoryName);
+                newCategory.setSubCategories(new ArrayList<>(subCategories));
                 CATEGORY_COLLECTION.addCategory(newCategory);
                 CATEGORY_COLLECTION.setModified(true);
                 categoryTextField.setText("");
@@ -50,6 +50,9 @@ public class CategoryRegisterController implements Initializable {
                 subCategories.clear();
                 Alerts.success("Kategori opprettet!");
                 avbryt();
+            }else{
+                Alerts.warning("En kategori med navnet " + categoryName + " finnes allerede.\n" +
+                        "Du kan skrivet navnet på kategorien og legge til nye under-kategorier til den.");
             }
         } catch (EmptyFieldException | InvalidTextInputException e) {
             Alerts.warning(e.getMessage());
