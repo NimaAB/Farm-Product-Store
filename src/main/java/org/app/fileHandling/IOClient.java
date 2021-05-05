@@ -81,8 +81,8 @@ public class IOClient<T> {
                     categoryCollection.setCategoriesObjects((ArrayList<Category>) openThread.call());
                 } else {
                     ArrayList<Product> list = (ArrayList<Product>) openThread.call();
-                    collection.getComponents().clear();
-                    collection.setComponents(list);
+                    collection.getProducts().clear();
+                    collection.setProducts(list);
                     collection.setLoadedFile(fileInfo.getFullPath());
                     collection.setModified(false);
                     AdminController.filenameLabelStatic.setText(fileInfo.getFileName());

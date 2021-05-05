@@ -1,9 +1,7 @@
 package org.app.controllers;
 
 
-import javafx.event.ActionEvent;
 import org.app.data.dataCollection.CategoryCollection;
-import org.app.data.models.Category;
 import org.app.data.models.Product;
 import org.app.fileHandling.FileInfo;
 import org.app.fileHandling.IOClient;
@@ -76,7 +74,7 @@ public class AdminController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         String file = "DataFraApp/Database/products.bin";
-        COLLECTION.loadComponents(file);
+        COLLECTION.loadProducts(file);
         COLLECTION.setTableView(tableview);
         COLLECTION.fillFilterComboBox(filterComboBox);
         COLLECTION.filterTableView(tableview, txtFilter);
@@ -114,7 +112,7 @@ public class AdminController implements Initializable {
             Double product_price = Validator.validatePrice(price.getText());
 
             Product product = new Product(product_name, category, subcategory, specs, product_price);
-            COLLECTION.addComponent(product);
+            COLLECTION.addProducts(product);
             reset();
 
             Alerts.success("Ny Produkt Opprettet");
@@ -167,7 +165,7 @@ public class AdminController implements Initializable {
 
     @FXML
     void save() {
-        ArrayList<Product> components = new ArrayList<>(COLLECTION.getComponents());
+        ArrayList<Product> components = new ArrayList<>(COLLECTION.getProducts());
         if (!components.isEmpty()) {
             String path = "DataFraApp/" + getPath();
             try {
@@ -255,7 +253,7 @@ public class AdminController implements Initializable {
         ObservableList<Product> selectedRows = tableSelectionModel.getSelectedItems();
         boolean doRemove = Alerts.confirm("Er du sikker på at du vil slette varen/varene du har valgt?");
         if (doRemove) {
-            COLLECTION.deleteSelectedComponents(selectedRows);
+            COLLECTION.deleteSelectedProducts(selectedRows);
             tableview.refresh();
         } else {
             tableSelectionModel.clearSelection();
@@ -270,8 +268,8 @@ public class AdminController implements Initializable {
                 COLLECTION.saveData();
             } else {
                 Alerts.success("Endringer er ikke lagret");
-                COLLECTION.setReloadComponents(true);
-                COLLECTION.getComponents().clear();
+                COLLECTION.setReloadProducts(true);
+                COLLECTION.getProducts().clear();
                 COLLECTION.setModified(false);
             }
         } else if(CATEGORY_COLLECTION.isModified()) {

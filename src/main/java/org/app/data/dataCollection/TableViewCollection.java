@@ -18,7 +18,7 @@ import java.util.ArrayList;
 public class TableViewCollection {
 
     private final ObservableList<Product> PRODUCTS = FXCollections.observableArrayList();
-    private boolean reloadComponents = true;
+    private boolean reloadProducts = true;
     private boolean modified = false;
     private String filterChoice = "Navn";
     private String loadedFile;
@@ -40,21 +40,21 @@ public class TableViewCollection {
     }
 
     /**
-     * Laster opp alle komponenter fra en fil og legger den til obsListen: <b>components</b>
+     * Laster opp alle produkter fra en fil og legger den til obsListen: <b>products</b>
      */
-    public void loadComponents(String filePath) {
+    public void loadProducts(String filePath) {
         IOClient<Product> open = new IOClient<>(new FileInfo(filePath));
         loadedFile = filePath;
-        if (reloadComponents) {
+        if (reloadProducts) {
             open.runOpenThread("Laster opp produkter...");
-            reloadComponents = false;
+            reloadProducts = false;
         }
     }
 
     /**
-     * Sletter alle komponenter som er valgt fra tabellen
+     * Sletter alle produkter som er valgt fra tabellen
      */
-    public void deleteSelectedComponents(ObservableList<Product> selectedProducts) {
+    public void deleteSelectedProducts(ObservableList<Product> selectedProducts) {
         if (selectedProducts.size() >= 1) {
             PRODUCTS.removeAll(selectedProducts);
             setModified(true);
@@ -62,10 +62,10 @@ public class TableViewCollection {
     }
 
     /**
-     * Legger en ny komponent i tabellen
+     * Legger en ny produkt i tabellen
      */
-    public void addComponent(Product product) {
-        for (Product p : getComponents()) {
+    public void addProducts(Product product) {
+        for (Product p : getProducts()) {
             if (product.getProductID() == p.getProductID()) {
                 PRODUCTS.remove(p);
                 break;
@@ -79,22 +79,22 @@ public class TableViewCollection {
      * Oppdaterer filen når bruker logger ut eller programmen slutter
      */
     public void saveData() {
-        ArrayList<Product> data = new ArrayList<>(getComponents());
+        ArrayList<Product> data = new ArrayList<>(getProducts());
         IOClient <Product> save = new IOClient<>(new FileInfo(loadedFile), data);
         save.runSaveThread("lagrer filen...");
         setModified(false);
     }
 
     /**
-     * Viser alle komponenter i tabellen
+     * Viser alle produkter i tabellen
      */
     public void setTableView(TableView<Product> tableView) {
-        tableView.setItems(getComponents());
+        tableView.setItems(getProducts());
     }
 
 
     /**
-     * Gjør det mulig til å filtrere tabellen ved komponent navn, pris, kategori osv.
+     * Gjør det mulig til å filtrere tabellen ved produkt navn, pris, kategori osv.
      */
     public void fillFilterComboBox(ComboBox<String> filterOptions) {
         String[] filterCats = {"Produkt ID", "Navn", "Kategori", "Spesifikasjoner", "Pris"};
@@ -157,7 +157,7 @@ public class TableViewCollection {
     /**
      * Getter og Setter methods
      */
-    public void setComponents(ArrayList<Product> items) {
+    public void setProducts(ArrayList<Product> items) {
         for (Product i : items) {
             for (Product p : PRODUCTS) {
                 while (i.getProductID() == p.getProductID()) {
@@ -168,12 +168,12 @@ public class TableViewCollection {
         }
     }
 
-    public ObservableList<Product> getComponents() {
+    public ObservableList<Product> getProducts() {
         return PRODUCTS;
     }
 
-    public void setReloadComponents(boolean reloadComponents1) {
-        reloadComponents = reloadComponents1;
+    public void setReloadProducts(boolean isProductsReloaded) {
+        reloadProducts = isProductsReloaded;
     }
 
     public void setModified(boolean isModified) {
